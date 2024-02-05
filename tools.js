@@ -250,7 +250,7 @@ upload.addEventListener("click", (e) => {
     stickyNoteDoc.classList.add("sticky-note");
     stickyNoteDoc.classList.add("resizable");
     stickyNoteDoc.innerHTML = `
-      <div class="header-note" data-drag-handle>
+      <div class="header-note drag" data-drag-handle>
         <div class="minimize-note"></div>
         <div class="remove-note"></div>
       </div>
