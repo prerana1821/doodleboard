@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doodle Board</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="toggle-options">
+      <img src="./icons/close.png" alt="Options" />
+    </div>
+
+    <div class="tools scale-tools">
+      <img src="./icons/pencil.png" class="pencil" alt="pencil" />
+      <img src="./icons/eraser.png" class="eraser" alt="eraser" />
+      <img src="./icons/download.png" class="download" alt="download" />
+      <img src="./icons/upload.png" class="upload" alt="upload" />
+      <img src="./icons/stickynote.png" class="stickynote" alt="stickynote" />
+
+      <img src="./icons/redo.png" class="redo" alt="redo" />
+      <img src="./icons/undo.png" class="redo" alt="undo" />
+      <img src="./icons/reset.png" class="reset" alt="reset" />
+    </div>
+
+    <div class="pencil-tools">
+      <div class="pencil-width">
+        <input type="range" name="" id="" min="1" max="10" value="5" />
+      </div>
+      <div class="pencil-colors">
+        <div class="black pencil-color"></div>
+        <div class="red pencil-color"></div>
+        <div class="green pencil-color"></div>
+        <div class="blue pencil-color"></div>
+        <div class="yellow pencil-color"></div>
+      </div>
+    </div>
+    <div class="eraser-tools">
+      <input type="range" name="" id="" min="1" max="10" value="3" />
+    </div>
+
+    <div class="stickynote-tools">
+      <div class="bg-pink notes-color"></div>
+      <div class="bg-orange notes-color"></div>
+      <div class="bg-green notes-color"></div>
+      <div class="bg-blue notes-color"></div>
+      <div class="bg-yellow notes-color"></div>
+      <div class="bg-purple notes-color"></div>
+      <div class="bg-grey notes-color"></div>
+    </div>
+
+    <!-- <div class="sticky-note">
+      <div class="header-note">
+        <div class="minimize-note"></div>
+        <div class="remove-note"></div>
+      </div>
+      <div class="body-note">
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+      </div>
+    </div> -->
+
+    <script src="./tools.js"></script>
+  </body>
+</html>
