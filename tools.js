@@ -17,6 +17,10 @@ let stickyNoteToolsFlag = false;
 
 let upload = document.querySelector(".upload");
 
+let dragEl;
+let dragHandleEl;
+const lastPosition = {};
+
 toggleOptions.addEventListener("click", (e) => {
   toggleFlag = !toggleFlag;
 
@@ -140,11 +144,7 @@ function noteActions(minimizeNote, removeNote, stickyNoteDoc) {
   minimizeNote.addEventListener("click", (e) => {
     let noteBody = stickyNoteDoc.querySelector(".body-note");
 
-    let noteBodyVisibility =
-      getComputedStyle(noteBody).getPropertyValue("display");
-
-    console.log({ noteBodyVisibility });
-    if (noteBodyVisibility === "none") {
+    if (noteBody.style.display === "none") {
       noteBody.style.display = "block";
     } else {
       noteBody.style.display = "none";
@@ -155,6 +155,87 @@ function noteActions(minimizeNote, removeNote, stickyNoteDoc) {
     stickyNoteDoc.remove();
   });
 }
+
+function setupResizable() {
+  const resizeEl = document.querySelector("[data-resizable]");
+  resizeEl.style.setProperty("resize", "both");
+  resizeEl.style.setProperty("overflow", "hidden");
+  resizeEl.addEventListener("mousedown", initResize);
+}
+
+function setupDraggable() {
+  let stickyNotes = document.querySelectorAll(".sticky-note");
+
+  stickyNotes.forEach((stickyNote) => {
+    stickyNote.addEventListener("mousedown", dragStart);
+    stickyNote.addEventListener("mouseup", dragEnd);
+    stickyNote.addEventListener("mouseout", dragEnd);
+  });
+}
+
+function initResize(e) {
+  e.preventDefault();
+  const resizeEl = e.target.closest(".sticky-note");
+  const initialWidth = parseInt(window.getComputedStyle(resizeEl).width, 10);
+  const initialHeight = parseInt(window.getComputedStyle(resizeEl).height, 10);
+  const startX = e.clientX;
+  const startY = e.clientY;
+
+  window.addEventListener("mousemove", Resize, false);
+  window.addEventListener("mouseup", stopResize, false);
+
+  function Resize(e) {
+    e.preventDefault();
+    const width = initialWidth + e.clientX - startX;
+    const height = initialHeight + e.clientY - startY;
+    resizeEl.style.width = width + "px";
+    resizeEl.style.height = height + "px";
+  }
+
+  function stopResize(e) {
+    e.preventDefault();
+    window.removeEventListener("mousemove", Resize, false);
+    window.removeEventListener("mouseup", stopResize, false);
+  }
+}
+
+function dragStart(event) {
+  dragEl = getDraggableAncestor(event.target);
+  dragEl.style.setProperty("position", "absolute");
+  lastPosition.left = event.clientX;
+  lastPosition.top = event.clientY;
+  dragEl.classList.add("dragging");
+  document.addEventListener("mousemove", dragMove);
+}
+
+function dragMove(event) {
+  if (dragEl) {
+    const newLeft = dragEl.offsetLeft + event.clientX - lastPosition.left;
+    const newTop = dragEl.offsetTop + event.clientY - lastPosition.top;
+    dragEl.style.left = `${newLeft}px`;
+    dragEl.style.top = `${newTop}px`;
+    lastPosition.left = event.clientX;
+    lastPosition.top = event.clientY;
+  }
+}
+
+function getDraggableAncestor(element) {
+  if (element.classList.contains("sticky-note")) {
+    return element;
+  } else {
+    return getDraggableAncestor(element.parentElement);
+  }
+}
+
+function dragEnd() {
+  if (dragEl) {
+    dragEl.classList.remove("dragging");
+  }
+  document.removeEventListener("mousemove", dragMove);
+  dragEl = null;
+}
+
+setupDraggable();
 
 upload.addEventListener("click", (e) => {
   let fileInput = document.createElement("input");
@@ -168,69 +249,22 @@ upload.addEventListener("click", (e) => {
     let stickyNoteDoc = document.createElement("div");
     stickyNoteDoc.classList.add("sticky-note");
     stickyNoteDoc.classList.add("resizable");
-
     stickyNoteDoc.innerHTML = `
-      <div class="header-note">
+      <div class="header-note" data-drag-handle>
         <div class="minimize-note"></div>
         <div class="remove-note"></div>
       </div>
-      <div class="body-note">
+      <div class="body-note" data-resizable>
           <img src="${url}" class="upload-img-note" />
       </div>`;
     document.body.appendChild(stickyNoteDoc);
 
     let minimizeNote = stickyNoteDoc.querySelector(".minimize-note");
     let removeNote = stickyNoteDoc.querySelector(".remove-note");
+
+    // Initialize resizable and draggable functionalities
+    setupResizable();
+    setupDraggable();
     noteActions(minimizeNote, removeNote, stickyNoteDoc);
-
-    stickyNoteDoc.onmousedown = function (event) {
-      dragAndDrop(stickyNoteDoc, event);
-    };
-    stickyNoteDoc.ondragstart = function () {
-      return false;
-    };
-
-    let resizer = document.createElement("div");
-    resizer.className = "resizer";
-    resizer.style.width = "10px";
-    resizer.style.height = "10px";
-    resizer.style.background = "black";
-    resizer.style.position = "absolute";
-    resizer.style.right = 0;
-    resizer.style.bottom = 0;
-    resizer.style.cursor = "se-resize";
-    stickyNoteDoc.appendChild(resizer);
-    resizer.addEventListener("mousedown", initResize, false);
-
-    function initResize(e) {
-      e.preventDefault(); // Prevent default behavior which might interfere with resizing
-      let initialWidth = parseInt(
-        document.defaultView.getComputedStyle(stickyNoteDoc).width,
-        10
-      );
-      let initialHeight = parseInt(
-        document.defaultView.getComputedStyle(stickyNoteDoc).height,
-        10
-      );
-      let startX = e.clientX;
-      let startY = e.clientY;
-
-      window.addEventListener("mousemove", Resize, false);
-      window.addEventListener("mouseup", stopResize, false);
-
-      function Resize(e) {
-        e.preventDefault(); // Prevent default behavior which might interfere with resizing
-        let width = initialWidth + e.clientX - startX;
-        let height = initialHeight + e.clientY - startY;
-        stickyNoteDoc.style.width = width + "px";
-        stickyNoteDoc.style.height = height + "px";
-      }
-
-      function stopResize(e) {
-        e.preventDefault(); // Prevent default behavior which might interfere with resizing
-        window.removeEventListener("mousemove", Resize, false);
-        window.removeEventListener("mouseup", stopResize, false);
-      }
-    }
   });
 });
