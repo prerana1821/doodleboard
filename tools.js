@@ -213,7 +213,6 @@ function dragStart(event) {
   dragEl.style.setProperty("position", "absolute");
   lastPosition.left = event.clientX;
   lastPosition.top = event.clientY;
-  dragEl.classList.add("dragging");
   document.addEventListener("mousemove", dragMove);
 }
 
@@ -237,9 +236,6 @@ function getDraggableAncestor(element) {
 }
 
 function dragEnd() {
-  if (dragEl) {
-    dragEl.classList.remove("dragging");
-  }
   document.removeEventListener("mousemove", dragMove);
   dragEl = null;
 }

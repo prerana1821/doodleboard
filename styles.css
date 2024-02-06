@@ -229,7 +229,3 @@ body {
 .drag-handle {
   cursor: pointer;
 }
-/* 
-.dragging {
-  cursor: move !important;
-} */
