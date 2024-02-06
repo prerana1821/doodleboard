@@ -71,6 +71,22 @@ eraser.addEventListener("click", (e) => {
   }
 });
 
+function noteActions(minimizeNote, removeNote, stickyNoteDoc) {
+  minimizeNote.addEventListener("click", (e) => {
+    let noteBody = stickyNoteDoc.querySelector(".body-note");
+
+    if (noteBody.style.display === "none") {
+      noteBody.style.display = "block";
+    } else {
+      noteBody.style.display = "none";
+    }
+  });
+
+  removeNote.addEventListener("click", (e) => {
+    stickyNoteDoc.remove();
+  });
+}
+
 stickyNote.addEventListener("click", (e) => {
   stickyNoteToolsFlag = !stickyNoteToolsFlag;
 
@@ -94,7 +110,7 @@ stickyNote.addEventListener("click", (e) => {
         <div class="remove-note"></div>
       </div>
       <div class="body-note">
-        <textarea class=" ${color.classList[0]} input-note"></textarea>
+        <textarea class=" ${color.classList[0]} input-note spellcheck"></textarea>
       </div>`;
       document.body.appendChild(stickyNoteDoc);
       let minimizeNote = stickyNoteDoc.querySelector(".minimize-note");
@@ -107,6 +123,38 @@ stickyNote.addEventListener("click", (e) => {
         return false;
       };
     });
+  });
+});
+
+upload.addEventListener("click", (e) => {
+  let fileInput = document.createElement("input");
+  fileInput.setAttribute("type", "file");
+  fileInput.click();
+
+  fileInput.addEventListener("change", (e) => {
+    let file = fileInput.files[0];
+    let url = URL.createObjectURL(file);
+
+    let stickyNoteDoc = document.createElement("div");
+    stickyNoteDoc.classList.add("sticky-note");
+    stickyNoteDoc.classList.add("resizable");
+    stickyNoteDoc.innerHTML = `
+      <div class="header-note drag" data-drag-handle>
+        <div class="minimize-note"></div>
+        <div class="remove-note"></div>
+      </div>
+      <div class="body-note" data-resizable>
+          <img src="${url}" class="upload-img-note" />
+      </div>`;
+    document.body.appendChild(stickyNoteDoc);
+
+    let minimizeNote = stickyNoteDoc.querySelector(".minimize-note");
+    let removeNote = stickyNoteDoc.querySelector(".remove-note");
+
+    // Initialize resizable and draggable functionalities
+    setupResizable();
+    setupDraggable();
+    noteActions(minimizeNote, removeNote, stickyNoteDoc);
   });
 });
 
@@ -138,22 +186,6 @@ function dragAndDrop(element, event) {
     document.removeEventListener("mousemove", onMouseMove);
     element.onmouseup = null;
   };
-}
-
-function noteActions(minimizeNote, removeNote, stickyNoteDoc) {
-  minimizeNote.addEventListener("click", (e) => {
-    let noteBody = stickyNoteDoc.querySelector(".body-note");
-
-    if (noteBody.style.display === "none") {
-      noteBody.style.display = "block";
-    } else {
-      noteBody.style.display = "none";
-    }
-  });
-
-  removeNote.addEventListener("click", (e) => {
-    stickyNoteDoc.remove();
-  });
 }
 
 function setupResizable() {
@@ -236,35 +268,3 @@ function dragEnd() {
 }
 
 setupDraggable();
-
-upload.addEventListener("click", (e) => {
-  let fileInput = document.createElement("input");
-  fileInput.setAttribute("type", "file");
-  fileInput.click();
-
-  fileInput.addEventListener("change", (e) => {
-    let file = fileInput.files[0];
-    let url = URL.createObjectURL(file);
-
-    let stickyNoteDoc = document.createElement("div");
-    stickyNoteDoc.classList.add("sticky-note");
-    stickyNoteDoc.classList.add("resizable");
-    stickyNoteDoc.innerHTML = `
-      <div class="header-note drag" data-drag-handle>
-        <div class="minimize-note"></div>
-        <div class="remove-note"></div>
-      </div>
-      <div class="body-note" data-resizable>
-          <img src="${url}" class="upload-img-note" />
-      </div>`;
-    document.body.appendChild(stickyNoteDoc);
-
-    let minimizeNote = stickyNoteDoc.querySelector(".minimize-note");
-    let removeNote = stickyNoteDoc.querySelector(".remove-note");
-
-    // Initialize resizable and draggable functionalities
-    setupResizable();
-    setupDraggable();
-    noteActions(minimizeNote, removeNote, stickyNoteDoc);
-  });
-});
