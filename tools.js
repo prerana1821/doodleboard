@@ -136,25 +136,26 @@ upload.addEventListener("click", (e) => {
     let url = URL.createObjectURL(file);
 
     let stickyNoteDoc = document.createElement("div");
-    stickyNoteDoc.classList.add("sticky-note");
-    stickyNoteDoc.classList.add("resizable");
+    stickyNoteDoc.classList.add("sticky-note-image");
+    stickyNoteDoc.setAttribute("data-resizable", true);
+    stickyNoteDoc.setAttribute("data-draggable", true);
+
     stickyNoteDoc.innerHTML = `
-      <div class="header-note drag" data-drag-handle>
+      <div class="header-note drag-handle" data-drag-handle="true">
         <div class="minimize-note"></div>
         <div class="remove-note"></div>
       </div>
-      <div class="body-note" data-resizable>
+      <div class="body-note">
           <img src="${url}" class="upload-img-note" />
       </div>`;
     document.body.appendChild(stickyNoteDoc);
 
     let minimizeNote = stickyNoteDoc.querySelector(".minimize-note");
     let removeNote = stickyNoteDoc.querySelector(".remove-note");
+    noteActions(minimizeNote, removeNote, stickyNoteDoc);
 
-    // Initialize resizable and draggable functionalities
     setupResizable();
     setupDraggable();
-    noteActions(minimizeNote, removeNote, stickyNoteDoc);
   });
 });
 
@@ -189,46 +190,22 @@ function dragAndDrop(element, event) {
 }
 
 function setupResizable() {
-  const resizeEl = document.querySelector("[data-resizable]");
-  resizeEl.style.setProperty("resize", "both");
-  resizeEl.style.setProperty("overflow", "hidden");
-  resizeEl.addEventListener("mousedown", initResize);
+  const resizeElemets = document.querySelectorAll("[data-resizable]");
+
+  resizeElemets.forEach((resizeElement) => {
+    resizeElement.style.setProperty("resize", "both");
+    resizeElement.style.setProperty("overflow", "hidden");
+  });
 }
 
 function setupDraggable() {
-  let stickyNotes = document.querySelectorAll(".sticky-note");
+  let stickyNotes = document.querySelectorAll(".sticky-note-image");
 
   stickyNotes.forEach((stickyNote) => {
     stickyNote.addEventListener("mousedown", dragStart);
     stickyNote.addEventListener("mouseup", dragEnd);
     stickyNote.addEventListener("mouseout", dragEnd);
   });
-}
-
-function initResize(e) {
-  e.preventDefault();
-  const resizeEl = e.target.closest(".sticky-note");
-  const initialWidth = parseInt(window.getComputedStyle(resizeEl).width, 10);
-  const initialHeight = parseInt(window.getComputedStyle(resizeEl).height, 10);
-  const startX = e.clientX;
-  const startY = e.clientY;
-
-  window.addEventListener("mousemove", Resize, false);
-  window.addEventListener("mouseup", stopResize, false);
-
-  function Resize(e) {
-    e.preventDefault();
-    const width = initialWidth + e.clientX - startX;
-    const height = initialHeight + e.clientY - startY;
-    resizeEl.style.width = width + "px";
-    resizeEl.style.height = height + "px";
-  }
-
-  function stopResize(e) {
-    e.preventDefault();
-    window.removeEventListener("mousemove", Resize, false);
-    window.removeEventListener("mouseup", stopResize, false);
-  }
 }
 
 function dragStart(event) {
@@ -252,7 +229,7 @@ function dragMove(event) {
 }
 
 function getDraggableAncestor(element) {
-  if (element.classList.contains("sticky-note")) {
+  if (element.classList.contains("sticky-note-image")) {
     return element;
   } else {
     return getDraggableAncestor(element.parentElement);
@@ -266,5 +243,3 @@ function dragEnd() {
   document.removeEventListener("mousemove", dragMove);
   dragEl = null;
 }
-
-setupDraggable();

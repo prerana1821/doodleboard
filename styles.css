@@ -171,7 +171,8 @@ body {
   background-color: #e6e6e6;
 }
 
-.sticky-note {
+.sticky-note,
+.sticky-note-image {
   height: 16rem;
   width: 16rem;
   position: absolute;
@@ -209,7 +210,8 @@ body {
   background-color: #f86158;
 }
 
-.sticky-note textarea {
+.sticky-note textarea,
+.sticky-note-image textarea {
   width: 100%;
   height: 100%;
   outline: #fff;
@@ -224,13 +226,10 @@ body {
   height: 100%;
 }
 
-.resizable {
-  position: relative;
-  overflow: hidden;
-  width: 200px;
-  height: 200px;
+.drag-handle {
+  cursor: pointer;
 }
-
-.drag {
-  cursor: move;
-}
+/* 
+.dragging {
+  cursor: move !important;
+} */
