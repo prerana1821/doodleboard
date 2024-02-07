@@ -232,17 +232,33 @@ body {
 .bg-yellow {
   background-color: #ffd966;
 }
+
 .bg-blue {
   background-color: #80caff;
 }
+
 .bg-green {
   background-color: #85e0a3;
 }
+
 .bg-purple {
   background-color: #d9b8ff;
 }
+
 .bg-grey {
   background-color: #e6e6e6;
+}
+
+.cursor-pencil {
+  cursor: url("./icons/cursor-pencil.png"), auto;
+}
+
+.cursor-eraser {
+  cursor: url("./icons/cursor-eraser.png"), auto;
+}
+
+.cursor-marker {
+  cursor: url("./icons/cursor-marker.png"), auto;
 }
 
 .sticky-note,

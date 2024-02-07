@@ -58,6 +58,10 @@ pencil.addEventListener("click", (e) => {
   eraserToolsFlag = false;
   markerToolsFlag = false;
 
+  document.body.classList.remove("cursor-eraser");
+  document.body.classList.remove("cursor-marker");
+  document.body.classList.add("cursor-pencil");
+
   if (pencilToolsFlag) {
     eraserTools.style.display = "none";
     stickyNoteTools.style.display = "none";
@@ -73,6 +77,10 @@ marker.addEventListener("click", (e) => {
   eraserToolsFlag = false;
   pencilToolsFlag = false;
 
+  document.body.classList.remove("cursor-pencil");
+  document.body.classList.remove("cursor-eraser");
+  document.body.classList.add("cursor-marker");
+
   if (markerToolsFlag) {
     eraserTools.style.display = "none";
     stickyNoteTools.style.display = "none";
@@ -85,6 +93,10 @@ marker.addEventListener("click", (e) => {
 
 eraser.addEventListener("click", (e) => {
   eraserToolsFlag = !eraserToolsFlag;
+
+  document.body.classList.remove("cursor-pencil");
+  document.body.classList.remove("cursor-marker");
+  document.body.classList.add("cursor-eraser");
 
   if (eraserToolsFlag) {
     pencilTools.style.display = "none";
