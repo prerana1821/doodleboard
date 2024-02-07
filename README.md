@@ -12,3 +12,4 @@
 - add layers
 - change canvas color
 - add typescript
+- change the mouse type based on pencil, eraser or marker

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
 * {
   box-sizing: border-box;
 }
@@ -5,6 +7,8 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: "Varela Round", sans-serif;
+  position: relative;
 }
 
 .toggle-options {
@@ -20,6 +24,7 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  z-index: 2;
 }
 
 .toggle-options img {
@@ -36,6 +41,7 @@ body {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.5rem;
+  z-index: 2;
 }
 
 .scale-tools {
@@ -58,21 +64,26 @@ body {
   cursor: pointer;
 }
 
+.tool-heading {
+  margin: 0;
+}
+
 .pencil-tools {
   width: 12.5rem;
-  height: 5rem;
+  height: 15rem;
   position: absolute;
   top: 4.5rem;
   left: 40vw;
   display: none;
   justify-items: center;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.5rem;
   align-items: flex-start;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.3rem;
   padding: 0.5rem 0 0.5rem 0.5rem;
+  z-index: 2;
 }
 
 .pencil-width {
@@ -85,12 +96,27 @@ body {
 .pencil-colors {
   display: flex;
   gap: 0.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .pencil-color {
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
+  cursor: pointer;
+}
+
+.pencil-edges,
+.pencil-patterns {
+  margin-top: 0.5rem 0;
+}
+
+.pencil-tools img,
+.pencil-patterns img {
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
 }
 
 .black {
@@ -132,6 +158,7 @@ body {
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.3rem;
   padding: 0.5rem;
+  z-index: 2;
 }
 
 .eraser-tools input {
@@ -150,6 +177,7 @@ body {
   border-radius: 0.3rem;
   padding: 0.5rem;
   gap: 0.5rem;
+  z-index: 2;
 }
 
 .stickynote-tools > div {
@@ -240,4 +268,9 @@ body {
 
 .drag-handle {
   cursor: pointer;
+}
+
+canvas {
+  position: relative;
+  z-index: 1;
 }

@@ -19,6 +19,7 @@ let pencilSize = pencilWidth.value;
 
 tool.strokeStyle = pencilColor;
 tool.lineWidth = pencilSize;
+tool.lineCap = "round";
 
 canvas.addEventListener("mousedown", (e) => {
   draw = true;
