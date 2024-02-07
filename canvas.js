@@ -2,6 +2,8 @@ let canvas = document.querySelector("canvas");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+let tool = canvas.getContext("2d");
+
 let pencilColors = document.querySelectorAll(".pencil-color");
 let pencilWidth = document.querySelector(".pencil-width-input");
 let pencilEdges = document.querySelectorAll(".pencil-edge");
@@ -14,7 +16,9 @@ let markerPatterns = document.querySelectorAll(".marker-pattern");
 let eraserIcon = document.querySelector(".eraser");
 let eraserWidth = document.querySelector(".eraser-width");
 
-let tool = canvas.getContext("2d");
+let download = document.querySelector(".download");
+
+let reset = document.querySelector(".reset");
 
 let drawPencil = false;
 let drawMarker = false;
@@ -149,4 +153,17 @@ eraserIcon.addEventListener("click", (e) => {
     tool.strokeStyle = pencilColor;
     tool.lineWidth = pencilSize;
   }
+});
+
+download.addEventListener("click", (e) => {
+  let url = canvas.toDataURL();
+
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "doodle-board.jpg";
+  a.click();
+});
+
+reset.addEventListener("click", (e) => {
+  tool.clearRect(0, 0, canvas.width, canvas.height);
 });
