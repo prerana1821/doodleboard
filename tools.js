@@ -7,6 +7,10 @@ let pencil = document.querySelector(".pencil");
 let pencilTools = document.querySelector(".pencil-tools");
 let pencilToolsFlag = false;
 
+let marker = document.querySelector(".marker");
+let markerTools = document.querySelector(".marker-tools");
+let markerToolsFlag = false;
+
 let eraser = document.querySelector(".eraser");
 let eraserTools = document.querySelector(".eraser-tools");
 let eraserToolsFlag = false;
@@ -52,13 +56,30 @@ function closeTools() {
 pencil.addEventListener("click", (e) => {
   pencilToolsFlag = !pencilToolsFlag;
   eraserToolsFlag = false;
+  markerToolsFlag = false;
 
   if (pencilToolsFlag) {
     eraserTools.style.display = "none";
     stickyNoteTools.style.display = "none";
+    markerTools.style.display = "none";
     pencilTools.style.display = "flex";
   } else {
     pencilTools.style.display = "none";
+  }
+});
+
+marker.addEventListener("click", (e) => {
+  markerToolsFlag = !markerToolsFlag;
+  eraserToolsFlag = false;
+  pencilToolsFlag = false;
+
+  if (markerToolsFlag) {
+    eraserTools.style.display = "none";
+    stickyNoteTools.style.display = "none";
+    pencilTools.style.display = "none";
+    markerTools.style.display = "flex";
+  } else {
+    markerTools.style.display = "none";
   }
 });
 
@@ -67,6 +88,8 @@ eraser.addEventListener("click", (e) => {
 
   if (eraserToolsFlag) {
     pencilTools.style.display = "none";
+    markerTools.style.display = "none";
+
     stickyNoteTools.style.display = "none";
     eraserTools.style.display = "flex";
   } else {
@@ -95,6 +118,7 @@ stickyNote.addEventListener("click", (e) => {
 
   if (stickyNoteToolsFlag) {
     pencilTools.style.display = "none";
+    markerTools.style.display = "none";
     eraserTools.style.display = "none";
     stickyNoteTools.style.display = "flex";
   } else {

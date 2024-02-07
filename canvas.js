@@ -4,35 +4,55 @@ canvas.height = window.innerHeight;
 
 let pencilColors = document.querySelectorAll(".pencil-color");
 let pencilWidth = document.querySelector(".pencil-width-input");
-let eraserIcon = document.querySelector(".eraser");
-let eraserWidth = document.querySelector(".eraser-width");
 let pencilEdges = document.querySelectorAll(".pencil-edge");
 let pencilPatterns = document.querySelectorAll(".pencil-pattern");
 
+let markerColors = document.querySelectorAll(".marker-color");
+let markerWidth = document.querySelector(".marker-width-input");
+let markerPatterns = document.querySelectorAll(".marker-pattern");
+
+let eraserIcon = document.querySelector(".eraser");
+let eraserWidth = document.querySelector(".eraser-width");
+
 let tool = canvas.getContext("2d");
 
-let draw = false;
-let eraserColor = "#fff";
+let drawPencil = false;
+let drawMarker = false;
 let pencilColor = "#1e1e1e";
+let markerColor = "#afafaf";
 let pencilEdge = "sqaure";
+let eraserColor = "#fff";
 
-let eraserSize = eraserWidth.value;
 let pencilSize = pencilWidth.value;
+let markerSize = markerWidth.value;
+let eraserSize = eraserWidth.value;
 
 tool.strokeStyle = pencilColor;
 tool.lineWidth = pencilSize;
 tool.lineCap = pencilEdge;
 
 canvas.addEventListener("mousedown", (e) => {
-  draw = true;
-  startDrawing({ x: e.clientX, y: e.clientY });
+  if (pencilToolsFlag) {
+    drawPencil = true;
+    startDrawing({ x: e.clientX, y: e.clientY });
+  } else if (markerToolsFlag) {
+    drawMarker = true;
+    startDrawing({ x: e.clientX, y: e.clientY });
+  }
 });
 
 canvas.addEventListener("mousemove", (e) => {
-  if (draw && pencilToolsFlag) {
+  if (drawPencil && pencilToolsFlag) {
     continueDrawing({
       color: eraserToolsFlag ? eraserColor : pencilColor,
       width: eraserToolsFlag ? eraserSize : pencilSize,
+      x: e.clientX,
+      y: e.clientY,
+    });
+  } else if (drawMarker && markerToolsFlag) {
+    continueDrawing({
+      color: eraserToolsFlag ? eraserColor : markerColor,
+      width: eraserToolsFlag ? eraserSize : markerSize,
       x: e.clientX,
       y: e.clientY,
     });
@@ -40,7 +60,8 @@ canvas.addEventListener("mousemove", (e) => {
 });
 
 canvas.addEventListener("mouseup", (e) => {
-  draw = false;
+  drawPencil = false;
+  drawMarker = false;
 });
 
 function startDrawing(movement) {
@@ -86,6 +107,29 @@ let lineStyles = [
 ];
 
 pencilPatterns.forEach((pattern, index) => {
+  pattern.addEventListener("click", () => {
+    let currentLineStyleIndex = index;
+    tool.setLineDash(lineStyles[currentLineStyleIndex]);
+  });
+});
+
+markerColors.forEach((color) => {
+  color.addEventListener("click", () => {
+    let chosenColor = window
+      .getComputedStyle(color)
+      .getPropertyValue("background-color");
+
+    markerColor = chosenColor;
+    tool.strokeStyle = markerColor;
+  });
+});
+
+markerWidth.addEventListener("change", (e) => {
+  markerSize = parseInt(e.target.value);
+  tool.lineWidth = markerSize;
+});
+
+markerPatterns.forEach((pattern, index) => {
   pattern.addEventListener("click", () => {
     let currentLineStyleIndex = index;
     tool.setLineDash(lineStyles[currentLineStyleIndex]);

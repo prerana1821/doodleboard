@@ -68,7 +68,8 @@ body {
   margin: 0;
 }
 
-.pencil-tools {
+.pencil-tools,
+.marker-tools {
   width: 12.5rem;
   height: 15rem;
   position: absolute;
@@ -86,20 +87,24 @@ body {
   z-index: 2;
 }
 
-.pencil-width {
+.pencil-width,
+.marker-width {
   width: 100%;
 }
-.pencil-width input {
+.pencil-width input,
+.marker-width input {
   width: 94%;
 }
 
-.pencil-colors {
+.pencil-colors,
+.marker-colors {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 0.2rem;
 }
 
-.pencil-color {
+.pencil-color,
+.marker-color {
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
@@ -107,12 +112,14 @@ body {
 }
 
 .pencil-edges,
-.pencil-patterns {
+.pencil-patterns,
+.marker-patterns {
   margin-top: 0.5rem 0;
 }
 
 .pencil-tools img,
-.pencil-patterns img {
+.pencil-patterns img,
+.marker-patterns img {
   width: 1.6rem;
   height: 1.6rem;
   margin-right: 0.5rem;
@@ -145,6 +152,33 @@ body {
 
 .purple {
   background-color: #9747ff;
+}
+
+.marker-tools {
+  left: 46vw;
+  height: 11rem;
+}
+
+.marker-grey {
+  background-color: #afafaf;
+}
+.marker-pink {
+  background-color: #ffa0f9;
+}
+.marker-orange {
+  background-color: #ffb868;
+}
+.marker-yellow {
+  background-color: #fff234;
+}
+.marker-green {
+  background-color: #aeff61;
+}
+.marker-blue {
+  background-color: #7efff7;
+}
+.marker-purple {
+  background-color: #bc9bff;
 }
 
 .eraser-tools {
