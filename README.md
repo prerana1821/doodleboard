@@ -11,3 +11,4 @@
 - add comment feature
 - add layers
 - change canvas color
+- add typescript

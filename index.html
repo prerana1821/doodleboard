@@ -60,7 +60,13 @@
 
     <div class="pencil-tools">
       <div class="pencil-width" title="Pencil Width">
-        <input type="range" name="" id="" min="1" max="10" value="5" />
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value="5"
+          class="pencil-width-input"
+        />
       </div>
       <div class="pencil-colors">
         <div class="black pencil-color" title="Black"></div>
@@ -73,7 +79,7 @@
       </div>
     </div>
     <div class="eraser-tools" title="Eraser Size">
-      <input type="range" name="" id="" min="1" max="10" value="3" />
+      <input type="range" min="1" max="10" value="3" class="eraser-width" />
     </div>
 
     <div class="stickynote-tools">
@@ -89,6 +95,6 @@
     <canvas></canvas>
 
     <script src="./tools.js"></script>
-    <!-- <script src="./learnCanvas.js"></script> -->
+    <script src="./canvas.js"></script>
   </body>
 </html>
