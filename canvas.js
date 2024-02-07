@@ -18,10 +18,14 @@ let eraserWidth = document.querySelector(".eraser-width");
 
 let download = document.querySelector(".download");
 
+let redo = document.querySelector(".redo");
+let undo = document.querySelector(".undo");
+
 let reset = document.querySelector(".reset");
 
 let drawPencil = false;
 let drawMarker = false;
+
 let pencilColor = "#1e1e1e";
 let markerColor = "#afafaf";
 let pencilEdge = "sqaure";
@@ -34,6 +38,9 @@ let eraserSize = eraserWidth.value;
 tool.strokeStyle = pencilColor;
 tool.lineWidth = pencilSize;
 tool.lineCap = pencilEdge;
+
+let undoRedoTracker = []; // data
+let track = 0; // represets which to perform from tracker array
 
 canvas.addEventListener("mousedown", (e) => {
   if (pencilToolsFlag) {
@@ -66,6 +73,10 @@ canvas.addEventListener("mousemove", (e) => {
 canvas.addEventListener("mouseup", (e) => {
   drawPencil = false;
   drawMarker = false;
+
+  let url = canvas.toDataURL();
+  undoRedoTracker.push(url);
+  track = undoRedoTracker.length - 1;
 });
 
 function startDrawing(movement) {
@@ -163,6 +174,31 @@ download.addEventListener("click", (e) => {
   a.download = "doodle-board.jpg";
   a.click();
 });
+
+undo.addEventListener("click", (e) => {
+  if (track > 0) {
+    track--;
+  }
+  undoRedoCanvas({ track, undoRedoTracker });
+});
+
+redo.addEventListener("click", (e) => {
+  if (track < undoRedoTracker.length - 1) {
+    track++;
+  }
+  undoRedoCanvas({ track, undoRedoTracker });
+});
+
+function undoRedoCanvas(tracker) {
+  track = tracker.track;
+  undoRedoTracker = tracker.undoRedoTracker;
+
+  let img = new Image();
+  img.src = undoRedoTracker[track];
+  img.onload = (e) => {
+    tool.drawImage(img, 0, 0, canvas.width, canvas.height);
+  };
+}
 
 reset.addEventListener("click", (e) => {
   tool.clearRect(0, 0, canvas.width, canvas.height);
