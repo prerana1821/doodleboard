@@ -59,7 +59,7 @@ body {
 }
 
 .pencil-tools {
-  width: 10rem;
+  width: 12.5rem;
   height: 5rem;
   position: absolute;
   top: 4.5rem;
@@ -68,15 +68,18 @@ body {
   justify-items: center;
   flex-direction: column;
   gap: 0.8rem;
-  align-items: center;
+  align-items: flex-start;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.3rem;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0 0.5rem 0.5rem;
 }
 
-.pencil-width input {
+.pencil-width {
   width: 100%;
+}
+.pencil-width input {
+  width: 94%;
 }
 
 .pencil-colors {
@@ -93,20 +96,29 @@ body {
 .black {
   background-color: #1e1e1e;
 }
+
 .red {
-  background-color: #e03131;
+  background-color: #f24822;
 }
 
-.green {
-  background-color: #2f9e44;
-}
-
-.blue {
-  background-color: #1971c2;
+.orange {
+  background-color: #ffa629;
 }
 
 .yellow {
-  background-color: #f08c00;
+  background-color: #ffcd29;
+}
+
+.green {
+  background-color: #14ae5c;
+}
+
+.blue {
+  background-color: #0d99ff;
+}
+
+.purple {
+  background-color: #0d99ff;
 }
 
 .eraser-tools {

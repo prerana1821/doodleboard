@@ -8,49 +8,87 @@
   </head>
   <body>
     <div class="toggle-options">
-      <img src="./icons/close.png" alt="Options" />
+      <img src="./icons/close.png" alt="Options" title="Close Menu" />
     </div>
 
     <div class="tools scale-tools">
-      <img src="./icons/pencil.png" class="pencil" alt="pencil" />
-      <img src="./icons/eraser.png" class="eraser" alt="eraser" />
-      <img src="./icons/download.png" class="download" alt="download" />
-      <img src="./icons/upload.png" class="upload" alt="upload" />
-      <img src="./icons/stickynote.png" class="stickynote" alt="stickynote" />
-      <img src="./icons/redo.png" class="redo" alt="redo" />
-      <img src="./icons/undo.png" class="redo" alt="undo" />
-      <img src="./icons/reset.png" class="reset" alt="reset" />
+      <img
+        src="./icons/pencil.png"
+        class="pencil"
+        alt="pencil"
+        title="Pencil"
+      />
+      <img
+        src="./icons/marker.png"
+        class="marker"
+        alt="marker"
+        title="Marker"
+      />
+      <img
+        src="./icons/eraser.png"
+        class="eraser"
+        alt="eraser"
+        title="Eraser"
+      />
+      <img
+        src="./icons/download.png"
+        class="download"
+        alt="download"
+        title="Download Page"
+      />
+      <img
+        src="./icons/upload.png"
+        class="upload"
+        alt="upload"
+        title="Upload Image"
+      />
+      <img
+        src="./icons/stickynote.png"
+        class="stickynote"
+        alt="stickynote"
+        title="Sticky Note"
+      />
+      <img src="./icons/redo.png" class="redo" alt="redo" title="Redo Action" />
+      <img src="./icons/undo.png" class="redo" alt="undo" title="Undo Action" />
+      <img
+        src="./icons/reset.png"
+        class="reset"
+        alt="reset"
+        title="Reset Page"
+      />
     </div>
 
     <div class="pencil-tools">
-      <div class="pencil-width">
+      <div class="pencil-width" title="Pencil Width">
         <input type="range" name="" id="" min="1" max="10" value="5" />
       </div>
       <div class="pencil-colors">
-        <div class="black pencil-color"></div>
-        <div class="red pencil-color"></div>
-        <div class="green pencil-color"></div>
-        <div class="blue pencil-color"></div>
-        <div class="yellow pencil-color"></div>
+        <div class="black pencil-color" title="Black"></div>
+        <div class="red pencil-color" title="Red"></div>
+        <div class="orange pencil-color" title="Orange"></div>
+        <div class="yellow pencil-color" title="yellow"></div>
+        <div class="green pencil-color" title="Green"></div>
+        <div class="blue pencil-color" title="Blue"></div>
+        <div class="purple pencil-color" title="Purple"></div>
       </div>
     </div>
-    <div class="eraser-tools">
+    <div class="eraser-tools" title="Eraser Size">
       <input type="range" name="" id="" min="1" max="10" value="3" />
     </div>
 
     <div class="stickynote-tools">
-      <div class="bg-pink notes-color"></div>
-      <div class="bg-orange notes-color"></div>
-      <div class="bg-green notes-color"></div>
-      <div class="bg-blue notes-color"></div>
-      <div class="bg-yellow notes-color"></div>
-      <div class="bg-purple notes-color"></div>
-      <div class="bg-grey notes-color"></div>
+      <div class="bg-pink notes-color" title="Pink"></div>
+      <div class="bg-orange notes-color" title="Orange"></div>
+      <div class="bg-green notes-color" title="Green"></div>
+      <div class="bg-blue notes-color" title="Blue"></div>
+      <div class="bg-yellow notes-color" title="Yellow"></div>
+      <div class="bg-purple notes-color" title="Purple"></div>
+      <div class="bg-grey notes-color" title="Grey"></div>
     </div>
 
     <canvas></canvas>
 
     <script src="./tools.js"></script>
-    <script src="./learnCanvas.js"></script>
+    <!-- <script src="./learnCanvas.js"></script> -->
   </body>
 </html>

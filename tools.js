@@ -34,6 +34,7 @@ toggleOptions.addEventListener("click", (e) => {
 function openTools() {
   let openToolsImg = toggleOptions.children[0];
   openToolsImg.src = "./icons/close.png";
+  openToolsImg.title = "Close Menu";
 
   tools.style.display = "flex";
 }
@@ -41,6 +42,7 @@ function openTools() {
 function closeTools() {
   let closeToolsImg = toggleOptions.children[0];
   closeToolsImg.src = "./icons/menu.png";
+  closeToolsImg.title = "Open Menu";
 
   tools.style.display = "none";
   pencilTools.style.display = "none";

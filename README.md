@@ -10,3 +10,4 @@
 - stamp feature
 - add comment feature
 - add layers
+- change canvas color
