@@ -51,6 +51,9 @@ function closeTools() {
 
 pencil.addEventListener("click", (e) => {
   pencilToolsFlag = !pencilToolsFlag;
+  eraserToolsFlag = false;
+
+  console.log({ pencilToolsFlag, eraserToolsFlag });
 
   if (pencilToolsFlag) {
     eraserTools.style.display = "none";
@@ -63,6 +66,8 @@ pencil.addEventListener("click", (e) => {
 
 eraser.addEventListener("click", (e) => {
   eraserToolsFlag = !eraserToolsFlag;
+
+  console.log({ pencilToolsFlag, eraserToolsFlag });
 
   if (eraserToolsFlag) {
     pencilTools.style.display = "none";

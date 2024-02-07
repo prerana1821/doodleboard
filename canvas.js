@@ -12,7 +12,6 @@ let tool = canvas.getContext("2d");
 let draw = false;
 let eraserColor = "#fff";
 let pencilColor = "#1e1e1e";
-let useEraser = false;
 
 let eraserSize = eraserWidth.value;
 let pencilSize = pencilWidth.value;
@@ -27,10 +26,10 @@ canvas.addEventListener("mousedown", (e) => {
 });
 
 canvas.addEventListener("mousemove", (e) => {
-  if (draw) {
+  if (draw && pencilToolsFlag) {
     continueDrawing({
-      color: useEraser ? eraserColor : pencilColor,
-      width: useEraser ? eraserSize : pencilSize,
+      color: eraserToolsFlag ? eraserColor : pencilColor,
+      width: eraserToolsFlag ? eraserSize : pencilSize,
       x: e.clientX,
       y: e.clientY,
     });
@@ -71,14 +70,11 @@ pencilWidth.addEventListener("change", (e) => {
 
 eraserWidth.addEventListener("change", (e) => {
   eraserSize = parseInt(e.target.value);
-  tool.strokeStyle = eraserColor;
   tool.lineWidth = eraserSize;
 });
 
 eraserIcon.addEventListener("click", (e) => {
-  useEraser = !useEraser;
-
-  if (useEraser) {
+  if (eraserToolsFlag) {
     tool.strokeStyle = eraserColor;
     tool.lineWidth = eraserSize;
   } else {
