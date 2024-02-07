@@ -42,6 +42,7 @@ body {
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.5rem;
   z-index: 2;
+  cursor: auto;
 }
 
 .scale-tools {
@@ -64,6 +65,13 @@ body {
   cursor: pointer;
 }
 
+.tool-heading-xl {
+  margin: 0;
+
+  font-size: xl;
+  font-weight: bold;
+}
+
 .tool-heading {
   margin: 0;
 }
@@ -71,10 +79,11 @@ body {
 .pencil-tools,
 .marker-tools {
   width: 12.5rem;
-  height: 15rem;
+  height: 17rem;
   position: absolute;
   top: 4.5rem;
-  left: 40vw;
+  /* left: 40vw; */
+  left: 1vw;
   display: none;
   justify-items: center;
   flex-direction: column;
@@ -85,6 +94,7 @@ body {
   border-radius: 0.3rem;
   padding: 0.5rem 0 0.5rem 0.5rem;
   z-index: 2;
+  cursor: auto;
 }
 
 .pencil-width,
@@ -155,8 +165,9 @@ body {
 }
 
 .marker-tools {
-  left: 46vw;
-  height: 11rem;
+  /* left: 46vw; */
+  left: 1vw;
+  height: 13rem;
 }
 
 .marker-grey {
@@ -182,17 +193,19 @@ body {
 }
 
 .eraser-tools {
-  width: 9rem;
-  height: 3rem;
+  width: 10rem;
+  height: 4rem;
   position: absolute;
   top: 4.5rem;
-  left: 44.5vw;
+  /* left: 44.5vw; */
+  left: 1vw;
   display: none;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.3rem;
   padding: 0.5rem;
   z-index: 2;
+  cursor: auto;
 }
 
 .eraser-tools input {
@@ -201,10 +214,11 @@ body {
 
 .stickynote-tools {
   width: 12rem;
-  height: 2.2rem;
+  height: 4.2rem;
   position: absolute;
   top: 4.5rem;
-  left: 54vw;
+  /* left: 54vw; */
+  left: 1vw;
   display: none;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
@@ -212,9 +226,15 @@ body {
   padding: 0.5rem;
   gap: 0.5rem;
   z-index: 2;
+  cursor: auto;
 }
 
-.stickynote-tools > div {
+.stickynote-colors {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.notes-color {
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
@@ -259,6 +279,10 @@ body {
 
 .cursor-marker {
   cursor: url("./icons/cursor-marker.png"), auto;
+}
+
+.cursor-auto {
+  cursor: auto;
 }
 
 .sticky-note,

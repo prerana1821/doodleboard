@@ -60,6 +60,7 @@ pencil.addEventListener("click", (e) => {
 
   document.body.classList.remove("cursor-eraser");
   document.body.classList.remove("cursor-marker");
+  document.body.classList.remove("cursor-auto");
   document.body.classList.add("cursor-pencil");
 
   if (pencilToolsFlag) {
@@ -79,6 +80,7 @@ marker.addEventListener("click", (e) => {
 
   document.body.classList.remove("cursor-pencil");
   document.body.classList.remove("cursor-eraser");
+  document.body.classList.remove("cursor-auto");
   document.body.classList.add("cursor-marker");
 
   if (markerToolsFlag) {
@@ -96,6 +98,7 @@ eraser.addEventListener("click", (e) => {
 
   document.body.classList.remove("cursor-pencil");
   document.body.classList.remove("cursor-marker");
+  document.body.classList.remove("cursor-auto");
   document.body.classList.add("cursor-eraser");
 
   if (eraserToolsFlag) {
@@ -104,6 +107,8 @@ eraser.addEventListener("click", (e) => {
 
     stickyNoteTools.style.display = "none";
     eraserTools.style.display = "flex";
+    eraserTools.style.flexDirection = "column";
+    eraserTools.style.gap = "0.3rem";
   } else {
     eraserTools.style.display = "none";
   }
@@ -126,6 +131,8 @@ function noteActions(minimizeNote, removeNote, stickyNoteDoc) {
 }
 
 stickyNote.addEventListener("click", (e) => {
+  resetCursor();
+
   stickyNoteToolsFlag = !stickyNoteToolsFlag;
 
   if (stickyNoteToolsFlag) {
@@ -133,6 +140,7 @@ stickyNote.addEventListener("click", (e) => {
     markerTools.style.display = "none";
     eraserTools.style.display = "none";
     stickyNoteTools.style.display = "flex";
+    stickyNoteTools.style.flexDirection = "column";
   } else {
     stickyNoteTools.style.display = "none";
   }
@@ -166,6 +174,8 @@ stickyNote.addEventListener("click", (e) => {
 });
 
 upload.addEventListener("click", (e) => {
+  resetCursor();
+
   let fileInput = document.createElement("input");
   fileInput.setAttribute("type", "file");
   fileInput.click();
@@ -277,4 +287,11 @@ function getDraggableAncestor(element) {
 function dragEnd() {
   document.removeEventListener("mousemove", dragMove);
   dragEl = null;
+}
+
+function resetCursor() {
+  document.body.classList.remove("cursor-pencil");
+  document.body.classList.remove("cursor-eraser");
+  document.body.classList.remove("cursor-marker");
+  document.body.classList.add("cursor-auto");
 }

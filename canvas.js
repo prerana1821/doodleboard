@@ -167,6 +167,8 @@ eraserIcon.addEventListener("click", (e) => {
 });
 
 download.addEventListener("click", (e) => {
+  resetCursor();
+
   let url = canvas.toDataURL();
 
   let a = document.createElement("a");
@@ -176,6 +178,8 @@ download.addEventListener("click", (e) => {
 });
 
 undo.addEventListener("click", (e) => {
+  resetCursor();
+
   if (track > 0) {
     track--;
   }
@@ -183,6 +187,8 @@ undo.addEventListener("click", (e) => {
 });
 
 redo.addEventListener("click", (e) => {
+  resetCursor();
+
   if (track < undoRedoTracker.length - 1) {
     track++;
   }
@@ -201,5 +207,7 @@ function undoRedoCanvas(tracker) {
 }
 
 reset.addEventListener("click", (e) => {
+  resetCursor();
+
   tool.clearRect(0, 0, canvas.width, canvas.height);
 });
