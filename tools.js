@@ -21,6 +21,10 @@ let stickyNoteToolsFlag = false;
 
 let upload = document.querySelector(".upload");
 
+let shapes = document.querySelector(".shapes");
+let shapesTools = document.querySelector(".shapes-tools");
+let shapesToolsFlag = false;
+
 let dragEl;
 let dragHandleEl;
 const lastPosition = {};
@@ -37,7 +41,7 @@ toggleOptions.addEventListener("click", (e) => {
 
 function openTools() {
   let openToolsImg = toggleOptions.children[0];
-  openToolsImg.src = "./icons/close.png";
+  openToolsImg.src = "./icons/tools/close.png";
   openToolsImg.title = "Close Menu";
 
   tools.style.display = "flex";
@@ -45,18 +49,22 @@ function openTools() {
 
 function closeTools() {
   let closeToolsImg = toggleOptions.children[0];
-  closeToolsImg.src = "./icons/menu.png";
+  closeToolsImg.src = "./icons/tools/menu.png";
   closeToolsImg.title = "Open Menu";
 
   tools.style.display = "none";
   pencilTools.style.display = "none";
+  markerTools.style.display = "none";
   eraserTools.style.display = "none";
+  shapesTools.style.display = "none";
+  stickyNoteTools.style.display = "none";
 }
 
 pencil.addEventListener("click", (e) => {
   pencilToolsFlag = !pencilToolsFlag;
   eraserToolsFlag = false;
   markerToolsFlag = false;
+  shapesToolsFlag = false;
 
   document.body.classList.remove("cursor-eraser");
   document.body.classList.remove("cursor-marker");
@@ -67,6 +75,7 @@ pencil.addEventListener("click", (e) => {
     eraserTools.style.display = "none";
     stickyNoteTools.style.display = "none";
     markerTools.style.display = "none";
+    shapesTools.style.display = "none";
     pencilTools.style.display = "flex";
   } else {
     pencilTools.style.display = "none";
@@ -77,6 +86,7 @@ marker.addEventListener("click", (e) => {
   markerToolsFlag = !markerToolsFlag;
   eraserToolsFlag = false;
   pencilToolsFlag = false;
+  shapesToolsFlag = false;
 
   document.body.classList.remove("cursor-pencil");
   document.body.classList.remove("cursor-eraser");
@@ -86,6 +96,7 @@ marker.addEventListener("click", (e) => {
   if (markerToolsFlag) {
     eraserTools.style.display = "none";
     stickyNoteTools.style.display = "none";
+    shapesTools.style.display = "none";
     pencilTools.style.display = "none";
     markerTools.style.display = "flex";
   } else {
@@ -104,13 +115,32 @@ eraser.addEventListener("click", (e) => {
   if (eraserToolsFlag) {
     pencilTools.style.display = "none";
     markerTools.style.display = "none";
-
+    shapesTools.style.display = "none";
     stickyNoteTools.style.display = "none";
     eraserTools.style.display = "flex";
     eraserTools.style.flexDirection = "column";
     eraserTools.style.gap = "0.3rem";
   } else {
     eraserTools.style.display = "none";
+  }
+});
+
+shapes.addEventListener("click", (e) => {
+  resetCursor();
+
+  shapesToolsFlag = !shapesToolsFlag;
+  pencilToolsFlag = false;
+  eraserToolsFlag = false;
+  markerToolsFlag = false;
+
+  if (shapesToolsFlag) {
+    eraserTools.style.display = "none";
+    stickyNoteTools.style.display = "none";
+    markerTools.style.display = "none";
+    pencilTools.style.display = "none";
+    shapesTools.style.display = "flex";
+  } else {
+    shapesTools.style.display = "none";
   }
 });
 
@@ -139,6 +169,8 @@ stickyNote.addEventListener("click", (e) => {
     pencilTools.style.display = "none";
     markerTools.style.display = "none";
     eraserTools.style.display = "none";
+    shapesTools.style.display = "none";
+
     stickyNoteTools.style.display = "flex";
     stickyNoteTools.style.flexDirection = "column";
   } else {
@@ -172,21 +204,6 @@ stickyNote.addEventListener("click", (e) => {
       stickyNoteDoc.ondragstart = function () {
         return false;
       };
-
-      // let inputNote = stickyNoteDoc.querySelector(".input-note");
-      // inputNote.addEventListener("input", function () {
-      //   let markdownText = inputNote.innerText;
-      //   console.log(markdownText);
-      //   // let parsedHTML = marked.parse(markdownText);
-      //   // inputNote.innerHTML = parsedHTML;
-      // });
-
-      let inputNote = stickyNoteDoc.querySelector(".input-note");
-      console.log(inputNote);
-      inputNote.addEventListener("mouseup", (e) => {
-        console.log("Hello");
-        showTooltip(e, inputNote);
-      });
     });
   });
 });
@@ -312,73 +329,4 @@ function resetCursor() {
   document.body.classList.remove("cursor-eraser");
   document.body.classList.remove("cursor-marker");
   document.body.classList.add("cursor-auto");
-}
-
-function showTooltip(event, inputNote) {
-  let selectedText = inputNote.textContent.substring(
-    inputNote.selectionStart,
-    inputNote.selectionEnd
-  );
-  if (selectedText.length > 0) {
-    let tooltip = document.createElement("div");
-    tooltip.classList.add("tooltip");
-    tooltip.style.left = event.pageX + "px";
-    tooltip.style.top = event.pageY + "px";
-
-    let options = ["Bold", "Italic", "Strikethrough", "Size"];
-    options.forEach((option) => {
-      let button = document.createElement("button");
-      button.textContent = option;
-      button.addEventListener("click", () =>
-        handleOptionClick(option, inputNote)
-      );
-      tooltip.appendChild(button);
-    });
-
-    document.body.appendChild(tooltip);
-
-    // Remove tooltip when clicking outside
-    document.addEventListener("click", function removeTooltip(e) {
-      if (!tooltip.contains(e.target)) {
-        tooltip.remove();
-        document.removeEventListener("click", removeTooltip);
-      }
-    });
-  }
-}
-
-// Function to handle option clicks
-function handleOptionClick(option, inputNote) {
-  let selectedText = inputNote.textContent.substring(
-    inputNote.selectionStart,
-    inputNote.selectionEnd
-  );
-  let replacementText = "";
-
-  switch (option) {
-    case "Bold":
-      replacementText = `<b>${selectedText}</b>`;
-      break;
-    case "Italic":
-      replacementText = `<i>${selectedText}</i>`;
-      break;
-    case "Strikethrough":
-      replacementText = `<s>${selectedText}</s>`;
-      break;
-    case "Size":
-      let size = prompt("Enter size (1-7):");
-      replacementText = `<span style="font-size: ${size}rem;">${selectedText}</span>`;
-      break;
-    default:
-      break;
-  }
-
-  if (replacementText !== "") {
-    inputNote.setRangeText(
-      replacementText,
-      inputNote.selectionStart,
-      inputNote.selectionEnd,
-      "end"
-    );
-  }
 }

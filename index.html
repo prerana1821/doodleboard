@@ -5,54 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doodle Board</title>
     <link rel="stylesheet" href="styles.css" />
-    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
   </head>
   <body>
     <div class="toggle-options">
-      <img src="./icons/close.png" alt="Options" title="Close Menu" />
+      <img src="./icons/tools/close.png" alt="Options" title="Close Menu" />
     </div>
 
     <div class="tools scale-tools">
       <img
-        src="./icons/pencil.png"
+        src="./icons/tools/pencil.png"
         class="pencil"
         alt="pencil"
         title="Pencil"
       />
       <img
-        src="./icons/marker.png"
+        src="./icons/tools/marker.png"
         class="marker"
         alt="marker"
         title="Marker"
       />
       <img
-        src="./icons/eraser.png"
+        src="./icons/tools/eraser.png"
         class="eraser"
         alt="eraser"
         title="Eraser"
       />
       <img
-        src="./icons/download.png"
+        src="./icons/tools/shapes.png"
+        class="shapes"
+        alt="shapes"
+        title="Shapes"
+      />
+      <img
+        src="./icons/tools/download.png"
         class="download"
         alt="download"
         title="Download Page"
       />
       <img
-        src="./icons/upload.png"
+        src="./icons/tools/upload.png"
         class="upload"
         alt="upload"
         title="Upload Image"
       />
       <img
-        src="./icons/stickynote.png"
+        src="./icons/tools/stickynote.png"
         class="stickynote"
         alt="stickynote"
         title="Sticky Note"
       />
-      <img src="./icons/redo.png" class="redo" alt="redo" title="Redo Action" />
-      <img src="./icons/undo.png" class="undo" alt="undo" title="Undo Action" />
       <img
-        src="./icons/reset.png"
+        src="./icons/tools/redo.png"
+        class="redo"
+        alt="redo"
+        title="Redo Action"
+      />
+      <img
+        src="./icons/tools/undo.png"
+        class="undo"
+        alt="undo"
+        title="Undo Action"
+      />
+      <img
+        src="./icons/tools/reset.png"
         class="reset"
         alt="reset"
         title="Reset Page"
@@ -85,13 +100,13 @@
       <div class="pencil-edges">
         <img
           class="pencil-edge"
-          src="./icons/square-edges.png"
+          src="./icons/pencil-tools/square-edges.png"
           alt="Square Edge"
           title="Square Edge"
         />
         <img
           class="pencil-edge"
-          src="./icons/rounded-edges.png"
+          src="./icons/pencil-tools/rounded-edges.png"
           alt="Round Edges"
           title="Round Edges"
         />
@@ -100,19 +115,19 @@
       <div class="pencil-patterns">
         <img
           class="pencil-pattern"
-          src="./icons/solid-line.png"
+          src="./icons/pencil-tools/solid-line.png"
           alt="Solid"
           title="Solid"
         />
         <img
           class="pencil-pattern"
-          src="./icons/dashed-line.png"
+          src="./icons/pencil-tools/dashed-line.png"
           alt="Dashed"
           title="Dashed"
         />
         <img
           class="pencil-pattern"
-          src="./icons/dotted-line.png"
+          src="./icons/pencil-tools/dotted-line.png"
           alt="Dotted"
           title="Dotted"
         />
@@ -145,19 +160,19 @@
       <div class="marker-patterns">
         <img
           class="marker-pattern"
-          src="./icons/solid-line.png"
+          src="./icons/pencil-tools/solid-line.png"
           alt="Solid"
           title="Solid"
         />
         <img
           class="marker-pattern"
-          src="./icons/dashed-line.png"
+          src="./icons/pencil-tools/dashed-line.png"
           alt="Dashed"
           title="Dashed"
         />
         <img
           class="marker-pattern"
-          src="./icons/dotted-line.png"
+          src="./icons/pencil-tools/dotted-line.png"
           alt="Dotted"
           title="Dotted"
         />
@@ -183,11 +198,26 @@
       </div>
     </div>
 
-    <!-- <canvas></canvas> -->
+    <div class="shapes-tools">
+      <p class="tool-heading-xl">Shapes:</p>
+      <div class="shapes">
+        <img class="shape" src="./icons/shapes/square.png" title="Sqaure" />
+        <img class="shape" src="./icons/shapes/circle.png" title="Circle" />
+        <img class="shape" src="./icons/shapes/diamond.png" title="Diamond" />
+        <img
+          class="shape"
+          src="./icons/shapes/rectangle.png"
+          title="rectangle"
+        />
+        <img class="shape" src="./icons/shapes/triangle.png" title="Triangle" />
+      </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <canvas></canvas>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
     <script src="./tools.js"></script>
 
-    <!-- <script src="./canvas.js"></script> -->
+    <script src="./canvas.js"></script>
   </body>
 </html>

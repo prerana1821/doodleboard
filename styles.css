@@ -77,7 +77,8 @@ body {
 }
 
 .pencil-tools,
-.marker-tools {
+.marker-tools,
+.shapes-tools {
   width: 12.5rem;
   height: 17rem;
   position: absolute;
@@ -162,6 +163,11 @@ body {
 
 .purple {
   background-color: #9747ff;
+}
+
+.shapes-tools {
+  left: 1vw;
+  height: 10rem;
 }
 
 .marker-tools {
@@ -270,15 +276,15 @@ body {
 }
 
 .cursor-pencil {
-  cursor: url("./icons/cursor-pencil.png"), auto;
+  cursor: url("./icons/cursors/cursor-pencil.png"), auto;
 }
 
 .cursor-eraser {
-  cursor: url("./icons/cursor-eraser.png"), auto;
+  cursor: url("./icons/cursors/cursor-eraser.png"), auto;
 }
 
 .cursor-marker {
-  cursor: url("./icons/cursor-marker.png"), auto;
+  cursor: url("./icons/cursors/cursor-marker.png"), auto;
 }
 
 .cursor-auto {
@@ -348,4 +354,18 @@ body {
 canvas {
   position: relative;
   z-index: 1;
+}
+
+.shapes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.shape {
+  width: 50%;
+  box-sizing: border-box;
+  max-width: 50px;
+  height: auto;
+  cursor: pointer;
 }
