@@ -315,6 +315,8 @@ body {
 .body-note {
   height: calc(100% - 2rem);
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  width: 100%;
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 
 .minimize-note {
@@ -324,13 +326,12 @@ body {
   background-color: #f86158;
 }
 
-.sticky-note textarea,
+.input-note,
 .sticky-note-image textarea {
   width: 100%;
   height: 100%;
   outline: #fff;
   resize: none;
-
   border: none;
   border-radius: 0 0 0.5rem 0.5rem;
 }
