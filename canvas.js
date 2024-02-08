@@ -93,9 +93,10 @@ canvas.addEventListener("mouseup", (e) => {
     drawShape = false;
   }
 
-  let url = canvas.toDataURL();
-  undoRedoTracker.push(url);
-  track = undoRedoTracker.length - 1;
+  saveUndoHistory();
+  // let url = canvas.toDataURL();
+  // undoRedoTracker.push(url);
+  // track = undoRedoTracker.length - 1;
 });
 
 function startDrawing(movement) {
@@ -201,7 +202,9 @@ function redrawUndoHistory() {
 function saveUndoHistory() {
   let url = canvas.toDataURL();
   undoRedoTracker.push(url);
+  console.log(undoRedoTracker);
   track = undoRedoTracker.length - 1;
+  console.log(track);
 }
 
 function startDrawingShape(position) {
@@ -279,7 +282,7 @@ function continueDrawingShape(position) {
 }
 
 function finishDrawingShape() {
-  saveUndoHistory();
+  // saveUndoHistory();
   currentShape = "";
 }
 
@@ -300,31 +303,67 @@ download.addEventListener("click", (e) => {
   a.click();
 });
 
+// undo.addEventListener("click", (e) => {
+//   resetCursor();
+
+//   if (track > 0) {
+//     track--;
+//   }
+//   undoRedoCanvas({ track, undoRedoTracker });
+// });
+
 undo.addEventListener("click", (e) => {
   resetCursor();
 
+  console.log("Hello");
+
   if (track > 0) {
+    console.log("Hi");
     track--;
+    undoRedoCanvas({ track, undoRedoTracker });
+    redo.disabled = false; // Enable the redo button if it was disabled
   }
-  undoRedoCanvas({ track, undoRedoTracker });
+
+  // // Disable the undo button if there are no actions to undo
+  // if (track === 0) {
+  //   undo.disabled = true;
+  // }
 });
+
+// redo.addEventListener("click", (e) => {
+//   resetCursor();
+
+//   if (track < undoRedoTracker.length - 1) {
+//     track++;
+//   }
+//   undoRedoCanvas({ track, undoRedoTracker });
+// });
 
 redo.addEventListener("click", (e) => {
   resetCursor();
 
   if (track < undoRedoTracker.length - 1) {
     track++;
+    undoRedoCanvas({ track, undoRedoTracker });
+    undo.disabled = false; // Enable the undo button if it was disabled
   }
-  undoRedoCanvas({ track, undoRedoTracker });
+
+  // // Disable the redo button if there are no actions to redo
+  // if (track === undoRedoTracker.length - 1) {
+  //   redo.disabled = true;
+  // }
 });
 
 function undoRedoCanvas(tracker) {
   track = tracker.track;
   undoRedoTracker = tracker.undoRedoTracker;
 
+  console.log({ track, undoRedoTracker });
+
   let img = new Image();
   img.src = undoRedoTracker[track];
   img.onload = (e) => {
+    tool.clearRect(0, 0, canvas.width, canvas.height);
     tool.drawImage(img, 0, 0, canvas.width, canvas.height);
   };
 }

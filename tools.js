@@ -53,6 +53,23 @@ function closeTools() {
   closeToolsImg.title = "Open Menu";
 
   tools.style.display = "none";
+  hideAllTools();
+}
+
+function toggleTool(toolFlag, otherToolFlags, tool, toolTools, cursorClass) {
+  resetCursor();
+  otherToolFlags.forEach((flag) => (flag = false));
+
+  if (toolFlag) {
+    hideAllTools();
+    document.body.classList.add(cursorClass);
+    toolTools.style.display = "flex";
+  } else {
+    toolTools.style.display = "none";
+  }
+}
+
+function hideAllTools() {
   pencilTools.style.display = "none";
   markerTools.style.display = "none";
   eraserTools.style.display = "none";
@@ -60,88 +77,132 @@ function closeTools() {
   stickyNoteTools.style.display = "none";
 }
 
+// pencil.addEventListener("click", (e) => {
+//   pencilToolsFlag = !pencilToolsFlag;
+//   eraserToolsFlag = false;
+//   markerToolsFlag = false;
+//   shapesToolsFlag = false;
+
+//   document.body.classList.remove("cursor-eraser");
+//   document.body.classList.remove("cursor-marker");
+//   document.body.classList.remove("cursor-auto");
+//   document.body.classList.add("cursor-pencil");
+
+//   if (pencilToolsFlag) {
+//     eraserTools.style.display = "none";
+//     stickyNoteTools.style.display = "none";
+//     markerTools.style.display = "none";
+//     shapesTools.style.display = "none";
+//     pencilTools.style.display = "flex";
+//   } else {
+//     pencilTools.style.display = "none";
+//   }
+// });
+
 pencil.addEventListener("click", (e) => {
   pencilToolsFlag = !pencilToolsFlag;
-  eraserToolsFlag = false;
-  markerToolsFlag = false;
-  shapesToolsFlag = false;
-
-  document.body.classList.remove("cursor-eraser");
-  document.body.classList.remove("cursor-marker");
-  document.body.classList.remove("cursor-auto");
-  document.body.classList.add("cursor-pencil");
-
-  if (pencilToolsFlag) {
-    eraserTools.style.display = "none";
-    stickyNoteTools.style.display = "none";
-    markerTools.style.display = "none";
-    shapesTools.style.display = "none";
-    pencilTools.style.display = "flex";
-  } else {
-    pencilTools.style.display = "none";
-  }
+  toggleTool(
+    pencilToolsFlag,
+    [markerToolsFlag, eraserToolsFlag, shapesToolsFlag],
+    pencil,
+    pencilTools,
+    "cursor-pencil"
+  );
 });
 
 marker.addEventListener("click", (e) => {
   markerToolsFlag = !markerToolsFlag;
-  eraserToolsFlag = false;
-  pencilToolsFlag = false;
-  shapesToolsFlag = false;
-
-  document.body.classList.remove("cursor-pencil");
-  document.body.classList.remove("cursor-eraser");
-  document.body.classList.remove("cursor-auto");
-  document.body.classList.add("cursor-marker");
-
-  if (markerToolsFlag) {
-    eraserTools.style.display = "none";
-    stickyNoteTools.style.display = "none";
-    shapesTools.style.display = "none";
-    pencilTools.style.display = "none";
-    markerTools.style.display = "flex";
-  } else {
-    markerTools.style.display = "none";
-  }
+  toggleTool(
+    markerToolsFlag,
+    [pencilToolsFlag, eraserToolsFlag, shapesToolsFlag],
+    marker,
+    markerTools,
+    "cursor-marker"
+  );
 });
+
+// marker.addEventListener("click", (e) => {
+//   markerToolsFlag = !markerToolsFlag;
+//   eraserToolsFlag = false;
+//   pencilToolsFlag = false;
+//   shapesToolsFlag = false;
+
+//   document.body.classList.remove("cursor-pencil");
+//   document.body.classList.remove("cursor-eraser");
+//   document.body.classList.remove("cursor-auto");
+//   document.body.classList.add("cursor-marker");
+
+//   if (markerToolsFlag) {
+//     eraserTools.style.display = "none";
+//     stickyNoteTools.style.display = "none";
+//     shapesTools.style.display = "none";
+//     pencilTools.style.display = "none";
+//     markerTools.style.display = "flex";
+//   } else {
+//     markerTools.style.display = "none";
+//   }
+// });
+
+// eraser.addEventListener("click", (e) => {
+//   eraserToolsFlag = !eraserToolsFlag;
+
+//   document.body.classList.remove("cursor-pencil");
+//   document.body.classList.remove("cursor-marker");
+//   document.body.classList.remove("cursor-auto");
+//   document.body.classList.add("cursor-eraser");
+
+//   if (eraserToolsFlag) {
+//     pencilTools.style.display = "none";
+//     markerTools.style.display = "none";
+//     shapesTools.style.display = "none";
+//     stickyNoteTools.style.display = "none";
+//     eraserTools.style.display = "flex";
+//     eraserTools.style.flexDirection = "column";
+//     eraserTools.style.gap = "0.3rem";
+//   } else {
+//     eraserTools.style.display = "none";
+//   }
+// });
 
 eraser.addEventListener("click", (e) => {
   eraserToolsFlag = !eraserToolsFlag;
-
-  document.body.classList.remove("cursor-pencil");
-  document.body.classList.remove("cursor-marker");
-  document.body.classList.remove("cursor-auto");
-  document.body.classList.add("cursor-eraser");
-
-  if (eraserToolsFlag) {
-    pencilTools.style.display = "none";
-    markerTools.style.display = "none";
-    shapesTools.style.display = "none";
-    stickyNoteTools.style.display = "none";
-    eraserTools.style.display = "flex";
-    eraserTools.style.flexDirection = "column";
-    eraserTools.style.gap = "0.3rem";
-  } else {
-    eraserTools.style.display = "none";
-  }
+  toggleTool(
+    eraserToolsFlag,
+    [pencilToolsFlag, markerToolsFlag, shapesToolsFlag],
+    eraser,
+    eraserTools,
+    "cursor-eraser"
+  );
 });
 
+// shapes.addEventListener("click", (e) => {
+//   resetCursor();
+
+//   shapesToolsFlag = !shapesToolsFlag;
+//   pencilToolsFlag = false;
+//   eraserToolsFlag = false;
+//   markerToolsFlag = false;
+
+//   if (shapesToolsFlag) {
+//     eraserTools.style.display = "none";
+//     stickyNoteTools.style.display = "none";
+//     markerTools.style.display = "none";
+//     pencilTools.style.display = "none";
+//     shapesTools.style.display = "flex";
+//   } else {
+//     shapesTools.style.display = "none";
+//   }
+// });
+
 shapes.addEventListener("click", (e) => {
-  resetCursor();
-
   shapesToolsFlag = !shapesToolsFlag;
-  pencilToolsFlag = false;
-  eraserToolsFlag = false;
-  markerToolsFlag = false;
-
-  if (shapesToolsFlag) {
-    eraserTools.style.display = "none";
-    stickyNoteTools.style.display = "none";
-    markerTools.style.display = "none";
-    pencilTools.style.display = "none";
-    shapesTools.style.display = "flex";
-  } else {
-    shapesTools.style.display = "none";
-  }
+  toggleTool(
+    shapesToolsFlag,
+    [pencilToolsFlag, markerToolsFlag, eraserToolsFlag],
+    shapes,
+    shapesTools,
+    "cursor-auto"
+  );
 });
 
 function noteActions(minimizeNote, removeNote, stickyNoteDoc) {

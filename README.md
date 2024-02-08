@@ -4,7 +4,7 @@
 - highlighter ( change width, colors, 3 types of style, 2 types edges ) - DONE
 - Write text (with markdown)
 - Add markdown on sticky notes
-- Create shapes: square, circle, rectangle, diamond, triangle, downward pointing triangle, rounded rectangle (filled & outline)
+- Create shapes: square, circle, rectangle, diamond, triangle, downward pointing triangle, rounded rectangle (filled & outline) - DONE
 - Straight line & Arrow
 - panning tool
 - stamp feature
