@@ -212,6 +212,8 @@ body {
   padding: 0.5rem;
   z-index: 2;
   cursor: auto;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .eraser-tools input {

@@ -94,9 +94,6 @@ canvas.addEventListener("mouseup", (e) => {
   }
 
   saveUndoHistory();
-  // let url = canvas.toDataURL();
-  // undoRedoTracker.push(url);
-  // track = undoRedoTracker.length - 1;
 });
 
 function startDrawing(movement) {
@@ -303,15 +300,6 @@ download.addEventListener("click", (e) => {
   a.click();
 });
 
-// undo.addEventListener("click", (e) => {
-//   resetCursor();
-
-//   if (track > 0) {
-//     track--;
-//   }
-//   undoRedoCanvas({ track, undoRedoTracker });
-// });
-
 undo.addEventListener("click", (e) => {
   resetCursor();
 
@@ -323,21 +311,7 @@ undo.addEventListener("click", (e) => {
     undoRedoCanvas({ track, undoRedoTracker });
     redo.disabled = false; // Enable the redo button if it was disabled
   }
-
-  // // Disable the undo button if there are no actions to undo
-  // if (track === 0) {
-  //   undo.disabled = true;
-  // }
 });
-
-// redo.addEventListener("click", (e) => {
-//   resetCursor();
-
-//   if (track < undoRedoTracker.length - 1) {
-//     track++;
-//   }
-//   undoRedoCanvas({ track, undoRedoTracker });
-// });
 
 redo.addEventListener("click", (e) => {
   resetCursor();
@@ -347,11 +321,6 @@ redo.addEventListener("click", (e) => {
     undoRedoCanvas({ track, undoRedoTracker });
     undo.disabled = false; // Enable the undo button if it was disabled
   }
-
-  // // Disable the redo button if there are no actions to redo
-  // if (track === undoRedoTracker.length - 1) {
-  //   redo.disabled = true;
-  // }
 });
 
 function undoRedoCanvas(tracker) {
