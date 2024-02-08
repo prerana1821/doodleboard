@@ -78,6 +78,7 @@ body {
 
 .pencil-tools,
 .marker-tools,
+.text-tools,
 .shapes-tools {
   width: 12.5rem;
   height: 17rem;
@@ -369,5 +370,34 @@ canvas {
   box-sizing: border-box;
   max-width: 50px;
   height: auto;
+  cursor: pointer;
+}
+
+.text-tools {
+  height: 11rem;
+}
+
+.text-sizes {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.text-size {
+  border: 1px solid;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+}
+
+.text-families {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.text-family {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.5rem;
   cursor: pointer;
 }

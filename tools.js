@@ -25,6 +25,10 @@ let shapes = document.querySelector(".shapes");
 let shapesTools = document.querySelector(".shapes-tools");
 let shapesToolsFlag = false;
 
+let text = document.querySelector(".text");
+let textTools = document.querySelector(".text-tools");
+let textToolsFlag = false;
+
 let dragEl;
 let dragHandleEl;
 const lastPosition = {};
@@ -73,6 +77,7 @@ function hideAllTools() {
   pencilTools.style.display = "none";
   markerTools.style.display = "none";
   eraserTools.style.display = "none";
+  textTools.style.display = "none";
   shapesTools.style.display = "none";
   stickyNoteTools.style.display = "none";
 }
@@ -81,10 +86,21 @@ pencil.addEventListener("click", (e) => {
   pencilToolsFlag = !pencilToolsFlag;
   toggleTool(
     pencilToolsFlag,
-    [markerToolsFlag, eraserToolsFlag, shapesToolsFlag],
+    [markerToolsFlag, eraserToolsFlag, shapesToolsFlag, textToolsFlag],
     pencil,
     pencilTools,
     "cursor-pencil"
+  );
+});
+
+text.addEventListener("click", (e) => {
+  textToolsFlag = !textToolsFlag;
+  toggleTool(
+    textToolsFlag,
+    [markerToolsFlag, eraserToolsFlag, shapesToolsFlag, pencilToolsFlag],
+    text,
+    textTools,
+    "cursor-auto"
   );
 });
 
@@ -92,7 +108,7 @@ marker.addEventListener("click", (e) => {
   markerToolsFlag = !markerToolsFlag;
   toggleTool(
     markerToolsFlag,
-    [pencilToolsFlag, eraserToolsFlag, shapesToolsFlag],
+    [pencilToolsFlag, eraserToolsFlag, shapesToolsFlag, textToolsFlag],
     marker,
     markerTools,
     "cursor-marker"
@@ -103,7 +119,7 @@ eraser.addEventListener("click", (e) => {
   eraserToolsFlag = !eraserToolsFlag;
   toggleTool(
     eraserToolsFlag,
-    [pencilToolsFlag, markerToolsFlag, shapesToolsFlag],
+    [pencilToolsFlag, markerToolsFlag, shapesToolsFlag, textToolsFlag],
     eraser,
     eraserTools,
     "cursor-eraser"
@@ -114,7 +130,7 @@ shapes.addEventListener("click", (e) => {
   shapesToolsFlag = !shapesToolsFlag;
   toggleTool(
     shapesToolsFlag,
-    [pencilToolsFlag, markerToolsFlag, eraserToolsFlag],
+    [pencilToolsFlag, markerToolsFlag, eraserToolsFlag, textToolsFlag],
     shapes,
     shapesTools,
     "cursor-auto"
