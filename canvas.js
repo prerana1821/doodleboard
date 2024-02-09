@@ -106,27 +106,16 @@ canvas.addEventListener("mouseup", (e) => {
   saveUndoHistory();
 });
 
-// canvas.addEventListener("click", (e) => {
-//   console.log({ textToolsFlag });
-//   if (textToolsFlag) {
-//     let text = prompt("Enter text:");
-//     if (text !== null) {
-//       tool.font = `${textSize}px ${textFamily}`;
-//       tool.fillStyle = textColor;
-//       tool.fillText(text, e.clientX, e.clientY);
-//       saveUndoHistory();
-//       textToolsFlag = false;
-//     }
-//   }
-// });
-
 canvas.addEventListener("click", (e) => {
+  console.log({ textSize, textFamily });
+
   if (textToolsFlag) {
     const textarea = document.createElement("textarea");
     textarea.style.position = "absolute";
     textarea.style.left = `${e.clientX}px`;
     textarea.style.top = `${e.clientY}px`;
-    textarea.style.font = `${textSize}px ${textFamily}`;
+    textarea.style.fontSize = textSize;
+    textarea.classList.add(textFamily);
     textarea.style.color = textColor;
     textarea.style.border = "1px solid black";
     textarea.style.outline = "none";
@@ -140,13 +129,6 @@ canvas.addEventListener("click", (e) => {
       offsetX = event.clientX - parseInt(textarea.style.left);
       offsetY = event.clientY - parseInt(textarea.style.top);
     });
-
-    // textarea.addEventListener("mousemove", (event) => {
-    //   if (isDragging) {
-    //     textarea.style.left = `${event.clientX - offsetX}px`;
-    //     textarea.style.top = `${event.clientY - offsetY}px`;
-    //   }
-    // });
 
     textarea.addEventListener("mousemove", (event) => {
       if (isDragging) {
@@ -239,17 +221,15 @@ function continueDrawing(movement) {
 
 textSizeIcons.forEach((sizeIcon) => {
   sizeIcon.addEventListener("click", () => {
-    textSize = parseInt(sizeIcon.innerText);
+    let chosenSize = sizeIcon.getAttribute("title");
+    textSize = chosenSize;
   });
 });
 
 textFamilyIcons.forEach((familyIcon) => {
   familyIcon.addEventListener("click", () => {
-    textFamily = familyIcon.classList.contains("hand")
-      ? "Handwriting"
-      : familyIcon.classList.contains("code")
-      ? "Monospace"
-      : "Sans-serif";
+    const chosenFont = familyIcon.getAttribute("class").split(" ")[0];
+    textFamily = chosenFont;
   });
 });
 

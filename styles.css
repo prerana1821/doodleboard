@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code&family=Kalam&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kalam&display=swap");
 
 * {
   box-sizing: border-box;
@@ -392,4 +394,16 @@ canvas {
   height: 1.8rem;
   margin-right: 0.5rem;
   cursor: pointer;
+}
+
+.hand {
+  font-family: "Kalam", cursive;
+}
+
+.normal {
+  font-family: "Varela Round", sans-serif;
+}
+
+.code {
+  font-family: "Fira Code", monospace;
 }
