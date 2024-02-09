@@ -138,7 +138,7 @@ canvas.addEventListener("click", (e) => {
         textarea.style.top = `${event.clientY - offsetY}px`;
       } else {
         // Check if the mouse is near the border of the textarea
-        const borderThreshold = 5; // Adjust as needed
+        const borderThreshold = 5;
         const textareaRect = textarea.getBoundingClientRect();
         const mouseX = event.clientX;
         const mouseY = event.clientY;
@@ -161,7 +161,6 @@ canvas.addEventListener("click", (e) => {
           // If the mouse is near any side, change the cursor to 'move'
           textarea.style.cursor = "move";
         } else {
-          // Otherwise, revert to the default cursor
           textarea.style.cursor = "default";
         }
       }
@@ -172,15 +171,15 @@ canvas.addEventListener("click", (e) => {
     });
 
     textarea.addEventListener("keydown", (event) => {
-      // Save the text when Enter is pressed
+      // save the text when enter is pressed
       if (event.key === "Enter") {
-        event.preventDefault(); // Prevent the default behavior of Enter
+        event.preventDefault();
         tool.fillText(
           textarea.value,
           parseInt(textarea.style.left),
           parseInt(textarea.style.top) + textSize
         );
-        document.body.removeChild(textarea); // Remove the textarea element
+        document.body.removeChild(textarea);
         saveUndoHistory();
         textToolsFlag = false;
       }
@@ -188,23 +187,22 @@ canvas.addEventListener("click", (e) => {
 
     textarea.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
-        event.preventDefault(); // Prevent the default behavior of Enter
+        event.preventDefault();
         tool.fillText(
           textarea.value,
           parseInt(textarea.style.left),
           parseInt(textarea.style.top) + textSize
         );
-        document.body.removeChild(textarea); // Remove the textarea element
+        document.body.removeChild(textarea);
         saveUndoHistory();
         textToolsFlag = false;
       } else if (event.key === "Delete" || event.key === "Backspace") {
-        // Check if the delete or backspace key is pressed
-        document.body.removeChild(textarea); // Remove the textarea element
+        document.body.removeChild(textarea);
         textToolsFlag = false;
       }
     });
 
-    document.body.appendChild(textarea); // Append the textarea to the body
+    document.body.appendChild(textarea);
     textarea.focus(); // Focus on the textarea for typing
   }
 });
