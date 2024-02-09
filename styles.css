@@ -215,7 +215,8 @@ body {
   width: 100%;
 }
 
-.stickynote-tools {
+.stickynote-tools,
+.canvas-bgcolor-tools {
   width: 12rem;
   height: 4.2rem;
   position: absolute;
@@ -230,18 +231,25 @@ body {
   gap: 0.5rem;
   z-index: 2;
   cursor: auto;
+  flex-direction: column;
 }
 
-.stickynote-colors {
+.stickynote-colors,
+.canvas-bgcolors {
   display: flex;
   gap: 0.5rem;
 }
 
-.notes-color {
+.notes-color,
+.canvas-color {
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.canvas-color {
+  border: 1px solid #ccc;
 }
 
 .bg-pink {
@@ -406,4 +414,24 @@ canvas {
 
 .code {
   font-family: "Fira Code", monospace;
+}
+
+.canvas-white {
+  background-color: #fff;
+}
+
+.canvas-grey {
+  background-color: #f8f9fa;
+}
+
+.canvas-blue {
+  background-color: #f5faff;
+}
+
+.canvas-pink {
+  background-color: #fffce8;
+}
+
+.canvas-purple {
+  background-color: #fdf8f6;
 }

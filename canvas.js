@@ -21,6 +21,8 @@ let shapeIcons = document.querySelectorAll(".shape");
 let textSizeIcons = document.querySelectorAll(".text-size");
 let textFamilyIcons = document.querySelectorAll(".text-family");
 
+let canvasBgColors = document.querySelectorAll(".canvas-color");
+
 let download = document.querySelector(".download");
 
 let redo = document.querySelector(".redo");
@@ -310,6 +312,17 @@ eraserIcon.addEventListener("click", (e) => {
     tool.strokeStyle = pencilColor;
     tool.lineWidth = pencilSize;
   }
+});
+
+canvasBgColors.forEach((bgColor) => {
+  bgColor.addEventListener("click", (e) => {
+    let chosenBgColor = window
+      .getComputedStyle(bgColor)
+      .getPropertyValue("background-color");
+
+    tool.fillStyle = chosenBgColor;
+    tool.fillRect(0, 0, canvas.width, canvas.height);
+  });
 });
 
 function redrawUndoHistory() {
