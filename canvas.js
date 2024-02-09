@@ -18,6 +18,9 @@ let eraserWidth = document.querySelector(".eraser-width");
 
 let shapeIcons = document.querySelectorAll(".shape");
 
+let textSizeIcons = document.querySelectorAll(".text-size");
+let textFamilyIcons = document.querySelectorAll(".text-family");
+
 let download = document.querySelector(".download");
 
 let redo = document.querySelector(".redo");
@@ -48,6 +51,10 @@ let currentShape = "";
 let drawShape = false;
 let startX = "";
 let startY = "";
+
+let textSize = 20;
+let textFamily = "normal";
+let textColor = "#000000";
 
 canvas.addEventListener("mousedown", (e) => {
   if (pencilToolsFlag) {
@@ -96,6 +103,53 @@ canvas.addEventListener("mouseup", (e) => {
   saveUndoHistory();
 });
 
+// canvas.addEventListener("click", (e) => {
+//   console.log({ textToolsFlag });
+//   if (textToolsFlag) {
+//     let text = prompt("Enter text:");
+//     if (text !== null) {
+//       tool.font = `${textSize}px ${textFamily}`;
+//       tool.fillStyle = textColor;
+//       tool.fillText(text, e.clientX, e.clientY);
+//       saveUndoHistory();
+//       textToolsFlag = false;
+//     }
+//   }
+// });
+
+canvas.addEventListener("click", (e) => {
+  if (textToolsFlag) {
+    const textarea = document.createElement("textarea");
+    textarea.style.position = "absolute";
+    textarea.style.left = `${e.clientX}px`;
+    textarea.style.top = `${e.clientY}px`;
+    textarea.style.font = `${textSize}px ${textFamily}`;
+    textarea.style.color = textColor;
+    textarea.style.border = "1px solid black";
+    textarea.style.outline = "none";
+    textarea.style.resize = "none";
+    textarea.style.overflow = "hidden";
+    textarea.style.background = "transparent";
+    textarea.style.zIndex = "1000"; // Ensure it's above other elements
+    textarea.addEventListener("keydown", (event) => {
+      // Save the text when Enter is pressed
+      if (event.key === "Enter") {
+        event.preventDefault(); // Prevent the default behavior of Enter
+        tool.fillText(
+          textarea.value,
+          parseInt(textarea.style.left),
+          parseInt(textarea.style.top) + textSize
+        );
+        document.body.removeChild(textarea); // Remove the textarea element
+        saveUndoHistory();
+        textToolsFlag = false;
+      }
+    });
+    document.body.appendChild(textarea); // Append the textarea to the body
+    textarea.focus(); // Focus on the textarea for typing
+  }
+});
+
 function startDrawing(movement) {
   tool.beginPath();
   tool.moveTo(movement.x, movement.y);
@@ -108,14 +162,34 @@ function continueDrawing(movement) {
   tool.stroke();
 }
 
+textSizeIcons.forEach((sizeIcon) => {
+  sizeIcon.addEventListener("click", () => {
+    textSize = parseInt(sizeIcon.innerText);
+  });
+});
+
+textFamilyIcons.forEach((familyIcon) => {
+  familyIcon.addEventListener("click", () => {
+    textFamily = familyIcon.classList.contains("hand")
+      ? "Handwriting"
+      : familyIcon.classList.contains("code")
+      ? "Monospace"
+      : "Sans-serif";
+  });
+});
+
 pencilColors.forEach((color) => {
   color.addEventListener("click", () => {
     let chosenColor = window
       .getComputedStyle(color)
       .getPropertyValue("background-color");
 
-    pencilColor = chosenColor;
-    tool.strokeStyle = pencilColor;
+    if (textToolsFlag) {
+      textColor = chosenColor;
+    } else {
+      pencilColor = chosenColor;
+      tool.strokeStyle = pencilColor;
+    }
   });
 });
 
@@ -199,9 +273,7 @@ function redrawUndoHistory() {
 function saveUndoHistory() {
   let url = canvas.toDataURL();
   undoRedoTracker.push(url);
-  console.log(undoRedoTracker);
   track = undoRedoTracker.length - 1;
-  console.log(track);
 }
 
 function startDrawingShape(position) {
@@ -303,10 +375,7 @@ download.addEventListener("click", (e) => {
 undo.addEventListener("click", (e) => {
   resetCursor();
 
-  console.log("Hello");
-
   if (track > 0) {
-    console.log("Hi");
     track--;
     undoRedoCanvas({ track, undoRedoTracker });
     redo.disabled = false; // Enable the redo button if it was disabled
@@ -326,8 +395,6 @@ redo.addEventListener("click", (e) => {
 function undoRedoCanvas(tracker) {
   track = tracker.track;
   undoRedoTracker = tracker.undoRedoTracker;
-
-  console.log({ track, undoRedoTracker });
 
   let img = new Image();
   img.src = undoRedoTracker[track];
