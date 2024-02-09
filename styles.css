@@ -67,8 +67,6 @@ body {
 
 .tool-heading-xl {
   margin: 0;
-
-  font-size: xl;
   font-weight: bold;
 }
 
@@ -121,12 +119,6 @@ body {
   height: 1.2rem;
   border-radius: 50%;
   cursor: pointer;
-}
-
-.pencil-edges,
-.pencil-patterns,
-.marker-patterns {
-  margin-top: 0.5rem 0;
 }
 
 .pencil-tools img,

@@ -56,6 +56,9 @@ let textSize = 20;
 let textFamily = "normal";
 let textColor = "#000000";
 
+let isDragging = false;
+let offsetX, offsetY;
+
 canvas.addEventListener("mousedown", (e) => {
   if (pencilToolsFlag) {
     drawPencil = true;
@@ -127,10 +130,63 @@ canvas.addEventListener("click", (e) => {
     textarea.style.color = textColor;
     textarea.style.border = "1px solid black";
     textarea.style.outline = "none";
-    textarea.style.resize = "none";
+    textarea.style.resize = "both";
     textarea.style.overflow = "hidden";
     textarea.style.background = "transparent";
     textarea.style.zIndex = "1000"; // Ensure it's above other elements
+
+    textarea.addEventListener("mousedown", (event) => {
+      isDragging = true;
+      offsetX = event.clientX - parseInt(textarea.style.left);
+      offsetY = event.clientY - parseInt(textarea.style.top);
+    });
+
+    // textarea.addEventListener("mousemove", (event) => {
+    //   if (isDragging) {
+    //     textarea.style.left = `${event.clientX - offsetX}px`;
+    //     textarea.style.top = `${event.clientY - offsetY}px`;
+    //   }
+    // });
+
+    textarea.addEventListener("mousemove", (event) => {
+      if (isDragging) {
+        textarea.style.left = `${event.clientX - offsetX}px`;
+        textarea.style.top = `${event.clientY - offsetY}px`;
+      } else {
+        // Check if the mouse is near the border of the textarea
+        const borderThreshold = 5; // Adjust as needed
+        const textareaRect = textarea.getBoundingClientRect();
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+
+        // Check if the mouse is within the borderThreshold of any side of the textarea
+        const nearTop =
+          mouseY >= textareaRect.top &&
+          mouseY <= textareaRect.top + borderThreshold;
+        const nearBottom =
+          mouseY <= textareaRect.bottom &&
+          mouseY >= textareaRect.bottom - borderThreshold;
+        const nearLeft =
+          mouseX >= textareaRect.left &&
+          mouseX <= textareaRect.left + borderThreshold;
+        const nearRight =
+          mouseX <= textareaRect.right &&
+          mouseX >= textareaRect.right - borderThreshold;
+
+        if (nearTop || nearBottom || nearLeft || nearRight) {
+          // If the mouse is near any side, change the cursor to 'move'
+          textarea.style.cursor = "move";
+        } else {
+          // Otherwise, revert to the default cursor
+          textarea.style.cursor = "default";
+        }
+      }
+    });
+
+    textarea.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
     textarea.addEventListener("keydown", (event) => {
       // Save the text when Enter is pressed
       if (event.key === "Enter") {
@@ -145,6 +201,25 @@ canvas.addEventListener("click", (e) => {
         textToolsFlag = false;
       }
     });
+
+    textarea.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Prevent the default behavior of Enter
+        tool.fillText(
+          textarea.value,
+          parseInt(textarea.style.left),
+          parseInt(textarea.style.top) + textSize
+        );
+        document.body.removeChild(textarea); // Remove the textarea element
+        saveUndoHistory();
+        textToolsFlag = false;
+      } else if (event.key === "Delete" || event.key === "Backspace") {
+        // Check if the delete or backspace key is pressed
+        document.body.removeChild(textarea); // Remove the textarea element
+        textToolsFlag = false;
+      }
+    });
+
     document.body.appendChild(textarea); // Append the textarea to the body
     textarea.focus(); // Focus on the textarea for typing
   }
