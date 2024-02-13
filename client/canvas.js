@@ -72,6 +72,7 @@ canvas.addEventListener("mousedown", (e) => {
   } else if (eraserToolsFlag.value) {
     drawEraser = true;
     startDrawing({ x: e.clientX, y: e.clientY });
+    tool.globalCompositeOperation = "destination-out";
   } else if (currentShape !== "") {
     drawShape = true;
     startX = e.clientX;
@@ -87,6 +88,7 @@ canvas.addEventListener("mousemove", (e) => {
       width: eraserToolsFlag.value ? eraserSize : pencilSize,
       x: e.clientX,
       y: e.clientY,
+      composite: eraserToolsFlag.value ? "destination-out" : "source-over",
     };
     continueDrawing(data);
   } else if ((drawMarker && markerToolsFlag.value) || drawEraser) {
@@ -95,6 +97,7 @@ canvas.addEventListener("mousemove", (e) => {
       width: eraserToolsFlag.value ? eraserSize : markerSize,
       x: e.clientX,
       y: e.clientY,
+      composite: eraserToolsFlag.value ? "destination-out" : "source-over",
     };
     continueDrawing(markerData);
   } else if (currentShape !== "" && drawShape) {
@@ -110,6 +113,11 @@ canvas.addEventListener("mouseup", (e) => {
   if (currentShape !== "") {
     finishDrawingShape();
     drawShape = false;
+  }
+
+  // Reset the global composite operation to default when not erasing
+  if (!drawEraser) {
+    tool.globalCompositeOperation = "source-over";
   }
 
   saveUndoHistory();
@@ -220,6 +228,7 @@ function startDrawing(movement) {
 function continueDrawing(movement) {
   tool.strokeStyle = movement.color;
   tool.lineWidth = movement.width;
+  tool.globalCompositeOperation = movement.composite;
   tool.lineTo(movement.x, movement.y);
   tool.stroke();
 }
@@ -309,9 +318,11 @@ eraserWidth.addEventListener("change", (e) => {
 
 eraserIcon.addEventListener("click", (e) => {
   if (eraserToolsFlag.value) {
+    tool.globalCompositeOperation = "destination-out";
     tool.strokeStyle = eraserColor;
     tool.lineWidth = eraserSize;
   } else {
+    tool.globalCompositeOperation = "source-over";
     tool.strokeStyle = pencilColor;
     tool.lineWidth = pencilSize;
   }
@@ -323,8 +334,10 @@ canvasBgColors.forEach((bgColor) => {
       .getComputedStyle(bgColor)
       .getPropertyValue("background-color");
 
-    tool.fillStyle = chosenBgColor;
-    tool.fillRect(0, 0, canvas.width, canvas.height);
+    document.body.style.backgroundColor = chosenBgColor;
+
+    // tool.fillStyle = chosenBgColor;
+    // tool.fillRect(0, 0, canvas.width, canvas.height);
   });
 });
 
