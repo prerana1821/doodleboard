@@ -32,6 +32,7 @@ let reset = document.querySelector(".reset");
 
 let drawPencil = false;
 let drawMarker = false;
+let drawEraser = false;
 
 let pencilColor = "#1e1e1e";
 let markerColor = "#afafaf";
@@ -62,13 +63,14 @@ let isDragging = false;
 let offsetX, offsetY;
 
 canvas.addEventListener("mousedown", (e) => {
-  if (pencilToolsFlag) {
+  if (pencilToolsFlag.value) {
     drawPencil = true;
     startDrawing({ x: e.clientX, y: e.clientY });
-    // let data = { x: e.clientX, y: e.clientY };
-    // socket.emit("startDrawing", data);
-  } else if (markerToolsFlag) {
+  } else if (markerToolsFlag.value) {
     drawMarker = true;
+    startDrawing({ x: e.clientX, y: e.clientY });
+  } else if (eraserToolsFlag.value) {
+    drawEraser = true;
     startDrawing({ x: e.clientX, y: e.clientY });
   } else if (currentShape !== "") {
     drawShape = true;
@@ -79,27 +81,22 @@ canvas.addEventListener("mousedown", (e) => {
 });
 
 canvas.addEventListener("mousemove", (e) => {
-  if (drawPencil && pencilToolsFlag) {
-    continueDrawing({
-      color: eraserToolsFlag ? eraserColor : pencilColor,
-      width: eraserToolsFlag ? eraserSize : pencilSize,
+  if ((drawPencil && pencilToolsFlag.value) || drawEraser) {
+    const data = {
+      color: eraserToolsFlag.value ? eraserColor : pencilColor,
+      width: eraserToolsFlag.value ? eraserSize : pencilSize,
       x: e.clientX,
       y: e.clientY,
-    });
-    // let data = {
-    //   color: eraserToolsFlag ? eraserColor : pencilColor,
-    //   width: eraserToolsFlag ? eraserSize : pencilSize,
-    //   x: e.clientX,
-    //   y: e.clientY,
-    // };
-    // socket.emit("continueDrawing", data);
-  } else if (drawMarker && markerToolsFlag) {
-    continueDrawing({
-      color: eraserToolsFlag ? eraserColor : markerColor,
-      width: eraserToolsFlag ? eraserSize : markerSize,
+    };
+    continueDrawing(data);
+  } else if ((drawMarker && markerToolsFlag.value) || drawEraser) {
+    const markerData = {
+      color: eraserToolsFlag.value ? eraserColor : markerColor,
+      width: eraserToolsFlag.value ? eraserSize : markerSize,
       x: e.clientX,
       y: e.clientY,
-    });
+    };
+    continueDrawing(markerData);
   } else if (currentShape !== "" && drawShape) {
     continueDrawingShape({ x: e.clientX, y: e.clientY });
   }
@@ -108,6 +105,7 @@ canvas.addEventListener("mousemove", (e) => {
 canvas.addEventListener("mouseup", (e) => {
   drawPencil = false;
   drawMarker = false;
+  drawEraser = false;
 
   if (currentShape !== "") {
     finishDrawingShape();
@@ -118,7 +116,7 @@ canvas.addEventListener("mouseup", (e) => {
 });
 
 canvas.addEventListener("click", (e) => {
-  if (textToolsFlag) {
+  if (textToolsFlag.value) {
     const textarea = document.createElement("textarea");
     textarea.style.position = "absolute";
     textarea.style.left = `${e.clientX}px`;
@@ -188,7 +186,7 @@ canvas.addEventListener("click", (e) => {
         );
         document.body.removeChild(textarea);
         saveUndoHistory();
-        textToolsFlag = false;
+        textToolsFlag.value = false;
       }
     });
 
@@ -202,10 +200,10 @@ canvas.addEventListener("click", (e) => {
         );
         document.body.removeChild(textarea);
         saveUndoHistory();
-        textToolsFlag = false;
+        textToolsFlag.value = false;
       } else if (event.key === "Delete" || event.key === "Backspace") {
         document.body.removeChild(textarea);
-        textToolsFlag = false;
+        textToolsFlag.value = false;
       }
     });
 
@@ -246,7 +244,7 @@ pencilColors.forEach((color) => {
       .getComputedStyle(color)
       .getPropertyValue("background-color");
 
-    if (textToolsFlag) {
+    if (textToolsFlag.value) {
       textColor = chosenColor;
     } else {
       pencilColor = chosenColor;
@@ -310,7 +308,7 @@ eraserWidth.addEventListener("change", (e) => {
 });
 
 eraserIcon.addEventListener("click", (e) => {
-  if (eraserToolsFlag) {
+  if (eraserToolsFlag.value) {
     tool.strokeStyle = eraserColor;
     tool.lineWidth = eraserSize;
   } else {

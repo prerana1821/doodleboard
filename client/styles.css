@@ -275,20 +275,20 @@ body {
   background-color: #e6e6e6;
 }
 
-.cursor-pencil {
-  cursor: url("./icons/cursors/cursor-pencil.png"), auto;
+.cursor-auto {
+  cursor: auto;
 }
 
-.cursor-eraser {
-  cursor: url("./icons/cursors/cursor-eraser.png"), auto;
+.cursor-pencil {
+  cursor: url("./icons/cursors/cursor-pencil.png"), auto;
 }
 
 .cursor-marker {
   cursor: url("./icons/cursors/cursor-marker.png"), auto;
 }
 
-.cursor-auto {
-  cursor: auto;
+.cursor-eraser {
+  cursor: url("./icons/cursors/cursor-eraser.png"), auto;
 }
 
 .sticky-note,

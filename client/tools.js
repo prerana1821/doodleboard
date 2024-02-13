@@ -5,33 +5,33 @@ let tools = document.querySelector(".tools");
 
 let pencil = document.querySelector(".pencil");
 let pencilTools = document.querySelector(".pencil-tools");
-let pencilToolsFlag = false;
+let pencilToolsFlag = { value: false };
 
 let marker = document.querySelector(".marker");
 let markerTools = document.querySelector(".marker-tools");
-let markerToolsFlag = false;
+let markerToolsFlag = { value: false };
 
 let eraser = document.querySelector(".eraser");
 let eraserTools = document.querySelector(".eraser-tools");
-let eraserToolsFlag = false;
+let eraserToolsFlag = { value: false };
 
 let stickyNote = document.querySelector(".stickynote");
 let stickyNoteTools = document.querySelector(".stickynote-tools");
-let stickyNoteToolsFlag = false;
+let stickyNoteToolsFlag = { value: false };
 
 let upload = document.querySelector(".upload");
 
 let shapes = document.querySelector(".shapes");
 let shapesTools = document.querySelector(".shapes-tools");
-let shapesToolsFlag = false;
+let shapesToolsFlag = { value: false };
 
 let text = document.querySelector(".text");
 let textTools = document.querySelector(".text-tools");
-let textToolsFlag = false;
+let textToolsFlag = { value: false };
 
 let canvasBgColor = document.querySelector(".canvas-bgcolor");
 let canvasBgColorTools = document.querySelector(".canvas-bgcolor-tools");
-let canvasBgColorToolsFlag = false;
+let canvasBgColorToolsFlag = { value: false };
 
 let dragEl;
 let dragHandleEl;
@@ -66,7 +66,10 @@ function closeTools() {
 
 function toggleTool(toolFlag, otherToolFlags, tool, toolTools, cursorClass) {
   resetCursor();
-  otherToolFlags.forEach((flag) => (flag = false));
+
+  otherToolFlags.forEach(
+    (flag, index) => (otherToolFlags[index].value = false)
+  );
 
   if (toolFlag) {
     hideAllTools();
@@ -88,9 +91,9 @@ function hideAllTools() {
 }
 
 pencil.addEventListener("click", (e) => {
-  pencilToolsFlag = !pencilToolsFlag;
+  pencilToolsFlag.value = !pencilToolsFlag.value;
   toggleTool(
-    pencilToolsFlag,
+    pencilToolsFlag.value,
     [
       markerToolsFlag,
       eraserToolsFlag,
@@ -104,27 +107,10 @@ pencil.addEventListener("click", (e) => {
   );
 });
 
-text.addEventListener("click", (e) => {
-  textToolsFlag = !textToolsFlag;
-  toggleTool(
-    textToolsFlag,
-    [
-      markerToolsFlag,
-      eraserToolsFlag,
-      shapesToolsFlag,
-      pencilToolsFlag,
-      canvasBgColorToolsFlag,
-    ],
-    text,
-    textTools,
-    "cursor-auto"
-  );
-});
-
 marker.addEventListener("click", (e) => {
-  markerToolsFlag = !markerToolsFlag;
+  markerToolsFlag.value = !markerToolsFlag.value;
   toggleTool(
-    markerToolsFlag,
+    markerToolsFlag.value,
     [
       pencilToolsFlag,
       eraserToolsFlag,
@@ -139,9 +125,9 @@ marker.addEventListener("click", (e) => {
 });
 
 eraser.addEventListener("click", (e) => {
-  eraserToolsFlag = !eraserToolsFlag;
+  eraserToolsFlag.value = !eraserToolsFlag.value;
   toggleTool(
-    eraserToolsFlag,
+    eraserToolsFlag.value,
     [
       pencilToolsFlag,
       markerToolsFlag,
@@ -156,9 +142,9 @@ eraser.addEventListener("click", (e) => {
 });
 
 shapes.addEventListener("click", (e) => {
-  shapesToolsFlag = !shapesToolsFlag;
+  shapesToolsFlag.value = !shapesToolsFlag.value;
   toggleTool(
-    shapesToolsFlag,
+    shapesToolsFlag.value,
     [
       pencilToolsFlag,
       markerToolsFlag,
@@ -172,10 +158,27 @@ shapes.addEventListener("click", (e) => {
   );
 });
 
-canvasBgColor.addEventListener("click", (e) => {
-  canvasBgColorToolsFlag = !canvasBgColorToolsFlag;
+text.addEventListener("click", (e) => {
+  textToolsFlag.value = !textToolsFlag.value;
   toggleTool(
-    canvasBgColorToolsFlag,
+    textToolsFlag.value,
+    [
+      markerToolsFlag,
+      eraserToolsFlag,
+      shapesToolsFlag,
+      pencilToolsFlag,
+      canvasBgColorToolsFlag,
+    ],
+    text,
+    textTools,
+    "cursor-auto"
+  );
+});
+
+canvasBgColor.addEventListener("click", (e) => {
+  canvasBgColorToolsFlag.value = !canvasBgColorToolsFlag.value;
+  toggleTool(
+    canvasBgColorToolsFlag.value,
     [
       pencilToolsFlag,
       markerToolsFlag,
@@ -207,10 +210,11 @@ function noteActions(minimizeNote, removeNote, stickyNoteDoc) {
 
 stickyNote.addEventListener("click", (e) => {
   resetCursor();
+  addCursorAuto();
 
-  stickyNoteToolsFlag = !stickyNoteToolsFlag;
+  stickyNoteToolsFlag.value = !stickyNoteToolsFlag.value;
 
-  if (stickyNoteToolsFlag) {
+  if (stickyNoteToolsFlag.value) {
     pencilTools.style.display = "none";
     markerTools.style.display = "none";
     eraserTools.style.display = "none";
@@ -257,6 +261,7 @@ stickyNote.addEventListener("click", (e) => {
 
 upload.addEventListener("click", (e) => {
   resetCursor();
+  addCursorAuto();
 
   let fileInput = document.createElement("input");
   fileInput.setAttribute("type", "file");
@@ -375,5 +380,8 @@ function resetCursor() {
   document.body.classList.remove("cursor-pencil");
   document.body.classList.remove("cursor-eraser");
   document.body.classList.remove("cursor-marker");
+}
+
+function addCursorAuto() {
   document.body.classList.add("cursor-auto");
 }
