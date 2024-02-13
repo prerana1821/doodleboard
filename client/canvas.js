@@ -64,9 +64,9 @@ let offsetX, offsetY;
 canvas.addEventListener("mousedown", (e) => {
   if (pencilToolsFlag) {
     drawPencil = true;
-    // startDrawing({ x: e.clientX, y: e.clientY });
-    let data = { x: e.clientX, y: e.clientY };
-    socket.emit("startDrawing", data);
+    startDrawing({ x: e.clientX, y: e.clientY });
+    // let data = { x: e.clientX, y: e.clientY };
+    // socket.emit("startDrawing", data);
   } else if (markerToolsFlag) {
     drawMarker = true;
     startDrawing({ x: e.clientX, y: e.clientY });
@@ -80,19 +80,19 @@ canvas.addEventListener("mousedown", (e) => {
 
 canvas.addEventListener("mousemove", (e) => {
   if (drawPencil && pencilToolsFlag) {
-    // continueDrawing({
-    //   color: eraserToolsFlag ? eraserColor : pencilColor,
-    //   width: eraserToolsFlag ? eraserSize : pencilSize,
-    //   x: e.clientX,
-    //   y: e.clientY,
-    // });
-    let data = {
+    continueDrawing({
       color: eraserToolsFlag ? eraserColor : pencilColor,
       width: eraserToolsFlag ? eraserSize : pencilSize,
       x: e.clientX,
       y: e.clientY,
-    };
-    socket.emit("continueDrawing", data);
+    });
+    // let data = {
+    //   color: eraserToolsFlag ? eraserColor : pencilColor,
+    //   width: eraserToolsFlag ? eraserSize : pencilSize,
+    //   x: e.clientX,
+    //   y: e.clientY,
+    // };
+    // socket.emit("continueDrawing", data);
   } else if (drawMarker && markerToolsFlag) {
     continueDrawing({
       color: eraserToolsFlag ? eraserColor : markerColor,
@@ -450,9 +450,9 @@ undo.addEventListener("click", (e) => {
 
   if (track > 0) {
     track--;
-    let data = { track, undoRedoTracker };
-    socket.emit("undoRedoCanvas", data);
-    // undoRedoCanvas({ track, undoRedoTracker });
+    // let data = { track, undoRedoTracker };
+    // socket.emit("undoRedoCanvas", data);
+    undoRedoCanvas({ track, undoRedoTracker });
     redo.disabled = false; // Enable the redo button if it was disabled
   }
 });
@@ -462,9 +462,9 @@ redo.addEventListener("click", (e) => {
 
   if (track < undoRedoTracker.length - 1) {
     track++;
-    let data = { track, undoRedoTracker };
-    socket.emit("undoRedoCanvas", data);
-    // undoRedoCanvas({ track, undoRedoTracker });
+    // let data = { track, undoRedoTracker };
+    // socket.emit("undoRedoCanvas", data);
+    undoRedoCanvas({ track, undoRedoTracker });
     undo.disabled = false; // Enable the undo button if it was disabled
   }
 });
@@ -487,14 +487,14 @@ reset.addEventListener("click", (e) => {
   tool.clearRect(0, 0, canvas.width, canvas.height);
 });
 
-socket.on("startDrawing", (data) => {
-  startDrawing(data);
-});
+// socket.on("startDrawing", (data) => {
+//   startDrawing(data);
+// });
 
-socket.on("continueDrawing", (data) => {
-  continueDrawing(data);
-});
+// socket.on("continueDrawing", (data) => {
+//   continueDrawing(data);
+// });
 
-socket.on("undoRedoCanvas", (data) => {
-  undoRedoCanvas(data);
-});
+// socket.on("undoRedoCanvas", (data) => {
+//   undoRedoCanvas(data);
+// });
