@@ -26,7 +26,6 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  z-index: 2;
 }
 
 .toggle-options img {
@@ -43,7 +42,6 @@ body {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.5rem;
-  z-index: 2;
   cursor: auto;
 }
 
@@ -95,7 +93,6 @@ body {
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.3rem;
   padding: 0.5rem 0 0.5rem 0.5rem;
-  z-index: 2;
   cursor: auto;
 }
 
@@ -205,7 +202,6 @@ body {
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   border-radius: 0.3rem;
   padding: 0.5rem;
-  z-index: 2;
   cursor: auto;
   flex-direction: column;
   gap: 0.3rem;
@@ -215,7 +211,8 @@ body {
   width: 100%;
 }
 
-.stickynote-tools {
+.stickynote-tools,
+.canvas-bgcolor-tools {
   width: 12rem;
   height: 4.2rem;
   position: absolute;
@@ -228,20 +225,26 @@ body {
   border-radius: 0.3rem;
   padding: 0.5rem;
   gap: 0.5rem;
-  z-index: 2;
   cursor: auto;
+  flex-direction: column;
 }
 
-.stickynote-colors {
+.stickynote-colors,
+.canvas-bgcolors {
   display: flex;
   gap: 0.5rem;
 }
 
-.notes-color {
+.notes-color,
+.canvas-color {
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.canvas-color {
+  border: 1px solid #ccc;
 }
 
 .bg-pink {
@@ -348,11 +351,6 @@ body {
   cursor: pointer;
 }
 
-canvas {
-  position: relative;
-  z-index: 1;
-}
-
 .shapes {
   display: flex;
   flex-wrap: wrap;
@@ -406,4 +404,24 @@ canvas {
 
 .code {
   font-family: "Fira Code", monospace;
+}
+
+.canvas-white {
+  background-color: #fff;
+}
+
+.canvas-grey {
+  background-color: #f8f9fa;
+}
+
+.canvas-blue {
+  background-color: #f5faff;
+}
+
+.canvas-pink {
+  background-color: #fffce8;
+}
+
+.canvas-purple {
+  background-color: #fdf8f6;
 }

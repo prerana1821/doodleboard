@@ -1,0 +1,21 @@
+{
+  "name": "doodleboard",
+  "version": "1.0.0",
+  "description": "doodleboard server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@netlify/functions": "^2.5.1",
+    "@types/express": "^4.17.21",
+    "express": "^4.18.2",
+    "serverless-http": "^3.2.0",
+    "socket.io": "^4.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

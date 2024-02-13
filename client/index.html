@@ -51,6 +51,12 @@
         title="Upload Image"
       />
       <img
+        src="./icons/tools/canvas-bgcolor.png"
+        class="canvas-bgcolor"
+        alt="change background color"
+        title="Change Background Color"
+      />
+      <img
         src="./icons/tools/stickynote.png"
         class="stickynote"
         alt="stickynote"
@@ -268,11 +274,28 @@
       </div>
     </div>
 
+    <div class="canvas-bgcolor-tools">
+      <p class="tool-heading-xl">Canvas Background:</p>
+      <div class="canvas-bgcolors">
+        <div class="canvas-white canvas-color" title="White"></div>
+        <div class="canvas-grey canvas-color" title="Grey"></div>
+        <div class="canvas-blue canvas-color" title="Blue"></div>
+        <div class="canvas-pink canvas-color" title="Pink"></div>
+        <div class="canvas-purple canvas-color" title="Purple"></div>
+      </div>
+    </div>
+
     <canvas></canvas>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+    <script
+      src="https://cdn.socket.io/4.7.4/socket.io.min.js"
+      integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      let socket = io.connect("http://localhost:3000");
+    </script>
     <script src="./tools.js"></script>
-
     <script src="./canvas.js"></script>
   </body>
 </html>
