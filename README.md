@@ -25,7 +25,7 @@ Doodle Board is an interactive drawing platform built entirely with JavaScript. 
 
 # Demo
 
-[View Demo](https://drive.google.com/file/d/1Pe_zr2gR4ZJ06MNxqXSKAwzGM7AOM8h1/view?usp=sharing)
+[View Demo](https://github.com/prerana1821/doodleboard/assets/61601706/496baf8f-2af7-405a-946d-74b8d805c4de)
 
 ## Key Features
 
