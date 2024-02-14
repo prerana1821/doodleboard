@@ -56,6 +56,12 @@ Doodle Board is an interactive drawing platform built entirely with JavaScript. 
 - [ ] add typescript
 - [x] change the mouse type based on pencil, eraser or marker - DONE
 
+## Blogs to be written based on my learnings
+
+- [ ] How to perform drag and drop (with resize) in Javascript?
+- [ ] How to draw shapes based on mouse events in Canvas?
+- [ ] Pen & Eraser Tool in HTML5 Canvas
+
 ## Installation
 
 No installation is required. Simply open the project in a web browser to start drawing!
