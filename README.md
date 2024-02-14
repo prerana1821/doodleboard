@@ -89,7 +89,7 @@ Doodle Board is an interactive drawing platform built entirely with JavaScript. 
 
 10. **Download**
 
-- Click on the Download icon to save the canvas as an image.
+   - Click on the Download icon to save the canvas as an image.
 
 ## TODO Features
 
