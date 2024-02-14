@@ -58,6 +58,7 @@ Doodle Board is an interactive drawing platform built entirely with JavaScript. 
 
 ## Blogs to be written based on my learnings
 
+- [ ] How to perform drag and drop in Javascript? (w/ trello dashboard UI)
 - [ ] How to perform drag and drop (with resize) in Javascript?
 - [ ] How to draw shapes based on mouse events in Canvas?
 - [ ] Pen & Eraser Tool in HTML5 Canvas
