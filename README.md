@@ -40,6 +40,14 @@ Doodle Board is an interactive drawing platform built entirely with JavaScript. 
 - **Undo/Redo**: Supports undo and redo actions for drawing.
 - **Download**: Allows users to download the content image.
 
+More features to come! 😍😇
+
+## Technologies Used
+
+- JavaScript
+- HTML5 Canvas
+- CSS
+
 ## TODO Features
 
 - [x] marker ( change width, colors, 3 types of style, 2 types edges ) - DONE
