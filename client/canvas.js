@@ -9,25 +9,12 @@ let pencilWidth = document.querySelector(".pencil-width-input");
 let pencilEdges = document.querySelectorAll(".pencil-edge");
 let pencilPatterns = document.querySelectorAll(".pencil-pattern");
 
-let markerColors = document.querySelectorAll(".marker-color");
-let markerWidth = document.querySelector(".marker-width-input");
-let markerPatterns = document.querySelectorAll(".marker-pattern");
-
-let eraserIcon = document.querySelector(".eraser");
-let eraserWidth = document.querySelector(".eraser-width");
-
 let drawPencil = false;
-let drawMarker = false;
-let drawEraser = false;
 
 let pencilColor = "#1e1e1e";
-let markerColor = "#afafaf";
 let pencilEdge = "sqaure";
-let eraserColor = "#fff";
 
 let pencilSize = pencilWidth.value;
-let markerSize = markerWidth.value;
-let eraserSize = eraserWidth.value;
 
 tool.strokeStyle = pencilColor;
 tool.lineWidth = pencilSize;
@@ -37,47 +24,23 @@ canvas.addEventListener("mousedown", (e) => {
   if (pencilToolsFlag.value) {
     drawPencil = true;
     startDrawing({ x: e.clientX, y: e.clientY });
-  } else if (markerToolsFlag.value) {
-    drawMarker = true;
-    startDrawing({ x: e.clientX, y: e.clientY });
-  } else if (eraserToolsFlag.value) {
-    drawEraser = true;
-    startDrawing({ x: e.clientX, y: e.clientY });
-    tool.globalCompositeOperation = "destination-out";
   }
 });
 
 canvas.addEventListener("mousemove", (e) => {
-  if ((drawPencil && pencilToolsFlag.value) || drawEraser) {
+  if (drawPencil && pencilToolsFlag.value) {
     const data = {
-      color: eraserToolsFlag.value ? eraserColor : pencilColor,
-      width: eraserToolsFlag.value ? eraserSize : pencilSize,
+      color: pencilColor,
+      width: pencilSize,
       x: e.clientX,
       y: e.clientY,
-      composite: eraserToolsFlag.value ? "destination-out" : "source-over",
     };
     continueDrawing(data);
-  } else if ((drawMarker && markerToolsFlag.value) || drawEraser) {
-    const markerData = {
-      color: eraserToolsFlag.value ? eraserColor : markerColor,
-      width: eraserToolsFlag.value ? eraserSize : markerSize,
-      x: e.clientX,
-      y: e.clientY,
-      composite: eraserToolsFlag.value ? "destination-out" : "source-over",
-    };
-    continueDrawing(markerData);
   }
 });
 
 canvas.addEventListener("mouseup", (e) => {
   drawPencil = false;
-  drawMarker = false;
-  drawEraser = false;
-
-  // Reset the global composite operation to default when not erasing
-  if (!drawEraser) {
-    tool.globalCompositeOperation = "source-over";
-  }
 });
 
 function startDrawing(movement) {
@@ -128,44 +91,4 @@ pencilPatterns.forEach((pattern, index) => {
     let currentLineStyleIndex = index;
     tool.setLineDash(lineStyles[currentLineStyleIndex]);
   });
-});
-
-markerColors.forEach((color) => {
-  color.addEventListener("click", () => {
-    let chosenColor = window
-      .getComputedStyle(color)
-      .getPropertyValue("background-color");
-
-    markerColor = chosenColor;
-    tool.strokeStyle = markerColor;
-  });
-});
-
-markerWidth.addEventListener("change", (e) => {
-  markerSize = parseInt(e.target.value);
-  tool.lineWidth = markerSize;
-});
-
-markerPatterns.forEach((pattern, index) => {
-  pattern.addEventListener("click", () => {
-    let currentLineStyleIndex = index;
-    tool.setLineDash(lineStyles[currentLineStyleIndex]);
-  });
-});
-
-eraserWidth.addEventListener("change", (e) => {
-  eraserSize = parseInt(e.target.value);
-  tool.lineWidth = eraserSize;
-});
-
-eraserIcon.addEventListener("click", (e) => {
-  if (eraserToolsFlag.value) {
-    tool.globalCompositeOperation = "destination-out";
-    tool.strokeStyle = eraserColor;
-    tool.lineWidth = eraserSize;
-  } else {
-    tool.globalCompositeOperation = "source-over";
-    tool.strokeStyle = pencilColor;
-    tool.lineWidth = pencilSize;
-  }
 });

@@ -7,14 +7,6 @@ let pencil = document.querySelector(".pencil");
 let pencilTools = document.querySelector(".pencil-tools");
 let pencilToolsFlag = { value: false };
 
-let marker = document.querySelector(".marker");
-let markerTools = document.querySelector(".marker-tools");
-let markerToolsFlag = { value: false };
-
-let eraser = document.querySelector(".eraser");
-let eraserTools = document.querySelector(".eraser-tools");
-let eraserToolsFlag = { value: false };
-
 toggleOptions.addEventListener("click", (e) => {
   toggleFlag = !toggleFlag;
 
@@ -60,49 +52,13 @@ function toggleTool(toolFlag, otherToolFlags, tool, toolTools, cursorClass) {
 
 function hideAllTools() {
   pencilTools.style.display = "none";
-  markerTools.style.display = "none";
-  eraserTools.style.display = "none";
 }
 
 pencil.addEventListener("click", (e) => {
   pencilToolsFlag.value = !pencilToolsFlag.value;
-  toggleTool(
-    pencilToolsFlag.value,
-    [markerToolsFlag, eraserToolsFlag],
-    pencil,
-    pencilTools,
-    "cursor-pencil"
-  );
-});
-
-marker.addEventListener("click", (e) => {
-  markerToolsFlag.value = !markerToolsFlag.value;
-  toggleTool(
-    markerToolsFlag.value,
-    [pencilToolsFlag, eraserToolsFlag],
-    marker,
-    markerTools,
-    "cursor-marker"
-  );
-});
-
-eraser.addEventListener("click", (e) => {
-  eraserToolsFlag.value = !eraserToolsFlag.value;
-  toggleTool(
-    eraserToolsFlag.value,
-    [pencilToolsFlag, markerToolsFlag],
-    eraser,
-    eraserTools,
-    "cursor-eraser"
-  );
+  toggleTool(pencilToolsFlag.value, [], pencil, pencilTools, "cursor-pencil");
 });
 
 function resetCursor() {
   document.body.classList.remove("cursor-pencil");
-  document.body.classList.remove("cursor-eraser");
-  document.body.classList.remove("cursor-marker");
-}
-
-function addCursorAuto() {
-  document.body.classList.add("cursor-auto");
 }
