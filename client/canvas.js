@@ -17,17 +17,11 @@ let eraserIcon = document.querySelector(".eraser");
 let eraserWidth = document.querySelector(".eraser-width");
 
 let drawPencil = false;
-let drawMarker = false;
-let drawEraser = false;
 
 let pencilColor = "#1e1e1e";
-let markerColor = "#afafaf";
 let pencilEdge = "sqaure";
-let eraserColor = "#fff";
 
 let pencilSize = pencilWidth.value;
-let markerSize = markerWidth.value;
-let eraserSize = eraserWidth.value;
 
 tool.strokeStyle = pencilColor;
 tool.lineWidth = pencilSize;
@@ -53,10 +47,10 @@ canvas.addEventListener("mousedown", (e) => {
 });
 
 canvas.addEventListener("mousemove", (e) => {
-  if ((drawPencil && pencilToolsFlag.value) || drawEraser) {
+  if (drawPencil && pencilToolsFlag.value) {
     const data = {
-      color: eraserToolsFlag.value ? eraserColor : pencilColor,
-      width: eraserToolsFlag.value ? eraserSize : pencilSize,
+      color: pencilColor,
+      width: pencilSize,
       x: e.clientX,
       y: e.clientY,
       composite: eraserToolsFlag.value ? "destination-out" : "source-over",
