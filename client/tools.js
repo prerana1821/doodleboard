@@ -15,6 +15,10 @@ let eraser = document.querySelector(".eraser");
 let eraserTools = document.querySelector(".eraser-tools");
 let eraserToolsFlag = { value: false };
 
+let shapes = document.querySelector(".shapes");
+let shapesTools = document.querySelector(".shapes-tools");
+let shapesToolsFlag = false;
+
 toggleOptions.addEventListener("click", (e) => {
   toggleFlag = !toggleFlag;
 
@@ -62,13 +66,14 @@ function hideAllTools() {
   pencilTools.style.display = "none";
   markerTools.style.display = "none";
   eraserTools.style.display = "none";
+  shapesTools.style.display = "none";
 }
 
 pencil.addEventListener("click", (e) => {
   pencilToolsFlag.value = !pencilToolsFlag.value;
   toggleTool(
     pencilToolsFlag.value,
-    [markerToolsFlag, eraserToolsFlag],
+    [markerToolsFlag, eraserToolsFlag, shapesToolsFlag],
     pencil,
     pencilTools,
     "cursor-pencil"
@@ -79,7 +84,7 @@ marker.addEventListener("click", (e) => {
   markerToolsFlag.value = !markerToolsFlag.value;
   toggleTool(
     markerToolsFlag.value,
-    [pencilToolsFlag, eraserToolsFlag],
+    [pencilToolsFlag, eraserToolsFlag, shapesToolsFlag],
     marker,
     markerTools,
     "cursor-marker"
@@ -90,10 +95,21 @@ eraser.addEventListener("click", (e) => {
   eraserToolsFlag.value = !eraserToolsFlag.value;
   toggleTool(
     eraserToolsFlag.value,
-    [pencilToolsFlag, markerToolsFlag],
+    [pencilToolsFlag, markerToolsFlag, shapesToolsFlag],
     eraser,
     eraserTools,
     "cursor-eraser"
+  );
+});
+
+shapes.addEventListener("click", (e) => {
+  shapesToolsFlag = !shapesToolsFlag;
+  toggleTool(
+    shapesToolsFlag,
+    [pencilToolsFlag, markerToolsFlag, eraserToolsFlag],
+    shapes,
+    shapesTools,
+    "cursor-auto"
   );
 });
 
@@ -101,4 +117,5 @@ function resetCursor() {
   document.body.classList.remove("cursor-pencil");
   document.body.classList.remove("cursor-eraser");
   document.body.classList.remove("cursor-marker");
+  document.body.classList.add("cursor-auto");
 }
