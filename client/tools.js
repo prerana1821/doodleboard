@@ -25,6 +25,10 @@ let stickyNoteToolsFlag = { value: false };
 
 let upload = document.querySelector(".upload");
 
+let canvasBgColor = document.querySelector(".canvas-bgcolor");
+let canvasBgColorTools = document.querySelector(".canvas-bgcolor-tools");
+let canvasBgColorToolsFlag = false;
+
 let dragEl;
 let dragHandleEl;
 const lastPosition = {};
@@ -78,13 +82,14 @@ function hideAllTools() {
   eraserTools.style.display = "none";
   shapesTools.style.display = "none";
   stickyNoteTools.style.display = "none";
+  canvasBgColorTools.style.display = "none";
 }
 
 pencil.addEventListener("click", (e) => {
   pencilToolsFlag.value = !pencilToolsFlag.value;
   toggleTool(
     pencilToolsFlag.value,
-    [markerToolsFlag, eraserToolsFlag, shapesToolsFlag],
+    [markerToolsFlag, eraserToolsFlag, shapesToolsFlag, canvasBgColorToolsFlag],
     pencil,
     pencilTools,
     "cursor-pencil"
@@ -95,7 +100,7 @@ marker.addEventListener("click", (e) => {
   markerToolsFlag.value = !markerToolsFlag.value;
   toggleTool(
     markerToolsFlag.value,
-    [pencilToolsFlag, eraserToolsFlag, shapesToolsFlag],
+    [pencilToolsFlag, eraserToolsFlag, shapesToolsFlag, canvasBgColorToolsFlag],
     marker,
     markerTools,
     "cursor-marker"
@@ -106,7 +111,7 @@ eraser.addEventListener("click", (e) => {
   eraserToolsFlag.value = !eraserToolsFlag.value;
   toggleTool(
     eraserToolsFlag.value,
-    [pencilToolsFlag, markerToolsFlag, shapesToolsFlag],
+    [pencilToolsFlag, markerToolsFlag, shapesToolsFlag, canvasBgColorToolsFlag],
     eraser,
     eraserTools,
     "cursor-eraser"
@@ -117,9 +122,20 @@ shapes.addEventListener("click", (e) => {
   shapesToolsFlag = !shapesToolsFlag;
   toggleTool(
     shapesToolsFlag,
-    [pencilToolsFlag, markerToolsFlag, eraserToolsFlag],
+    [pencilToolsFlag, markerToolsFlag, eraserToolsFlag, canvasBgColorToolsFlag],
     shapes,
     shapesTools,
+    "cursor-auto"
+  );
+});
+
+canvasBgColor.addEventListener("click", (e) => {
+  canvasBgColorToolsFlag = !canvasBgColorToolsFlag;
+  toggleTool(
+    canvasBgColorToolsFlag,
+    [pencilToolsFlag, markerToolsFlag, eraserToolsFlag, shapesToolsFlag],
+    canvasBgColor,
+    canvasBgColorTools,
     "cursor-auto"
   );
 });

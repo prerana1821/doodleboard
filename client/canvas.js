@@ -18,6 +18,8 @@ let eraserWidth = document.querySelector(".eraser-width");
 
 let shapeIcons = document.querySelectorAll(".shape");
 
+let canvasBgColors = document.querySelectorAll(".canvas-color");
+
 let drawPencil = false;
 let drawMarker = false;
 let drawEraser = false;
@@ -191,6 +193,17 @@ eraserIcon.addEventListener("click", (e) => {
     tool.strokeStyle = pencilColor;
     tool.lineWidth = pencilSize;
   }
+});
+
+canvasBgColors.forEach((bgColor) => {
+  bgColor.addEventListener("click", (e) => {
+    let chosenBgColor = window
+      .getComputedStyle(bgColor)
+      .getPropertyValue("background-color");
+
+    tool.fillStyle = chosenBgColor;
+    tool.fillRect(0, 0, canvas.width, canvas.height);
+  });
 });
 
 function startDrawingShape(position) {
