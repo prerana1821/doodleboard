@@ -20,6 +20,8 @@ let shapeIcons = document.querySelectorAll(".shape");
 
 let canvasBgColors = document.querySelectorAll(".canvas-color");
 
+let download = document.querySelector(".download");
+
 let drawPencil = false;
 let drawMarker = false;
 let drawEraser = false;
@@ -204,6 +206,17 @@ canvasBgColors.forEach((bgColor) => {
     tool.fillStyle = chosenBgColor;
     tool.fillRect(0, 0, canvas.width, canvas.height);
   });
+});
+
+download.addEventListener("click", (e) => {
+  resetCursor();
+
+  let url = canvas.toDataURL();
+
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "doodle-board.jpg";
+  a.click();
 });
 
 function startDrawingShape(position) {
