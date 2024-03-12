@@ -200,6 +200,7 @@ function noteActions(minimizeNote, removeNote, stickyNoteDoc) {
       noteBody.style.display = "block";
     } else {
       noteBody.style.display = "none";
+      noteBody.parentElement.style.resize = "none";
     }
   });
 
