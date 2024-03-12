@@ -28,6 +28,9 @@ let download = document.querySelector(".download");
 let redo = document.querySelector(".redo");
 let undo = document.querySelector(".undo");
 
+let zoomIn = document.querySelector(".zoom-in");
+let zoomOut = document.querySelector(".zoom-out");
+
 let reset = document.querySelector(".reset");
 
 let drawPencil = false;
@@ -62,6 +65,23 @@ let textColor = "#000000";
 let isDragging = false;
 let offsetX, offsetY;
 
+// let MAX_ZOOM = 5;
+// let MIN_ZOOM = 0.1;
+// let SCROLL_SENSITIVITY = 0.0005;
+
+let translatePos = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+};
+
+let scale = 1.0;
+let scaleMultiplier = 0.8;
+
+// tool.translate(translatePos.x, translatePos.y);
+// tool.scale(1, 1);
+
+console.log(scale);
+
 canvas.addEventListener("mousedown", (e) => {
   if (pencilToolsFlag.value) {
     drawPencil = true;
@@ -78,11 +98,22 @@ canvas.addEventListener("mousedown", (e) => {
     startX = e.clientX;
     startY = e.clientY;
     // startDrawingShape({ x: e.clientX, y: e.clientY });
+  } else if (panningToolFlag.value) {
+    isPanning = true;
+    panStart = { x: e.clientX, y: e.clientY };
   }
 });
 
 canvas.addEventListener("mousemove", (e) => {
-  if ((drawPencil && pencilToolsFlag.value) || drawEraser) {
+  if (isPanning) {
+    const deltaX = e.clientX - panStart.x;
+    const deltaY = e.clientY - panStart.y;
+    cameraOffset.x -= deltaX / cameraZoom;
+    cameraOffset.y -= deltaY / cameraZoom;
+    panStart = { x: e.clientX, y: e.clientY };
+    redrawCanvas();
+    canvas.style.cursor = "move";
+  } else if ((drawPencil && pencilToolsFlag.value) || drawEraser) {
     const data = {
       color: eraserToolsFlag.value ? eraserColor : pencilColor,
       width: eraserToolsFlag.value ? eraserSize : pencilSize,
@@ -120,7 +151,19 @@ canvas.addEventListener("mouseup", (e) => {
     tool.globalCompositeOperation = "source-over";
   }
 
+  if (isPanning) {
+    isPanning = false;
+    canvas.style.cursor = "default";
+  }
+
   saveUndoHistory();
+});
+
+canvas.addEventListener("mouseout", (e) => {
+  if (isPanning) {
+    isPanning = false;
+    canvas.style.cursor = "default";
+  }
 });
 
 canvas.addEventListener("click", (e) => {
@@ -501,14 +544,28 @@ reset.addEventListener("click", (e) => {
   }
 });
 
-// socket.on("startDrawing", (data) => {
-//   startDrawing(data);
-// });
+zoomIn.addEventListener("click", (e) => {
+  console.log("hello");
+  scale /= scaleMultiplier;
+  saveUndoHistory();
+  redrawCanvas();
+});
 
-// socket.on("continueDrawing", (data) => {
-//   continueDrawing(data);
-// });
+zoomOut.addEventListener("click", (e) => {
+  console.log("Hii");
+  scale *= scaleMultiplier;
+  saveUndoHistory();
+  redrawCanvas();
+});
 
-// socket.on("undoRedoCanvas", (data) => {
-//   undoRedoCanvas(data);
-// });
+function redrawCanvas() {
+  tool.clearRect(0, 0, canvas.width, canvas.height);
+  tool.save();
+  redrawUndoHistory();
+  // tool.translate(translatePos.x, translatePos.y);
+  console.log(scale);
+  tool.scale(scale, scale);
+  // redraw your content here
+
+  tool.restore();
+}

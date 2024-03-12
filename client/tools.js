@@ -33,9 +33,17 @@ let canvasBgColor = document.querySelector(".canvas-bgcolor");
 let canvasBgColorTools = document.querySelector(".canvas-bgcolor-tools");
 let canvasBgColorToolsFlag = { value: false };
 
+let panningTool = document.querySelector(".panning");
+let panningToolFlag = { value: false };
+
 let dragEl;
 let dragHandleEl;
 const lastPosition = {};
+
+let isPanning = false;
+let cameraOffset = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+let panStart = { x: 0, y: 0 };
+let cameraZoom = 1;
 
 toggleOptions.addEventListener("click", (e) => {
   toggleFlag = !toggleFlag;
@@ -71,6 +79,9 @@ function toggleTool(toolFlag, otherToolFlags, tool, toolTools, cursorClass) {
     (flag, index) => (otherToolFlags[index].value = false)
   );
 
+  isPanning = false;
+  panningToolFlag.value = false;
+
   if (toolFlag) {
     hideAllTools();
     document.body.classList.add(cursorClass);
@@ -89,6 +100,18 @@ function hideAllTools() {
   stickyNoteTools.style.display = "none";
   canvasBgColorTools.style.display = "none";
 }
+
+panningTool.addEventListener("click", (e) => {
+  panningToolFlag.value = !panningToolFlag.value;
+
+  if (panningToolFlag.value) {
+    panningTool.src = "./icons/tools/cursor.png";
+    panningTool.title = "Selection";
+  } else {
+    panningTool.src = "./icons/tools/panning.png";
+    panningTool.title = "Hand (Panning Tool)";
+  }
+});
 
 pencil.addEventListener("click", (e) => {
   pencilToolsFlag.value = !pencilToolsFlag.value;
