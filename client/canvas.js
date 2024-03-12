@@ -495,7 +495,10 @@ function undoRedoCanvas(tracker) {
 reset.addEventListener("click", (e) => {
   resetCursor();
 
-  tool.clearRect(0, 0, canvas.width, canvas.height);
+  let text = "This will clear the whole canvas. Are you sure?";
+  if (confirm(text) == true) {
+    tool.clearRect(0, 0, canvas.width, canvas.height);
+  }
 });
 
 // socket.on("startDrawing", (data) => {
