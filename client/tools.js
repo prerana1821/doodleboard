@@ -25,6 +25,10 @@ let stickyNoteToolsFlag = { value: false };
 
 let upload = document.querySelector(".upload");
 
+let text = document.querySelector(".text");
+let textTools = document.querySelector(".text-tools");
+let textToolsFlag = { value: false };
+
 let canvasBgColor = document.querySelector(".canvas-bgcolor");
 let canvasBgColorTools = document.querySelector(".canvas-bgcolor-tools");
 let canvasBgColorToolsFlag = false;
@@ -82,6 +86,7 @@ function hideAllTools() {
   eraserTools.style.display = "none";
   shapesTools.style.display = "none";
   stickyNoteTools.style.display = "none";
+  textTools.style.display = "none";
   canvasBgColorTools.style.display = "none";
 }
 
@@ -89,7 +94,13 @@ pencil.addEventListener("click", (e) => {
   pencilToolsFlag.value = !pencilToolsFlag.value;
   toggleTool(
     pencilToolsFlag.value,
-    [markerToolsFlag, eraserToolsFlag, shapesToolsFlag, canvasBgColorToolsFlag],
+    [
+      markerToolsFlag,
+      eraserToolsFlag,
+      shapesToolsFlag,
+      canvasBgColorToolsFlag,
+      textToolsFlag,
+    ],
     pencil,
     pencilTools,
     "cursor-pencil"
@@ -100,7 +111,13 @@ marker.addEventListener("click", (e) => {
   markerToolsFlag.value = !markerToolsFlag.value;
   toggleTool(
     markerToolsFlag.value,
-    [pencilToolsFlag, eraserToolsFlag, shapesToolsFlag, canvasBgColorToolsFlag],
+    [
+      pencilToolsFlag,
+      eraserToolsFlag,
+      shapesToolsFlag,
+      canvasBgColorToolsFlag,
+      textToolsFlag,
+    ],
     marker,
     markerTools,
     "cursor-marker"
@@ -111,7 +128,13 @@ eraser.addEventListener("click", (e) => {
   eraserToolsFlag.value = !eraserToolsFlag.value;
   toggleTool(
     eraserToolsFlag.value,
-    [pencilToolsFlag, markerToolsFlag, shapesToolsFlag, canvasBgColorToolsFlag],
+    [
+      pencilToolsFlag,
+      markerToolsFlag,
+      shapesToolsFlag,
+      canvasBgColorToolsFlag,
+      textToolsFlag,
+    ],
     eraser,
     eraserTools,
     "cursor-eraser"
@@ -122,7 +145,13 @@ shapes.addEventListener("click", (e) => {
   shapesToolsFlag = !shapesToolsFlag;
   toggleTool(
     shapesToolsFlag,
-    [pencilToolsFlag, markerToolsFlag, eraserToolsFlag, canvasBgColorToolsFlag],
+    [
+      pencilToolsFlag,
+      markerToolsFlag,
+      eraserToolsFlag,
+      canvasBgColorToolsFlag,
+      textToolsFlag,
+    ],
     shapes,
     shapesTools,
     "cursor-auto"
@@ -133,9 +162,32 @@ canvasBgColor.addEventListener("click", (e) => {
   canvasBgColorToolsFlag = !canvasBgColorToolsFlag;
   toggleTool(
     canvasBgColorToolsFlag,
-    [pencilToolsFlag, markerToolsFlag, eraserToolsFlag, shapesToolsFlag],
+    [
+      pencilToolsFlag,
+      markerToolsFlag,
+      eraserToolsFlag,
+      shapesToolsFlag,
+      textToolsFlag,
+    ],
     canvasBgColor,
     canvasBgColorTools,
+    "cursor-auto"
+  );
+});
+
+text.addEventListener("click", (e) => {
+  textToolsFlag.value = !textToolsFlag.value;
+  toggleTool(
+    textToolsFlag.value,
+    [
+      pencilToolsFlag,
+      eraserToolsFlag,
+      markerToolsFlag,
+      shapesToolsFlag,
+      canvasBgColorToolsFlag,
+    ],
+    text,
+    textTools,
     "cursor-auto"
   );
 });

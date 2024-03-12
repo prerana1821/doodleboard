@@ -16,6 +16,9 @@ let markerPatterns = document.querySelectorAll(".marker-pattern");
 let eraserIcon = document.querySelector(".eraser");
 let eraserWidth = document.querySelector(".eraser-width");
 
+let textSizeIcons = document.querySelectorAll(".text-size");
+let textFamilyIcons = document.querySelectorAll(".text-family");
+
 let shapeIcons = document.querySelectorAll(".shape");
 
 let canvasBgColors = document.querySelectorAll(".canvas-color");
@@ -48,6 +51,13 @@ let currentShape = "";
 let drawShape = false;
 let startX = "";
 let startY = "";
+
+let textSize = 20;
+let textFamily = "normal";
+let textColor = "#000000";
+
+let isDragging = false;
+let offsetX, offsetY;
 
 canvas.addEventListener("mousedown", (e) => {
   if (pencilToolsFlag.value) {
@@ -109,6 +119,88 @@ canvas.addEventListener("mouseup", (e) => {
   saveUndoHistory();
 });
 
+canvas.addEventListener("click", (e) => {
+  if (textToolsFlag.value) {
+    const textarea = document.createElement("textarea");
+    textarea.style.position = "absolute";
+    textarea.style.left = `${e.clientX}px`;
+    textarea.style.top = `${e.clientY}px`;
+    textarea.style.fontSize = textSize;
+    textarea.classList.add(textFamily);
+    textarea.style.color = textColor;
+    textarea.style.border = "1px solid black";
+    textarea.style.outline = "none";
+    textarea.style.resize = "both";
+    textarea.style.overflow = "hidden";
+    textarea.style.background = "transparent";
+    textarea.style.zIndex = "1000";
+
+    textarea.addEventListener("mousedown", (event) => {
+      isDragging = true;
+      offsetX = event.clientX - parseInt(textarea.style.left);
+      offsetY = event.clientY - parseInt(textarea.style.top);
+    });
+
+    textarea.addEventListener("mousemove", (event) => {
+      if (isDragging) {
+        textarea.style.left = `${event.clientX - offsetX}px`;
+        textarea.style.top = `${event.clientY - offsetY}px`;
+      } else {
+        // Check if the mouse is near the border of the textarea
+        const borderThreshold = 5;
+        const textareaRect = textarea.getBoundingClientRect();
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+
+        // Check if the mouse is within the borderThreshold of any side of the textarea
+        const nearTop =
+          mouseY >= textareaRect.top &&
+          mouseY <= textareaRect.top + borderThreshold;
+        const nearBottom =
+          mouseY <= textareaRect.bottom &&
+          mouseY >= textareaRect.bottom - borderThreshold;
+        const nearLeft =
+          mouseX >= textareaRect.left &&
+          mouseX <= textareaRect.left + borderThreshold;
+        const nearRight =
+          mouseX <= textareaRect.right &&
+          mouseX >= textareaRect.right - borderThreshold;
+
+        if (nearTop || nearBottom || nearLeft || nearRight) {
+          // If the mouse is near any side, change the cursor to 'move'
+          textarea.style.cursor = "move";
+        } else {
+          textarea.style.cursor = "default";
+        }
+      }
+    });
+
+    textarea.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    textarea.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        tool.fillText(
+          textarea.value,
+          parseInt(textarea.style.left),
+          parseInt(textarea.style.top) + textSize
+        );
+        document.body.removeChild(textarea);
+        saveUndoHistory();
+        textToolsFlag.value = false;
+      } else if (event.key === "Delete" || event.key === "Backspace") {
+        document.body.removeChild(textarea);
+        textToolsFlag.value = false;
+      }
+    });
+
+    document.body.appendChild(textarea);
+    textarea.focus(); // Focus on the textarea for typing
+  }
+});
+
 function startDrawing(movement) {
   tool.beginPath();
   tool.moveTo(movement.x, movement.y);
@@ -121,6 +213,20 @@ function continueDrawing(movement) {
   tool.lineTo(movement.x, movement.y);
   tool.stroke();
 }
+
+textSizeIcons.forEach((sizeIcon) => {
+  sizeIcon.addEventListener("click", () => {
+    let chosenSize = sizeIcon.getAttribute("title");
+    textSize = chosenSize;
+  });
+});
+
+textFamilyIcons.forEach((familyIcon) => {
+  familyIcon.addEventListener("click", () => {
+    const chosenFont = familyIcon.getAttribute("class").split(" ")[0];
+    textFamily = chosenFont;
+  });
+});
 
 pencilColors.forEach((color) => {
   color.addEventListener("click", () => {
