@@ -25,6 +25,9 @@ let canvasBgColors = document.querySelectorAll(".canvas-color");
 
 let download = document.querySelector(".download");
 
+let redo = document.querySelector(".redo");
+let undo = document.querySelector(".undo");
+
 let reset = document.querySelector(".reset");
 
 let drawPencil = false;
@@ -430,6 +433,38 @@ shapeIcons.forEach((shape) => {
     currentShape = shape.getAttribute("alt").toLowerCase();
   });
 });
+
+undo.addEventListener("click", (e) => {
+  resetCursor();
+
+  if (track > 0) {
+    track--;
+    undoRedoCanvas({ track, undoRedoTracker });
+    redo.disabled = false;
+  }
+});
+
+redo.addEventListener("click", (e) => {
+  resetCursor();
+
+  if (track < undoRedoTracker.length - 1) {
+    track++;
+    undoRedoCanvas({ track, undoRedoTracker });
+    undo.disabled = false;
+  }
+});
+
+function undoRedoCanvas(tracker) {
+  track = tracker.track;
+  undoRedoTracker = tracker.undoRedoTracker;
+
+  let img = new Image();
+  img.src = undoRedoTracker[track];
+  img.onload = (e) => {
+    tool.clearRect(0, 0, canvas.width, canvas.height);
+    tool.drawImage(img, 0, 0, canvas.width, canvas.height);
+  };
+}
 
 reset.addEventListener("click", (e) => {
   resetCursor();
