@@ -22,6 +22,8 @@ let canvasBgColors = document.querySelectorAll(".canvas-color");
 
 let download = document.querySelector(".download");
 
+let reset = document.querySelector(".reset");
+
 let drawPencil = false;
 let drawMarker = false;
 let drawEraser = false;
@@ -321,4 +323,13 @@ shapeIcons.forEach((shape) => {
   shape.addEventListener("click", (e) => {
     currentShape = shape.getAttribute("alt").toLowerCase();
   });
+});
+
+reset.addEventListener("click", (e) => {
+  resetCursor();
+
+  let text = "This will clear the whole canvas. Are you sure?";
+  if (confirm(text) == true) {
+    tool.clearRect(0, 0, canvas.width, canvas.height);
+  }
 });
