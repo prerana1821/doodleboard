@@ -40,11 +40,6 @@ let dragEl;
 let dragHandleEl;
 const lastPosition = {};
 
-let isPanning = false;
-let cameraOffset = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-let panStart = { x: 0, y: 0 };
-let cameraZoom = 1;
-
 toggleOptions.addEventListener("click", (e) => {
   toggleFlag = !toggleFlag;
 
@@ -79,7 +74,6 @@ function toggleTool(toolFlag, otherToolFlags, tool, toolTools, cursorClass) {
     (flag, index) => (otherToolFlags[index].value = false)
   );
 
-  isPanning = false;
   panningToolFlag.value = false;
 
   if (toolFlag) {

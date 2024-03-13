@@ -65,106 +65,131 @@ let textColor = "#000000";
 let isDragging = false;
 let offsetX, offsetY;
 
-// let MAX_ZOOM = 5;
-// let MIN_ZOOM = 0.1;
-// let SCROLL_SENSITIVITY = 0.0005;
+let scale = 1.0;
+let scaleMultiplier = 0.8;
+let isPanning = false;
 
-let translatePos = {
+let cameraOffset = {
   x: canvas.width / 2,
   y: canvas.height / 2,
 };
+let panStart = {};
 
-let scale = 1.0;
-let scaleMultiplier = 0.8;
+tool.beginPath();
+tool.moveTo(0, 0);
+tool.lineTo(100, 150);
+tool.stroke();
 
-// tool.translate(translatePos.x, translatePos.y);
-// tool.scale(1, 1);
+canvas.addEventListener("mousedown", function (evt) {
+  isPanning = true;
+  panStart.x = evt.clientX - cameraOffset.x;
+  panStart.y = evt.clientY - cameraOffset.y;
+});
 
-console.log(scale);
-
-canvas.addEventListener("mousedown", (e) => {
-  if (pencilToolsFlag.value) {
-    drawPencil = true;
-    startDrawing({ x: e.clientX, y: e.clientY });
-  } else if (markerToolsFlag.value) {
-    drawMarker = true;
-    startDrawing({ x: e.clientX, y: e.clientY });
-  } else if (eraserToolsFlag.value) {
-    drawEraser = true;
-    startDrawing({ x: e.clientX, y: e.clientY });
-    tool.globalCompositeOperation = "destination-out";
-  } else if (currentShape !== "") {
-    drawShape = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    // startDrawingShape({ x: e.clientX, y: e.clientY });
-  } else if (panningToolFlag.value) {
-    isPanning = true;
-    panStart = { x: e.clientX, y: e.clientY };
+canvas.addEventListener("mousemove", function (evt) {
+  if (isPanning && isPanning) {
+    cameraOffset.x = evt.clientX - panStart.x;
+    cameraOffset.y = evt.clientY - panStart.y;
+    redraw();
   }
 });
 
-canvas.addEventListener("mousemove", (e) => {
-  if (isPanning) {
-    const deltaX = e.clientX - panStart.x;
-    const deltaY = e.clientY - panStart.y;
-    cameraOffset.x -= deltaX / cameraZoom;
-    cameraOffset.y -= deltaY / cameraZoom;
-    panStart = { x: e.clientX, y: e.clientY };
-    redrawCanvas();
-    canvas.style.cursor = "move";
-  } else if ((drawPencil && pencilToolsFlag.value) || drawEraser) {
-    const data = {
-      color: eraserToolsFlag.value ? eraserColor : pencilColor,
-      width: eraserToolsFlag.value ? eraserSize : pencilSize,
-      x: e.clientX,
-      y: e.clientY,
-      composite: eraserToolsFlag.value ? "destination-out" : "source-over",
-    };
-    continueDrawing(data);
-  } else if ((drawMarker && markerToolsFlag.value) || drawEraser) {
-    const markerData = {
-      color: eraserToolsFlag.value ? eraserColor : markerColor,
-      width: eraserToolsFlag.value ? eraserSize : markerSize,
-      x: e.clientX,
-      y: e.clientY,
-      composite: eraserToolsFlag.value ? "destination-out" : "source-over",
-    };
-    continueDrawing(markerData);
-  } else if (currentShape !== "" && drawShape) {
-    continueDrawingShape({ x: e.clientX, y: e.clientY });
-  }
+canvas.addEventListener("mouseup", function (evt) {
+  isPanning = false;
 });
 
-canvas.addEventListener("mouseup", (e) => {
-  drawPencil = false;
-  drawMarker = false;
-  drawEraser = false;
+// canvas.addEventListener("mousedown", (e) => {
+//   if (pencilToolsFlag.value) {
+//     drawPencil = true;
+//     startDrawing({ x: e.clientX, y: e.clientY });
+//   } else if (markerToolsFlag.value) {
+//     drawMarker = true;
+//     startDrawing({ x: e.clientX, y: e.clientY });
+//   } else if (eraserToolsFlag.value) {
+//     drawEraser = true;
+//     startDrawing({ x: e.clientX, y: e.clientY });
+//     tool.globalCompositeOperation = "destination-out";
+//   } else if (currentShape !== "") {
+//     drawShape = true;
+//     startX = e.clientX;
+//     startY = e.clientY;
+//     // startDrawingShape({ x: e.clientX, y: e.clientY });
+//   } else if (panningToolFlag.value) {
+//     isPanning = true;
+//     panStart.x = e.clientX - cameraOffset.x;
+//     panStart.y = e.clientY - cameraOffset.y;
+//     // panStart = { x: e.clientX, y: e.clientY };
+//     // cameraOffset = {
+//     //   x: canvas.width / 2 - e.clientX,
+//     //   y: canvas.height / 2 - e.clientY,
+//     // };
+//   }
+// });
 
-  if (currentShape !== "") {
-    finishDrawingShape();
-    drawShape = false;
-  }
+// canvas.addEventListener("mousemove", (e) => {
+//   if (isPanning) {
+//     const deltaX = e.clientX - panStart.x;
+//     const deltaY = e.clientY - panStart.y;
+//     // cameraOffset.x -= deltaX / cameraZoom;
+//     // cameraOffset.y -= deltaY / cameraZoom;
+//     cameraOffset = { x: deltaX, y: deltaY };
+//     // panStart = { x: e.clientX, y: e.clientY };
+//     redrawCanvas();
+//     canvas.style.cursor = "move";
+//   } else if ((drawPencil && pencilToolsFlag.value) || drawEraser) {
+//     const data = {
+//       color: eraserToolsFlag.value ? eraserColor : pencilColor,
+//       width: eraserToolsFlag.value ? eraserSize : pencilSize,
+//       x: e.clientX,
+//       y: e.clientY,
+//       composite: eraserToolsFlag.value ? "destination-out" : "source-over",
+//     };
+//     continueDrawing(data);
+//   } else if ((drawMarker && markerToolsFlag.value) || drawEraser) {
+//     const markerData = {
+//       color: eraserToolsFlag.value ? eraserColor : markerColor,
+//       width: eraserToolsFlag.value ? eraserSize : markerSize,
+//       x: e.clientX,
+//       y: e.clientY,
+//       composite: eraserToolsFlag.value ? "destination-out" : "source-over",
+//     };
+//     continueDrawing(markerData);
+//   } else if (currentShape !== "" && drawShape) {
+//     continueDrawingShape({ x: e.clientX, y: e.clientY });
+//   }
+// });
 
-  // Reset the global composite operation to default when not erasing
-  if (!drawEraser) {
-    tool.globalCompositeOperation = "source-over";
-  }
+// canvas.addEventListener("mouseup", (e) => {
+//   drawPencil = false;
+//   drawMarker = false;
+//   drawEraser = false;
 
-  if (isPanning) {
-    isPanning = false;
-    canvas.style.cursor = "default";
-  }
+//   if (currentShape !== "") {
+//     finishDrawingShape();
+//     drawShape = false;
+//   }
 
-  saveUndoHistory();
-});
+//   // Reset the global composite operation to default when not erasing
+//   if (!drawEraser) {
+//     tool.globalCompositeOperation = "source-over";
+//   }
 
-canvas.addEventListener("mouseout", (e) => {
-  if (isPanning) {
-    isPanning = false;
-    canvas.style.cursor = "default";
-  }
-});
+//   if (isPanning) {
+//     isPanning = false;
+//     redrawCanvas();
+//     canvas.style.cursor = "default";
+//   }
+
+//   saveUndoHistory();
+// });
+
+// canvas.addEventListener("mouseout", (e) => {
+//   if (isPanning) {
+//     isPanning = false;
+//     redrawCanvas();
+//     canvas.style.cursor = "default";
+//   }
+// });
 
 canvas.addEventListener("click", (e) => {
   if (textToolsFlag.value) {
@@ -545,27 +570,38 @@ reset.addEventListener("click", (e) => {
 });
 
 zoomIn.addEventListener("click", (e) => {
-  console.log("hello");
   scale /= scaleMultiplier;
-  saveUndoHistory();
-  redrawCanvas();
+  // saveUndoHistory();
+  redraw();
 });
 
 zoomOut.addEventListener("click", (e) => {
-  console.log("Hii");
   scale *= scaleMultiplier;
-  saveUndoHistory();
-  redrawCanvas();
+  // saveUndoHistory();
+  redraw();
 });
 
 function redrawCanvas() {
   tool.clearRect(0, 0, canvas.width, canvas.height);
   tool.save();
+  tool.translate(cameraOffset.x, cameraOffset.y);
+  tool.scale(scale, scale);
   redrawUndoHistory();
-  // tool.translate(translatePos.x, translatePos.y);
+
+  tool.restore();
+}
+
+function redraw() {
+  console.log("Hello");
+  tool.clearRect(0, 0, canvas.width, canvas.height);
+  tool.save();
+  tool.translate(cameraOffset.x, cameraOffset.y);
   console.log(scale);
   tool.scale(scale, scale);
-  // redraw your content here
-
+  tool.beginPath();
+  tool.moveTo(0, 0);
+  tool.lineTo(100, 150);
+  tool.stroke();
+  // redrawUndoHistory();
   tool.restore();
 }
