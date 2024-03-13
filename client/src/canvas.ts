@@ -1,20 +1,32 @@
+import {
+  pencilToolsFlag,
+  eraserToolsFlag,
+  markerToolsFlag,
+  textToolsFlag,
+  resetCursor,
+} from "./tools";
+
 let canvas = document.querySelector("canvas");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let tool = canvas.getContext("2d");
+let tool: CanvasRenderingContext2D = canvas.getContext("2d");
 
 let pencilColors = document.querySelectorAll(".pencil-color");
-let pencilWidth = document.querySelector(".pencil-width-input");
+let pencilWidth = <HTMLInputElement>(
+  document.querySelector(".pencil-width-input")
+);
 let pencilEdges = document.querySelectorAll(".pencil-edge");
 let pencilPatterns = document.querySelectorAll(".pencil-pattern");
 
 let markerColors = document.querySelectorAll(".marker-color");
-let markerWidth = document.querySelector(".marker-width-input");
+let markerWidth = <HTMLInputElement>(
+  document.querySelector(".marker-width-input")
+);
 let markerPatterns = document.querySelectorAll(".marker-pattern");
 
 let eraserIcon = document.querySelector(".eraser");
-let eraserWidth = document.querySelector(".eraser-width");
+let eraserWidth = <HTMLInputElement>document.querySelector(".eraser-width");
 
 let shapeIcons = document.querySelectorAll(".shape");
 
@@ -25,8 +37,8 @@ let canvasBgColors = document.querySelectorAll(".canvas-color");
 
 let download = document.querySelector(".download");
 
-let redo = document.querySelector(".redo");
-let undo = document.querySelector(".undo");
+let redo = <HTMLImageElement>document.querySelector(".redo");
+let undo = <HTMLImageElement>document.querySelector(".undo");
 
 let reset = document.querySelector(".reset");
 
@@ -36,12 +48,12 @@ let drawEraser = false;
 
 let pencilColor = "#1e1e1e";
 let markerColor = "#afafaf";
-let pencilEdge = "sqaure";
+let pencilEdge: CanvasLineCap = "square";
 let eraserColor = "#fff";
 
-let pencilSize = pencilWidth.value;
-let markerSize = markerWidth.value;
-let eraserSize = eraserWidth.value;
+let pencilSize = +pencilWidth.value;
+let markerSize = +markerWidth.value;
+let eraserSize = +eraserWidth.value;
 
 tool.strokeStyle = pencilColor;
 tool.lineWidth = pencilSize;
@@ -52,15 +64,15 @@ let track = 0; // represets which to perform from tracker array
 
 let currentShape = "";
 let drawShape = false;
-let startX = "";
-let startY = "";
+let startX: number = 0;
+let startY: number = 0;
 
 let textSize = 20;
 let textFamily = "normal";
 let textColor = "#000000";
 
 let isDragging = false;
-let offsetX, offsetY;
+let offsetX: number, offsetY: number;
 
 canvas.addEventListener("mousedown", (e) => {
   if (pencilToolsFlag.value) {
@@ -129,7 +141,7 @@ canvas.addEventListener("click", (e) => {
     textarea.style.position = "absolute";
     textarea.style.left = `${e.clientX}px`;
     textarea.style.top = `${e.clientY}px`;
-    textarea.style.fontSize = textSize;
+    textarea.style.fontSize = textSize.toString();
     textarea.classList.add(textFamily);
     textarea.style.color = textColor;
     textarea.style.border = "1px solid black";
@@ -236,7 +248,7 @@ function continueDrawing(movement) {
 textSizeIcons.forEach((sizeIcon) => {
   sizeIcon.addEventListener("click", () => {
     let chosenSize = sizeIcon.getAttribute("title");
-    textSize = chosenSize;
+    textSize = +chosenSize;
   });
 });
 
@@ -263,15 +275,33 @@ pencilColors.forEach((color) => {
 });
 
 pencilWidth.addEventListener("change", (e) => {
-  pencilSize = parseInt(e.target.value);
+  let target = e.target as HTMLInputElement;
+  pencilSize = parseInt(target.value);
   tool.lineWidth = pencilSize;
 });
 
 pencilEdges.forEach((edge) => {
   edge.addEventListener("click", (e) => {
     let chosenEdge = edge.getAttribute("alt").split(" ")[0].toLowerCase();
-    pencilEdge = chosenEdge;
-    tool.lineCap = pencilEdge;
+    let canvasLineCap: CanvasLineCap;
+
+    switch (chosenEdge) {
+      case "butt":
+        canvasLineCap = "butt";
+        break;
+      case "round":
+        canvasLineCap = "round";
+        break;
+      case "square":
+        canvasLineCap = "square";
+        break;
+      default:
+        canvasLineCap = "butt";
+        break;
+    }
+
+    pencilEdge = canvasLineCap;
+    tool.lineCap = canvasLineCap;
   });
 });
 
@@ -300,7 +330,8 @@ markerColors.forEach((color) => {
 });
 
 markerWidth.addEventListener("change", (e) => {
-  markerSize = parseInt(e.target.value);
+  let target = e.target as HTMLInputElement;
+  markerSize = parseInt(target.value);
   tool.lineWidth = markerSize;
 });
 
@@ -312,7 +343,8 @@ markerPatterns.forEach((pattern, index) => {
 });
 
 eraserWidth.addEventListener("change", (e) => {
-  eraserSize = parseInt(e.target.value);
+  let target = e.target as HTMLInputElement;
+  eraserSize = parseInt(target.value);
   tool.lineWidth = eraserSize;
 });
 
@@ -367,7 +399,7 @@ function startDrawingShape(position) {
 
 function continueDrawingShape(position) {
   tool.strokeStyle = "#1e1e1e";
-  tool.lineWidth = "3";
+  tool.lineWidth = 3;
 
   switch (currentShape) {
     case "square":
@@ -395,7 +427,7 @@ function continueDrawingShape(position) {
     case "diamond":
       let diamondWidth = Math.abs(position.x - startX);
       let diamondHeight = Math.abs(position.y - startY);
-      tool.clearRect(0, 0, canvas.diamondWidth, canvas.diamondHeight);
+      tool.clearRect(0, 0, diamondWidth, diamondHeight);
       redrawUndoHistory();
       tool.beginPath();
       tool.moveTo(startX, startY - diamondHeight / 2); // Top point
@@ -464,7 +496,7 @@ undo.addEventListener("click", (e) => {
     // let data = { track, undoRedoTracker };
     // socket.emit("undoRedoCanvas", data);
     undoRedoCanvas({ track, undoRedoTracker });
-    redo.disabled = false; // Enable the redo button if it was disabled
+    // redo.disabled = false; // Enable the redo button if it was disabled
   }
 });
 
@@ -476,7 +508,7 @@ redo.addEventListener("click", (e) => {
     // let data = { track, undoRedoTracker };
     // socket.emit("undoRedoCanvas", data);
     undoRedoCanvas({ track, undoRedoTracker });
-    undo.disabled = false; // Enable the undo button if it was disabled
+    // undo.disabled = false; // Enable the undo button if it was disabled
   }
 });
 
@@ -500,15 +532,3 @@ reset.addEventListener("click", (e) => {
     tool.clearRect(0, 0, canvas.width, canvas.height);
   }
 });
-
-// socket.on("startDrawing", (data) => {
-//   startDrawing(data);
-// });
-
-// socket.on("continueDrawing", (data) => {
-//   continueDrawing(data);
-// });
-
-// socket.on("undoRedoCanvas", (data) => {
-//   undoRedoCanvas(data);
-// });

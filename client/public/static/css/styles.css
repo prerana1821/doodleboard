@@ -280,15 +280,15 @@ body {
 }
 
 .cursor-pencil {
-  cursor: url("./icons/cursors/cursor-pencil.png"), auto;
+  cursor: url("../../icons/cursors/cursor-pencil.png"), auto;
 }
 
 .cursor-marker {
-  cursor: url("./icons/cursors/cursor-marker.png"), auto;
+  cursor: url("../../icons/cursors/cursor-marker.png"), auto;
 }
 
 .cursor-eraser {
-  cursor: url("./icons/cursors/cursor-eraser.png"), auto;
+  cursor: url("../../icons/cursors/cursor-eraser.png"), auto;
 }
 
 .sticky-note,

@@ -1,41 +1,46 @@
 let toggleOptions = document.querySelector(".toggle-options");
 let toggleFlag = true;
 
-let tools = document.querySelector(".tools");
+let tools = <HTMLDivElement>document.querySelector(".tools");
 
 let pencil = document.querySelector(".pencil");
-let pencilTools = document.querySelector(".pencil-tools");
-let pencilToolsFlag = { value: false };
+let pencilTools = <HTMLDivElement>document.querySelector(".pencil-tools");
+// let pencilToolsFlag = { value: false };
+export const pencilToolsFlag = { value: false };
 
 let marker = document.querySelector(".marker");
-let markerTools = document.querySelector(".marker-tools");
-let markerToolsFlag = { value: false };
+let markerTools = <HTMLDivElement>document.querySelector(".marker-tools");
+export const markerToolsFlag = { value: false };
 
 let eraser = document.querySelector(".eraser");
-let eraserTools = document.querySelector(".eraser-tools");
-let eraserToolsFlag = { value: false };
+let eraserTools = <HTMLDivElement>document.querySelector(".eraser-tools");
+export const eraserToolsFlag = { value: false };
 
 let stickyNote = document.querySelector(".stickynote");
-let stickyNoteTools = document.querySelector(".stickynote-tools");
+let stickyNoteTools = <HTMLDivElement>(
+  document.querySelector(".stickynote-tools")
+);
 let stickyNoteToolsFlag = { value: false };
 
 let upload = document.querySelector(".upload");
 
 let shapes = document.querySelector(".shapes");
-let shapesTools = document.querySelector(".shapes-tools");
-let shapesToolsFlag = { value: false };
+let shapesTools = <HTMLDivElement>document.querySelector(".shapes-tools");
+export const shapesToolsFlag = { value: false };
 
 let text = document.querySelector(".text");
-let textTools = document.querySelector(".text-tools");
-let textToolsFlag = { value: false };
+let textTools = <HTMLDivElement>document.querySelector(".text-tools");
+export const textToolsFlag = { value: false };
 
 let canvasBgColor = document.querySelector(".canvas-bgcolor");
-let canvasBgColorTools = document.querySelector(".canvas-bgcolor-tools");
-let canvasBgColorToolsFlag = { value: false };
+let canvasBgColorTools = <HTMLDivElement>(
+  document.querySelector(".canvas-bgcolor-tools")
+);
+export const canvasBgColorToolsFlag = { value: false };
 
 let dragEl;
 let dragHandleEl;
-const lastPosition = {};
+const lastPosition = { left: 0, top: 0 };
 
 toggleOptions.addEventListener("click", (e) => {
   toggleFlag = !toggleFlag;
@@ -48,7 +53,7 @@ toggleOptions.addEventListener("click", (e) => {
 });
 
 function openTools() {
-  let openToolsImg = toggleOptions.children[0];
+  let openToolsImg = <HTMLImageElement>toggleOptions.children[0];
   openToolsImg.src = "./icons/tools/close.png";
   openToolsImg.title = "Close Menu";
 
@@ -56,7 +61,7 @@ function openTools() {
 }
 
 function closeTools() {
-  let closeToolsImg = toggleOptions.children[0];
+  let closeToolsImg = <HTMLImageElement>toggleOptions.children[0];
   closeToolsImg.src = "./icons/tools/menu.png";
   closeToolsImg.title = "Open Menu";
 
@@ -274,8 +279,8 @@ upload.addEventListener("click", (e) => {
 
     let stickyNoteDoc = document.createElement("div");
     stickyNoteDoc.classList.add("sticky-note-image");
-    stickyNoteDoc.setAttribute("data-resizable", true);
-    stickyNoteDoc.setAttribute("data-draggable", true);
+    stickyNoteDoc.setAttribute("data-resizable", "true");
+    stickyNoteDoc.setAttribute("data-draggable", "true");
 
     stickyNoteDoc.innerHTML = `
       <div class="header-note drag-handle" data-drag-handle="true">
@@ -329,7 +334,7 @@ function dragAndDrop(element, event) {
 function setupResizable() {
   const resizeElemets = document.querySelectorAll("[data-resizable]");
 
-  resizeElemets.forEach((resizeElement) => {
+  resizeElemets.forEach((resizeElement: HTMLDivElement) => {
     resizeElement.style.setProperty("resize", "both");
     resizeElement.style.setProperty("overflow", "hidden");
   });
@@ -377,11 +382,11 @@ function dragEnd() {
   dragEl = null;
 }
 
-function resetCursor() {
+export const resetCursor = () => {
   document.body.classList.remove("cursor-pencil");
   document.body.classList.remove("cursor-eraser");
   document.body.classList.remove("cursor-marker");
-}
+};
 
 function addCursorAuto() {
   document.body.classList.add("cursor-auto");
