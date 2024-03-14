@@ -6,11 +6,19 @@ import {
   resetCursor,
 } from "./tools";
 
-let canvas = document.querySelector("canvas");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+type Movement = {
+  x: number;
+  y: number;
+  width?: number;
+  color?: string;
+  composite?: string;
+};
 
-let tool: CanvasRenderingContext2D = canvas.getContext("2d");
+let canvas = document.querySelector("canvas");
+canvas!.width = window.innerWidth;
+canvas!.height = window.innerHeight;
+
+let tool: CanvasRenderingContext2D = canvas!.getContext("2d")!;
 
 let pencilColors = document.querySelectorAll(".pencil-color");
 let pencilWidth = <HTMLInputElement>(
@@ -59,7 +67,7 @@ tool.strokeStyle = pencilColor;
 tool.lineWidth = pencilSize;
 tool.lineCap = pencilEdge;
 
-let undoRedoTracker = []; // data
+let undoRedoTracker: string[] = []; // data
 let track = 0; // represets which to perform from tracker array
 
 let currentShape = "";
@@ -67,14 +75,16 @@ let drawShape = false;
 let startX: number = 0;
 let startY: number = 0;
 
-let textSize = 20;
+let textSize: number | string = 20;
 let textFamily = "normal";
 let textColor = "#000000";
 
 let isDragging = false;
 let offsetX: number, offsetY: number;
 
-canvas.addEventListener("mousedown", (e) => {
+console.log({ textSize });
+
+canvas?.addEventListener("mousedown", (e) => {
   if (pencilToolsFlag.value) {
     drawPencil = true;
     startDrawing({ x: e.clientX, y: e.clientY });
@@ -93,7 +103,7 @@ canvas.addEventListener("mousedown", (e) => {
   }
 });
 
-canvas.addEventListener("mousemove", (e) => {
+canvas?.addEventListener("mousemove", (e) => {
   if ((drawPencil && pencilToolsFlag.value) || drawEraser) {
     const data = {
       color: eraserToolsFlag.value ? eraserColor : pencilColor,
@@ -117,7 +127,7 @@ canvas.addEventListener("mousemove", (e) => {
   }
 });
 
-canvas.addEventListener("mouseup", (e) => {
+canvas?.addEventListener("mouseup", (e) => {
   drawPencil = false;
   drawMarker = false;
   drawEraser = false;
@@ -135,13 +145,13 @@ canvas.addEventListener("mouseup", (e) => {
   saveUndoHistory();
 });
 
-canvas.addEventListener("click", (e) => {
+canvas?.addEventListener("click", (e) => {
   if (textToolsFlag.value) {
     const textarea = document.createElement("textarea");
     textarea.style.position = "absolute";
     textarea.style.left = `${e.clientX}px`;
     textarea.style.top = `${e.clientY}px`;
-    textarea.style.fontSize = textSize.toString();
+    textarea.style.fontSize = `${textSize}px`;
     textarea.classList.add(textFamily);
     textarea.style.color = textColor;
     textarea.style.border = "1px solid black";
@@ -202,7 +212,8 @@ canvas.addEventListener("click", (e) => {
         tool.fillText(
           textarea.value,
           parseInt(textarea.style.left),
-          parseInt(textarea.style.top) + textSize
+          parseInt(textarea.style.top),
+          Number(textSize)
         );
         document.body.removeChild(textarea);
         saveUndoHistory();
@@ -216,7 +227,7 @@ canvas.addEventListener("click", (e) => {
         tool.fillText(
           textarea.value,
           parseInt(textarea.style.left),
-          parseInt(textarea.style.top) + textSize
+          parseInt(textarea.style.top) + Number(textSize)
         );
         document.body.removeChild(textarea);
         saveUndoHistory();
@@ -232,15 +243,17 @@ canvas.addEventListener("click", (e) => {
   }
 });
 
-function startDrawing(movement) {
+function startDrawing(movement: Movement) {
   tool.beginPath();
   tool.moveTo(movement.x, movement.y);
 }
 
-function continueDrawing(movement) {
-  tool.strokeStyle = movement.color;
-  tool.lineWidth = movement.width;
-  tool.globalCompositeOperation = movement.composite;
+function continueDrawing(movement: Movement) {
+  tool.strokeStyle = movement.color ? movement.color : "#1e1e1e";
+  tool.lineWidth = movement.width ? movement.width : 16;
+  tool.globalCompositeOperation = movement.composite
+    ? (movement.composite as GlobalCompositeOperation)
+    : "source-over";
   tool.lineTo(movement.x, movement.y);
   tool.stroke();
 }
@@ -248,14 +261,14 @@ function continueDrawing(movement) {
 textSizeIcons.forEach((sizeIcon) => {
   sizeIcon.addEventListener("click", () => {
     let chosenSize = sizeIcon.getAttribute("title");
-    textSize = +chosenSize;
+    textSize = chosenSize ? chosenSize : "16";
   });
 });
 
 textFamilyIcons.forEach((familyIcon) => {
   familyIcon.addEventListener("click", () => {
-    const chosenFont = familyIcon.getAttribute("class").split(" ")[0];
-    textFamily = chosenFont;
+    const chosenFont = familyIcon.getAttribute("class")?.split(" ")[0];
+    textFamily = chosenFont ? chosenFont : "normal";
   });
 });
 
@@ -282,7 +295,7 @@ pencilWidth.addEventListener("change", (e) => {
 
 pencilEdges.forEach((edge) => {
   edge.addEventListener("click", (e) => {
-    let chosenEdge = edge.getAttribute("alt").split(" ")[0].toLowerCase();
+    let chosenEdge = edge?.getAttribute("alt")?.split(" ")[0].toLowerCase();
     let canvasLineCap: CanvasLineCap;
 
     switch (chosenEdge) {
@@ -348,7 +361,7 @@ eraserWidth.addEventListener("change", (e) => {
   tool.lineWidth = eraserSize;
 });
 
-eraserIcon.addEventListener("click", (e) => {
+eraserIcon?.addEventListener("click", (e) => {
   if (eraserToolsFlag.value) {
     tool.globalCompositeOperation = "destination-out";
     tool.strokeStyle = eraserColor;
@@ -369,13 +382,13 @@ canvasBgColors.forEach((bgColor) => {
     document.body.style.backgroundColor = chosenBgColor;
 
     // tool.fillStyle = chosenBgColor;
-    // tool.fillRect(0, 0, canvas.width, canvas.height);
+    // tool.fillRect(0, 0, canvas!.width, canvas!.height);
   });
 });
 
 function redrawUndoHistory() {
   // Clear the canvas
-  canvas.width = canvas.width;
+  canvas!.width = canvas!.width;
 
   // Create new image objects for each saved state in the undoRedoTracker array
   for (let i = 0; i <= track; i++) {
@@ -387,17 +400,17 @@ function redrawUndoHistory() {
 }
 
 function saveUndoHistory() {
-  let url = canvas.toDataURL();
+  let url = canvas!.toDataURL();
   undoRedoTracker.push(url);
   track = undoRedoTracker.length - 1;
 }
 
-function startDrawingShape(position) {
+function startDrawingShape(position: Movement) {
   tool.beginPath();
   tool.moveTo(position.x, position.y);
 }
 
-function continueDrawingShape(position) {
+function continueDrawingShape(position: Movement) {
   tool.strokeStyle = "#1e1e1e";
   tool.lineWidth = 3;
 
@@ -405,7 +418,7 @@ function continueDrawingShape(position) {
     case "square":
       let width = position.x - startX;
       let height = position.y - startY;
-      tool.clearRect(0, 0, canvas.width, canvas.height);
+      tool.clearRect(0, 0, canvas!.width, canvas!.height);
       // Redraw the previous image (if any)
       redrawUndoHistory();
       tool.beginPath();
@@ -417,7 +430,7 @@ function continueDrawingShape(position) {
       let radius = Math.sqrt(
         (position.x - startX) ** 2 + (position.y - startY) ** 2
       );
-      tool.clearRect(0, 0, canvas.width, canvas.height);
+      tool.clearRect(0, 0, canvas!.width, canvas!.height);
       redrawUndoHistory();
       tool.beginPath();
       tool.arc(startX, startY, radius, 0, 2 * Math.PI);
@@ -440,7 +453,7 @@ function continueDrawingShape(position) {
     case "rectangle":
       let rectWidth = position.x - startX;
       let rectHeight = position.y - startY;
-      tool.clearRect(0, 0, canvas.width, canvas.height);
+      tool.clearRect(0, 0, canvas!.width, canvas!.height);
       redrawUndoHistory();
       tool.beginPath();
       tool.rect(startX, startY, rectWidth, rectHeight);
@@ -449,7 +462,7 @@ function continueDrawingShape(position) {
     case "triangle":
       let triangleWidth = position.x - startX;
       let triangleHeight = position.y - startY;
-      tool.clearRect(0, 0, canvas.width, canvas.height);
+      tool.clearRect(0, 0, canvas!.width, canvas!.height);
       redrawUndoHistory();
       tool.beginPath();
       // Start from the top vertex and draw the triangle
@@ -473,14 +486,14 @@ function finishDrawingShape() {
 
 shapeIcons.forEach((shape) => {
   shape.addEventListener("click", (e) => {
-    currentShape = shape.getAttribute("alt").toLowerCase();
+    currentShape = shape.getAttribute("alt")!.toLowerCase();
   });
 });
 
-download.addEventListener("click", (e) => {
+download?.addEventListener("click", (e) => {
   resetCursor();
 
-  let url = canvas.toDataURL();
+  let url = canvas!.toDataURL();
 
   let a = document.createElement("a");
   a.href = url;
@@ -512,23 +525,23 @@ redo.addEventListener("click", (e) => {
   }
 });
 
-function undoRedoCanvas(tracker) {
+function undoRedoCanvas(tracker: { track: number; undoRedoTracker: string[] }) {
   track = tracker.track;
   undoRedoTracker = tracker.undoRedoTracker;
 
   let img = new Image();
   img.src = undoRedoTracker[track];
   img.onload = (e) => {
-    tool.clearRect(0, 0, canvas.width, canvas.height);
-    tool.drawImage(img, 0, 0, canvas.width, canvas.height);
+    tool.clearRect(0, 0, canvas!.width, canvas!.height);
+    tool.drawImage(img, 0, 0, canvas!.width, canvas!.height);
   };
 }
 
-reset.addEventListener("click", (e) => {
+reset?.addEventListener("click", (e) => {
   resetCursor();
 
   let text = "This will clear the whole canvas. Are you sure?";
   if (confirm(text) == true) {
-    tool.clearRect(0, 0, canvas.width, canvas.height);
+    tool.clearRect(0, 0, canvas!.width, canvas!.height);
   }
 });

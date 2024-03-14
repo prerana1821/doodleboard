@@ -5,7 +5,6 @@ let tools = <HTMLDivElement>document.querySelector(".tools");
 
 let pencil = document.querySelector(".pencil");
 let pencilTools = <HTMLDivElement>document.querySelector(".pencil-tools");
-// let pencilToolsFlag = { value: false };
 export const pencilToolsFlag = { value: false };
 
 let marker = document.querySelector(".marker");
@@ -38,11 +37,11 @@ let canvasBgColorTools = <HTMLDivElement>(
 );
 export const canvasBgColorToolsFlag = { value: false };
 
-let dragEl;
+let dragEl: HTMLElement | null;
 let dragHandleEl;
 const lastPosition = { left: 0, top: 0 };
 
-toggleOptions.addEventListener("click", (e) => {
+toggleOptions?.addEventListener("click", (e) => {
   toggleFlag = !toggleFlag;
 
   if (toggleFlag) {
@@ -53,7 +52,7 @@ toggleOptions.addEventListener("click", (e) => {
 });
 
 function openTools() {
-  let openToolsImg = <HTMLImageElement>toggleOptions.children[0];
+  let openToolsImg = <HTMLImageElement>toggleOptions?.children[0];
   openToolsImg.src = "./icons/tools/close.png";
   openToolsImg.title = "Close Menu";
 
@@ -61,7 +60,7 @@ function openTools() {
 }
 
 function closeTools() {
-  let closeToolsImg = <HTMLImageElement>toggleOptions.children[0];
+  let closeToolsImg = <HTMLImageElement>toggleOptions?.children[0];
   closeToolsImg.src = "./icons/tools/menu.png";
   closeToolsImg.title = "Open Menu";
 
@@ -69,7 +68,13 @@ function closeTools() {
   hideAllTools();
 }
 
-function toggleTool(toolFlag, otherToolFlags, tool, toolTools, cursorClass) {
+function toggleTool(
+  toolFlag: boolean,
+  otherToolFlags: { value: boolean }[],
+  tool: Element | null,
+  toolTools: HTMLDivElement,
+  cursorClass: string
+) {
   resetCursor();
 
   otherToolFlags.forEach(
@@ -95,7 +100,7 @@ function hideAllTools() {
   canvasBgColorTools.style.display = "none";
 }
 
-pencil.addEventListener("click", (e) => {
+pencil?.addEventListener("click", (e) => {
   pencilToolsFlag.value = !pencilToolsFlag.value;
   toggleTool(
     pencilToolsFlag.value,
@@ -112,7 +117,7 @@ pencil.addEventListener("click", (e) => {
   );
 });
 
-marker.addEventListener("click", (e) => {
+marker?.addEventListener("click", (e) => {
   markerToolsFlag.value = !markerToolsFlag.value;
   toggleTool(
     markerToolsFlag.value,
@@ -129,7 +134,7 @@ marker.addEventListener("click", (e) => {
   );
 });
 
-eraser.addEventListener("click", (e) => {
+eraser?.addEventListener("click", (e) => {
   eraserToolsFlag.value = !eraserToolsFlag.value;
   toggleTool(
     eraserToolsFlag.value,
@@ -146,7 +151,7 @@ eraser.addEventListener("click", (e) => {
   );
 });
 
-shapes.addEventListener("click", (e) => {
+shapes?.addEventListener("click", (e) => {
   shapesToolsFlag.value = !shapesToolsFlag.value;
   toggleTool(
     shapesToolsFlag.value,
@@ -163,7 +168,7 @@ shapes.addEventListener("click", (e) => {
   );
 });
 
-text.addEventListener("click", (e) => {
+text?.addEventListener("click", (e) => {
   textToolsFlag.value = !textToolsFlag.value;
   toggleTool(
     textToolsFlag.value,
@@ -180,7 +185,7 @@ text.addEventListener("click", (e) => {
   );
 });
 
-canvasBgColor.addEventListener("click", (e) => {
+canvasBgColor?.addEventListener("click", (e) => {
   canvasBgColorToolsFlag.value = !canvasBgColorToolsFlag.value;
   toggleTool(
     canvasBgColorToolsFlag.value,
@@ -197,24 +202,36 @@ canvasBgColor.addEventListener("click", (e) => {
   );
 });
 
-function noteActions(minimizeNote, removeNote, stickyNoteDoc) {
-  minimizeNote.addEventListener("click", (e) => {
-    let noteBody = stickyNoteDoc.querySelector(".body-note");
+function noteActions(
+  minimizeNote: HTMLDivElement | null,
+  removeNote: HTMLDivElement | null,
+  stickyNoteDoc: HTMLDivElement | null
+) {
+  minimizeNote?.addEventListener("click", (e) => {
+    if (!stickyNoteDoc) return; // Check if stickyNoteDoc is null
+
+    let noteBody = <HTMLDivElement>stickyNoteDoc.querySelector(".body-note");
+
+    if (!noteBody) return; // Check if noteBody is null
 
     if (noteBody.style.display === "none") {
       noteBody.style.display = "block";
     } else {
       noteBody.style.display = "none";
-      noteBody.parentElement.style.resize = "none";
+      let parent = noteBody.parentElement;
+      if (parent) {
+        parent.style.resize = "none";
+      }
     }
   });
 
-  removeNote.addEventListener("click", (e) => {
+  removeNote?.addEventListener("click", (e) => {
+    if (!stickyNoteDoc) return; // Check if stickyNoteDoc is null
     stickyNoteDoc.remove();
   });
 }
 
-stickyNote.addEventListener("click", (e) => {
+stickyNote?.addEventListener("click", (e) => {
   resetCursor();
   addCursorAuto();
 
@@ -251,8 +268,12 @@ stickyNote.addEventListener("click", (e) => {
 
       document.body.appendChild(stickyNoteDoc);
 
-      let minimizeNote = stickyNoteDoc.querySelector(".minimize-note");
-      let removeNote = stickyNoteDoc.querySelector(".remove-note");
+      let minimizeNote = <HTMLDivElement>(
+        stickyNoteDoc.querySelector(".minimize-note")
+      );
+      let removeNote = <HTMLDivElement>(
+        stickyNoteDoc.querySelector(".remove-note")
+      );
       noteActions(minimizeNote, removeNote, stickyNoteDoc);
 
       stickyNoteDoc.onmousedown = function (event) {
@@ -265,7 +286,7 @@ stickyNote.addEventListener("click", (e) => {
   });
 });
 
-upload.addEventListener("click", (e) => {
+upload?.addEventListener("click", (e) => {
   resetCursor();
   addCursorAuto();
 
@@ -274,15 +295,16 @@ upload.addEventListener("click", (e) => {
   fileInput.click();
 
   fileInput.addEventListener("change", (e) => {
-    let file = fileInput.files[0];
-    let url = URL.createObjectURL(file);
+    if (fileInput.files && fileInput.files.length > 0) {
+      let file = fileInput.files[0];
+      let url = URL.createObjectURL(file);
 
-    let stickyNoteDoc = document.createElement("div");
-    stickyNoteDoc.classList.add("sticky-note-image");
-    stickyNoteDoc.setAttribute("data-resizable", "true");
-    stickyNoteDoc.setAttribute("data-draggable", "true");
+      let stickyNoteDoc = document.createElement("div");
+      stickyNoteDoc.classList.add("sticky-note-image");
+      stickyNoteDoc.setAttribute("data-resizable", "true");
+      stickyNoteDoc.setAttribute("data-draggable", "true");
 
-    stickyNoteDoc.innerHTML = `
+      stickyNoteDoc.innerHTML = `
       <div class="header-note drag-handle" data-drag-handle="true">
         <div class="minimize-note"></div>
         <div class="remove-note"></div>
@@ -290,34 +312,41 @@ upload.addEventListener("click", (e) => {
       <div class="body-note">
           <img src="${url}" class="upload-img-note" />
       </div>`;
-    document.body.appendChild(stickyNoteDoc);
+      document.body.appendChild(stickyNoteDoc);
 
-    let minimizeNote = stickyNoteDoc.querySelector(".minimize-note");
-    let removeNote = stickyNoteDoc.querySelector(".remove-note");
-    noteActions(minimizeNote, removeNote, stickyNoteDoc);
+      let minimizeNote = <HTMLDivElement>(
+        stickyNoteDoc.querySelector(".minimize-note")
+      );
+      let removeNote = <HTMLDivElement>(
+        stickyNoteDoc.querySelector(".remove-note")
+      );
+      noteActions(minimizeNote, removeNote, stickyNoteDoc);
 
-    setupResizable();
-    setupDraggable();
+      setupResizable();
+      setupDraggable();
+    } else {
+      alert("No file selected.");
+    }
   });
 });
 
-function dragAndDrop(element, event) {
+function dragAndDrop(element: HTMLDivElement, event: MouseEvent) {
   let shiftX = event.clientX - element.getBoundingClientRect().left;
   let shiftY = event.clientY - element.getBoundingClientRect().top;
 
   element.style.position = "absolute";
-  element.style.zIndex = 1000;
+  element.style.zIndex = "1000";
 
   moveAt(event.pageX, event.pageY);
 
   // moves the element at (pageX, pageY) coordinates
   // taking initial shifts into account
-  function moveAt(pageX, pageY) {
+  function moveAt(pageX: number, pageY: number) {
     element.style.left = pageX - shiftX + "px";
     element.style.top = pageY - shiftY + "px";
   }
 
-  function onMouseMove(event) {
+  function onMouseMove(event: { pageX: any; pageY: any }) {
     moveAt(event.pageX, event.pageY);
   }
 
@@ -332,11 +361,13 @@ function dragAndDrop(element, event) {
 }
 
 function setupResizable() {
-  const resizeElemets = document.querySelectorAll("[data-resizable]");
+  const resizeElements = document.querySelectorAll("[data-resizable]");
 
-  resizeElemets.forEach((resizeElement: HTMLDivElement) => {
-    resizeElement.style.setProperty("resize", "both");
-    resizeElement.style.setProperty("overflow", "hidden");
+  resizeElements.forEach((resizeElement) => {
+    if (resizeElement instanceof HTMLElement) {
+      resizeElement.style.setProperty("resize", "both");
+      resizeElement.style.setProperty("overflow", "hidden");
+    }
   });
 }
 
@@ -344,21 +375,28 @@ function setupDraggable() {
   let stickyNotes = document.querySelectorAll(".sticky-note-image");
 
   stickyNotes.forEach((stickyNote) => {
-    stickyNote.addEventListener("mousedown", dragStart);
+    stickyNote.addEventListener("mousedown", (event: MouseEvent | Event) =>
+      dragStart(event)
+    );
+
     stickyNote.addEventListener("mouseup", dragEnd);
     stickyNote.addEventListener("mouseout", dragEnd);
   });
 }
 
-function dragStart(event) {
-  dragEl = getDraggableAncestor(event.target);
-  dragEl.style.setProperty("position", "absolute");
-  lastPosition.left = event.clientX;
-  lastPosition.top = event.clientY;
-  document.addEventListener("mousemove", dragMove);
+function dragStart(event: MouseEvent | Event) {
+  const mouseEvent = event as MouseEvent;
+  const target = mouseEvent.target as HTMLElement;
+  const dragEl = getDraggableAncestor(target);
+  if (dragEl) {
+    dragEl.style.setProperty("position", "absolute");
+    lastPosition.left = mouseEvent.clientX;
+    lastPosition.top = mouseEvent.clientY;
+    document.addEventListener("mousemove", dragMove);
+  }
 }
 
-function dragMove(event) {
+function dragMove(event: { clientX: number; clientY: number }) {
   if (dragEl) {
     const newLeft = dragEl.offsetLeft + event.clientX - lastPosition.left;
     const newTop = dragEl.offsetTop + event.clientY - lastPosition.top;
@@ -369,11 +407,11 @@ function dragMove(event) {
   }
 }
 
-function getDraggableAncestor(element) {
-  if (element.classList.contains("sticky-note-image")) {
+function getDraggableAncestor(element: HTMLElement | null) {
+  if (element?.classList.contains("sticky-note-image")) {
     return element;
   } else {
-    return getDraggableAncestor(element.parentElement);
+    return getDraggableAncestor(element!.parentElement);
   }
 }
 
