@@ -4,18 +4,360 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
     <title>Doodleboard</title>
+    <script src="./main.js"></script>
   </head>
   <body>
     <nav>
-      <ul>
+      <ul class="header">
         <li>
-          <a href="#"> <img src="./icons/" alt="" /> </a>
+          <a href="#"
+            ><img class="logo" src="./logo.png" alt="Doodleboard Logo"
+          /></a>
         </li>
-        <li style="float: right">
-          <a class="active" href="./index.html">Start</a>
+        <li>
+          <a
+            class="nav-link"
+            href="https://github.com/prerana1821/doodleboard"
+            target="_blank"
+            >Github</a
+          >
         </li>
       </ul>
     </nav>
+
+    <section class="hero">
+      <div class="content">
+        <h2>Unleash Your Creativity, One Stroke at a Time!</h2>
+        <p>
+          Whether you want to sketch freely, annotate images, or add shapes and
+          text, Doodle Board has got you covered.
+        </p>
+        <a class="primary-button" href="/client/index.html">Start Doodling</a>
+      </div>
+      <div class="waves"></div>
+    </section>
+
+    <section>
+      <h2 class="sec-heading">
+        Express yourself freely and bring your ideas to life!
+      </h2>
+      <base href="./icons/landing-page/frame-1.png" />
+      <div id="carousel">
+        <figure id="spinner">
+          <img src="./frame-1.png" alt="frame-1" />
+          <img src="./frame-2.png" alt="frame-2" />
+          <img src="./frame-3.png" alt="frame-3" />
+        </figure>
+      </div>
+      <span style="float: left" class="ss-icon" onclick="galleryspin('-')"
+        >&lt;</span
+      >
+      <span style="float: right" class="ss-icon" onclick="galleryspin('')"
+        >&gt;</span
+      >
+    </section>
+
+    <section>
+      <h2 class="pri-heading">Key Features ✨</h2>
+      <div id="container" class="max-w-7xl">
+        <div id="stack" class="stack">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">
+              Masterful Pencil Sketches
+            </h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              w/ Expressive Precision
+            </h2>
+            <p id="description" class="description">
+              Let your creativity flow with our Pencil feature. Sketch, doodle,
+              or diagram with absolute freedom using adjustable size, color, and
+              patterns. Whether you're brainstorming ideas or adding a personal
+              touch to your work, the possibilities are endless.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./pencil.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="stack" class="stack reverse">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">
+              Highlight Brilliance:
+            </h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              Vibrant Marker Annotations
+            </h2>
+            <p id="description" class="description">
+              Make your points stand out with our Marker tool. Highlight key
+              information, underline crucial details, or draw attention to
+              important sections effortlessly. With adjustable size, color, and
+              patterns, your insights will shine brighter than ever.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./marker.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="stack" class="stack">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">Error-Free Editing:</h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              Wipe Away Mistakes with Ease
+            </h2>
+            <p id="description" class="description">
+              Say goodbye to errors with our Eraser feature. Correct mistakes
+              seamlessly and refine your creations with precision. With
+              adjustable size, no mistake is too big or too small to fix.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./eraser.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="stack" class="stack reverse">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">Shape Your Vision</h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              with Precision Shapes
+            </h2>
+            <p id="description" class="description">
+              Transform your ideas into polished creations with our Shapes
+              feature. From circles to triangles, unlock a world of
+              possibilities with a variety of shapes at your disposal. Perfect
+              for diagrams, illustrations, and more.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./shapes.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="stack" class="stack">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">
+              Text That Speaks Volumes
+            </h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              w/ Dynamic Typography
+            </h2>
+            <p id="description" class="description">
+              Let your words do the talking with our Text tool. Add captions,
+              labels, or commentary with customizable size and font options.
+              With draggable, resizable, and delete functionalities, your
+              message will always be on point.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./text.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="stack" class="stack reverse">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">
+              Playful Sticky Notes:
+            </h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              with Colorful Annotations
+            </h2>
+            <p id="description" class="description">
+              Make your annotations pop with our Sticky Note feature. Add
+              colorful notes, reminders, or comments to your canvas with ease.
+              With draggable and resizable options, organizing your thoughts has
+              never been easier.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./sticky-notes.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="stack" class="stack">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">Upload & Annotate:</h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              Bring Your Images to Life
+            </h2>
+            <p id="description" class="description">
+              Elevate your images with our Upload feature. Upload photos or
+              graphics directly to your canvas and annotate them seamlessly.
+              With draggable and resizable options, customization is key to
+              making your visuals truly yours.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./upload.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="stack" class="stack reverse">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">Background Color</h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              Set the Stage for Your Creativity
+            </h2>
+            <p id="description" class="description">
+              Create the perfect backdrop for your creations with our Background
+              Color feature. Personalize your canvas with customizable
+              background colors that set the mood and enhance your artwork.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./background.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="stack" class="stack">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">Undo/Redo & Reset</h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              Stay in Control of Your Creations
+            </h2>
+            <p id="description" class="description">
+              Take control of your creative process with our Undo/Redo and Reset
+              functionalities. Experiment freely, knowing that you can always
+              backtrack or start fresh with just a click.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./undo-redo.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="stack" class="stack reverse">
+          <div id="content" class="feat-content">
+            <h1 id="titleHeading" class="title-heading">Download & Share</h1>
+            <h2 id="titleSubHeading" class="title-subheading">
+              Spread Your Creativity Far & Wide
+            </h2>
+            <p id="description" class="description">
+              Share your creations with the world with our Download and Share
+              feature. Export your masterpieces effortlessly, ensuring they
+              reach the right audience every time. Whether it's a professional
+              presentation or a personal project, sharing has never been easier.
+            </p>
+          </div>
+          <div id="imageContainer" class="image-container">
+            <div id="animatedDiv" class="animated-div">
+              <img
+                id="featuredImage"
+                class="featured-image"
+                src="./download.png"
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="copyright">
+          <p>© 2023 | precodes. All rights reserved</p>
+        </div>
+        <div class="social-icons">
+          <a
+            href="https://twitter.com/precodes18"
+            class="social-button"
+            aria-label="Twitter"
+          >
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a
+            href="https://instagram.com/pre.codes"
+            class="social-button"
+            aria-label="Instagram"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/prerana-nawar"
+            class="social-button"
+            aria-label="LinkedIn"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a
+            href="https://precodes.netlify.app"
+            class="social-button"
+            aria-label="Website"
+          >
+            <i class="fas fa-globe"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
