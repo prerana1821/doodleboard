@@ -500,15 +500,3 @@ reset.addEventListener("click", (e) => {
     tool.clearRect(0, 0, canvas.width, canvas.height);
   }
 });
-
-// socket.on("startDrawing", (data) => {
-//   startDrawing(data);
-// });
-
-// socket.on("continueDrawing", (data) => {
-//   continueDrawing(data);
-// });
-
-// socket.on("undoRedoCanvas", (data) => {
-//   undoRedoCanvas(data);
-// });

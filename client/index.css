@@ -368,6 +368,7 @@ div#carousel ~ span:hover {
 }
 
 .social-button {
+  text-decoration: none;
   background-color: rgb(0 0 0 / 10%);
   width: 40px;
   height: 40px;

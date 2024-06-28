@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doodle Board</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" href="./icons/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="toggle-options">
+      <img src="./icons/tools/close.png" alt="Options" title="Close Menu" />
+    </div>
+
+    <div class="tools scale-tools">
+      <img
+        src="./icons/tools/pencil.png"
+        class="pencil"
+        alt="pencil"
+        title="Pencil"
+      />
+      <img
+        src="./icons/tools/marker.png"
+        class="marker"
+        alt="marker"
+        title="Marker"
+      />
+      <img
+        src="./icons/tools/eraser.png"
+        class="eraser"
+        alt="eraser"
+        title="Eraser"
+      />
+      <img
+        src="./icons/tools/shapes.png"
+        class="shapes"
+        alt="shapes"
+        title="Shapes"
+      />
+      <img src="./icons/tools/text.png" class="text" alt="text" title="Text" />
+      <img
+        src="./icons/tools/download.png"
+        class="download"
+        alt="download"
+        title="Download Page"
+      />
+      <img
+        src="./icons/tools/upload.png"
+        class="upload"
+        alt="upload"
+        title="Upload Image"
+      />
+      <img
+        src="./icons/tools/canvas-bgcolor.png"
+        class="canvas-bgcolor"
+        alt="change background color"
+        title="Change Background Color"
+      />
+      <img
+        src="./icons/tools/stickynote.png"
+        class="stickynote"
+        alt="stickynote"
+        title="Sticky Note"
+      />
+      <img
+        src="./icons/tools/redo.png"
+        class="redo"
+        alt="redo"
+        title="Redo Action"
+      />
+      <img
+        src="./icons/tools/undo.png"
+        class="undo"
+        alt="undo"
+        title="Undo Action"
+      />
+      <img
+        src="./icons/tools/reset.png"
+        class="reset"
+        alt="reset"
+        title="Reset Page"
+      />
+    </div>
+
+    <div class="pencil-tools">
+      <p class="tool-heading-xl">Pencil Options:</p>
+      <div class="pencil-width" title="Pencil Size">
+        <p class="tool-heading">Size:</p>
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value="5"
+          class="pencil-width-input"
+        />
+      </div>
+      <p class="tool-heading">Colors:</p>
+      <div class="pencil-colors">
+        <div class="black pencil-color" title="Black"></div>
+        <div class="red pencil-color" title="Red"></div>
+        <div class="orange pencil-color" title="Orange"></div>
+        <div class="yellow pencil-color" title="yellow"></div>
+        <div class="green pencil-color" title="Green"></div>
+        <div class="blue pencil-color" title="Blue"></div>
+        <div class="purple pencil-color" title="Purple"></div>
+      </div>
+      <p class="tool-heading">Edges:</p>
+      <div class="pencil-edges">
+        <img
+          class="pencil-edge"
+          src="./icons/pencil-tools/square-edges.png"
+          alt="Square Edge"
+          title="Square Edge"
+        />
+        <img
+          class="pencil-edge"
+          src="./icons/pencil-tools/rounded-edges.png"
+          alt="Round Edges"
+          title="Round Edges"
+        />
+      </div>
+      <p class="tool-heading">Patterns:</p>
+      <div class="pencil-patterns">
+        <img
+          class="pencil-pattern"
+          src="./icons/pencil-tools/solid-line.png"
+          alt="Solid"
+          title="Solid"
+        />
+        <img
+          class="pencil-pattern"
+          src="./icons/pencil-tools/dashed-line.png"
+          alt="Dashed"
+          title="Dashed"
+        />
+        <img
+          class="pencil-pattern"
+          src="./icons/pencil-tools/dotted-line.png"
+          alt="Dotted"
+          title="Dotted"
+        />
+      </div>
+    </div>
+
+    <div class="marker-tools">
+      <p class="tool-heading-xl">Marker Options:</p>
+      <div class="marker-width" title="Marker Size">
+        <p class="tool-heading">Size:</p>
+        <input
+          type="range"
+          min="5"
+          max="15"
+          value="10"
+          class="marker-width-input"
+        />
+      </div>
+      <p class="tool-heading">Colors:</p>
+      <div class="marker-colors">
+        <div class="marker-grey marker-color" title="Grey"></div>
+        <div class="marker-pink marker-color" title="Pink"></div>
+        <div class="marker-orange marker-color" title="Orange"></div>
+        <div class="marker-yellow marker-color" title="yellow"></div>
+        <div class="marker-green marker-color" title="Green"></div>
+        <div class="marker-blue marker-color" title="Blue"></div>
+        <div class="marker-purple marker-color" title="Purple"></div>
+      </div>
+      <p class="tool-heading">Patterns:</p>
+      <div class="marker-patterns">
+        <img
+          class="marker-pattern"
+          src="./icons/pencil-tools/solid-line.png"
+          alt="Solid"
+          title="Solid"
+        />
+        <img
+          class="marker-pattern"
+          src="./icons/pencil-tools/dashed-line.png"
+          alt="Dashed"
+          title="Dashed"
+        />
+        <img
+          class="marker-pattern"
+          src="./icons/pencil-tools/dotted-line.png"
+          alt="Dotted"
+          title="Dotted"
+        />
+      </div>
+    </div>
+
+    <div class="eraser-tools" title="Eraser Size">
+      <p class="tool-heading-xl">Eraser Option:</p>
+
+      <input type="range" min="1" max="10" value="3" class="eraser-width" />
+    </div>
+
+    <div class="stickynote-tools">
+      <p class="tool-heading-xl">Sticky Note Colors:</p>
+      <div class="stickynote-colors">
+        <div class="bg-pink notes-color" title="Pink"></div>
+        <div class="bg-orange notes-color" title="Orange"></div>
+        <div class="bg-green notes-color" title="Green"></div>
+        <div class="bg-blue notes-color" title="Blue"></div>
+        <div class="bg-yellow notes-color" title="Yellow"></div>
+        <div class="bg-purple notes-color" title="Purple"></div>
+        <div class="bg-grey notes-color" title="Grey"></div>
+      </div>
+    </div>
+
+    <div class="shapes-tools">
+      <p class="tool-heading-xl">Shape Options:</p>
+      <div class="shapes">
+        <img
+          class="shape"
+          src="./icons/shape-tools/square.png"
+          title="Square"
+          alt="Square"
+        />
+        <img
+          class="shape"
+          src="./icons/shape-tools/circle.png"
+          title="Circle"
+          alt="Circle"
+        />
+        <img
+          class="shape"
+          src="./icons/shape-tools/diamond.png"
+          title="Diamond"
+          alt="Diamond"
+        />
+        <img
+          class="shape"
+          src="./icons/shape-tools/rectangle.png"
+          title="Rectangle"
+          alt="Rectangle"
+        />
+        <img
+          class="shape"
+          src="./icons/shape-tools/triangle.png"
+          title="Triangle"
+          alt="Triangle"
+        />
+      </div>
+    </div>
+
+    <div class="text-tools">
+      <p class="tool-heading-xl">Text Options:</p>
+      <p class="tool-heading">Size:</p>
+      <div class="text-sizes">
+        <div class="s text-size" title="small">S</div>
+        <div class="m text-size" title="medium">M</div>
+        <div class="l text-size" title="large">L</div>
+        <div class="xl text-size" title="x-large">XL</div>
+      </div>
+      <p class="tool-heading">Family:</p>
+      <div class="text-families">
+        <img
+          class="hand text-family"
+          src="./icons/text-tools/hand.png"
+          alt="Hand Drawn"
+          title="Hand Drawn"
+        />
+        <img
+          class="normal text-family"
+          src="./icons/text-tools/normal.png"
+          alt="Normal"
+          title="Normal"
+        />
+        <img
+          class="code text-family"
+          src="./icons/text-tools/code.png"
+          alt="Code"
+          title="Code"
+        />
+      </div>
+    </div>
+
+    <div class="canvas-bgcolor-tools">
+      <p class="tool-heading-xl">Canvas Background:</p>
+      <div class="canvas-bgcolors">
+        <div class="canvas-white canvas-color" title="White"></div>
+        <div class="canvas-grey canvas-color" title="Grey"></div>
+        <div class="canvas-blue canvas-color" title="Blue"></div>
+        <div class="canvas-pink canvas-color" title="Pink"></div>
+        <div class="canvas-purple canvas-color" title="Purple"></div>
+      </div>
+    </div>
+
+    <canvas></canvas>
+
+    <script src="./tools.js"></script>
+    <script src="./canvas.js"></script>
+  </body>
+</html>
