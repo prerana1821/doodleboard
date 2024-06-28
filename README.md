@@ -50,19 +50,20 @@ More features to come! 😍😇
 
 ## TODO Features
 
-- [x] marker ( change width, colors, 3 types of style, 2 types edges ) - DONE
-- [x] highlighter ( change width, colors, 3 types of style, 2 types edges ) - DONE
-- [x] Write text (with markdown) - DONE
+- [x] marker ( change width, colors, 3 types of style, 2 types edges )
+- [x] highlighter ( change width, colors, 3 types of style, 2 types edges )
+- [x] Write text (with markdown)
 - [ ] Add markdown on sticky notes
-- [x] Create shapes: square, circle, rectangle, diamond, triangle, downward pointing triangle, rounded rectangle (filled & outline) - DONE
+- [x] Create shapes: square, circle, rectangle, diamond, triangle, downward pointing triangle, rounded rectangle (filled & outline)
 - [ ] Straight line & Arrow
 - [ ] panning tool
 - [ ] stamp feature
 - [ ] add comment features
 - [ ] add layers
-- [x] change canvas color - DONE
+- [x] change canvas color
 - [ ] add typescript
-- [x] change the mouse type based on pencil, eraser or marker - DONE
+- [ ] live collaboration
+- [x] change the mouse type based on pencil, eraser or marker
 
 ## Blogs to be written based on my learnings
 
