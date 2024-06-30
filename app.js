@@ -3,14 +3,19 @@ const socket = require("socket.io");
 
 const app = express();
 
-app.use(express.static("../client"));
+app.use(express.static("./client"));
 
 let port = process.env.PORT || 3000;
+
 let server = app.listen(port, () => {
   console.log("Listening to port " + port);
 });
 
 let io = socket(server);
+
+app.get("/", (req, res) => {
+  res.send("Hey doodleboard is API running 🥳");
+});
 
 // recieve data
 io.on("connection", (socket) => {
@@ -26,3 +31,5 @@ io.on("connection", (socket) => {
     io.sockets.emit("undoRedoCanvas", data);
   });
 });
+
+module.exports = app;
